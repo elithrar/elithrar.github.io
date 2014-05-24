@@ -1,0 +1,24 @@
+# Dependencies
+markdown:         redcarpet
+highlighter:      pygments
+
+# Permalinks
+permalink:        /article/:title/
+
+# Setup
+title:            'go, web, go'
+tagline:          'On the web, Go, and building things.'
+description:      'Articles.'
+url:              http://elithrar.github.io/
+baseurl:           
+
+author:
+  name:           'Matt Silverlock'
+  url:            https://github.com/elithrar
+  twitter:        elithrar
+
+paginate:         5
+
+# Custom vars
+github:
+  repo:           https://github.com/elithrar/elithrar.github.io
