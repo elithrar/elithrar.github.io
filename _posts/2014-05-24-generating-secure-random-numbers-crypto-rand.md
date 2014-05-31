@@ -21,11 +21,11 @@ import(
 func GenerateRandomBytes(s int) ([]byte, error) {
 	b := make([]byte, s)
 	n, err := rand.Read(b)
-	if len(n) != b || err != nil {
-		return nil, fmt.Errorf("Unable to successfully read from the system CSPRNG.")
+	if n != len(b) || err != nil {
+		return nil, fmt.Errorf("Unable to successfully read from the system CSPRNG (%v)", err)
 	}
 
-	return n, nil
+	return b, nil
 }
 
 func GenerateRandomString(s int) (string, error) {
@@ -34,7 +34,7 @@ func GenerateRandomString(s int) (string, error) {
 		return "", err
 	}
 
-	return base64.URLEncoding.EncodeToString(b)
+	return base64.URLEncoding.EncodeToString(b), nil
 }
 
 // This will give us a 44 byte, base64 encoded output

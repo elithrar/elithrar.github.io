@@ -14,7 +14,7 @@ package main
 import(
     "net/http"
     "github.com/goji/httpauth"
-    "github.com/zenazn/goji/web"
+    "github.com/zenazn/goji"
 )
 
 func main() {
