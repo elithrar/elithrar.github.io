@@ -64,6 +64,7 @@ import (
     "fmt"
     "html/template"
     "net/http"
+    "path/filepath"
 )
 
 var templates map[string]*template.Template
@@ -92,9 +93,6 @@ func init() {
 		templates[filepath.Base(layout)] = template.Must(template.ParseFiles(files...))
 	}
 
-	// Create a new buffer pool to write our rendered templates to (for error checking)
-	bufpool = bpool.NewBufferPool(64)
-}
 }
 
 // renderTemplate is a wrapper around template.ExecuteTemplate.
@@ -113,7 +111,7 @@ func renderTemplate(w http.ResponseWriter, name string, data map[string]interfac
 
 ```
 
-We create our templates from a set of template snippets and the base layout (just the one, in our case). We can fill in our `{% raw %}{{ template "script" }}{% endraw %}` block as needed, and we can mix and match our sidebar content as well. If your pages are alike, you could also generate this map with a range clause by using a slice of the template names as the keys.
+We create our templates from a set of template snippets and the base layout (just the one, in our case). We can fill in our `{% raw %}{{ template "script" }}{% endraw %}` block as needed, and we can mix and match our sidebar content as well. If your pages are alike, you can generate this map with a range clause by using a slice of the template names as the keys.
 
 Slightly tangential to this, there's the common problem of dealing with the error returned from `template.ExecuteTemplate`. If we pass the writer to an error handler, it's too late: we've already written (partially) to the response and we'll end up a mess in the user's browser. It'll be part of the page before it hit the error, and then the error page's content. The solution here is to write to a `bytes.Buffer` to catch any errors during the template rendering, and *then* write out the contents of the buffer to the `http.ResponseWriter`.
 
@@ -163,7 +161,7 @@ func init() {
 
 ```
 
-We can catch that returned error in our handler and return a HTTP 500 instead.  The best part is that it also makes testing our handlers easier. If you try to take over the http.ResponseWriter with your error handler, you've likely already sent a HTTP 200 status header, making it much harder to test where things are broken. By writing to a temporary buffer first, we ensure that don't set headers until we're sure the template will render correctly; making testing much simpler.
+We can catch that returned error in our handler and return a HTTP 500 instead.  The best part is that it also makes testing our handlers easier. If you try to take over the http.ResponseWriter with your error handler, you've already sent a HTTP 200 status header, making it much harder to test where things are broken. By writing to a temporary buffer first, we ensure that don't set headers until we're sure the template will render correctly; making testing much simpler.
 
 And that's about it. We have composable templates, we deal with our errors before writing out, and it's still fast.
 
