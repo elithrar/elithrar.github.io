@@ -64,6 +64,7 @@ import (
     "fmt"
     "html/template"
     "net/http"
+    "path/filepath"
 )
 
 var templates map[string]*template.Template
@@ -92,9 +93,6 @@ func init() {
 		templates[filepath.Base(layout)] = template.Must(template.ParseFiles(files...))
 	}
 
-	// Create a new buffer pool to write our rendered templates to (for error checking)
-	bufpool = bpool.NewBufferPool(64)
-}
 }
 
 // renderTemplate is a wrapper around template.ExecuteTemplate.
