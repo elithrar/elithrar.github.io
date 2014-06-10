@@ -27,8 +27,7 @@ First, we define `base.tmpl`:
 </body>
 </html>
 {{ end }}
-// We define empty blocks for optional content so we don't have to define a
-// block in child templates that don't need it (i.e. extra scripts).
+// We define empty blocks for optional content so we don't have to define a block in child templates that don't need them
 {{ define "scripts" }}{{ end }}
 {{ define "sidebar" }}{{ end }}
 {% endraw %}
@@ -75,10 +74,27 @@ func init() {
 		templates = make(map[string]*template.Template)
 	}
 
-    templates["index.html"] = template.Must(template.ParseFiles("index.tmpl", "sidebar_index.tmpl", "sidebar_base.tmpl", "listings_table.tmpl", "base.tmpl"))
-    templates["signup.html"] = template.Must(template.ParseFiles("signup.tmpl", "sidebar_faq.tmpl", "sidebar_base.tmpl", "signup_form.tmpl", "payment_scripts.tmpl", "base.tmpl"))
-    templates["dashboard.html"] = template.Must(template.ParseFiles("dashboard.tmpl", "sidebar_dashboard.tmpl", "sidebar_base.tmpl", "base.tmpl"))
+	templatesDir := config.Templates.Path
 
+	layouts, err := filepath.Glob(templatesDir + "layouts/*.tmpl")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	includes, err := filepath.Glob(templatesDir + "includes/*.tmpl")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+    // Generate our templates map from our layouts/ and includes/ directories
+	for _, layout := range layouts {
+		files := append(includes, layout)
+		templates[filepath.Base(layout)] = template.Must(template.ParseFiles(files...))
+	}
+
+	// Create a new buffer pool to write our rendered templates to (for error checking)
+	bufpool = bpool.NewBufferPool(64)
+}
 }
 
 // renderTemplate is a wrapper around template.ExecuteTemplate.
@@ -101,7 +117,7 @@ We create our templates from a set of template snippets and the base layout (jus
 
 Slightly tangential to this, there's the common problem of dealing with the error returned from `template.ExecuteTemplate`. If we pass the writer to an error handler, it's too late: we've already written (partially) to the response and we'll end up a mess in the user's browser. It'll be part of the page before it hit the error, and then the error page's content. The solution here is to write to a `bytes.Buffer` to catch any errors during the template rendering, and *then* write out the contents of the buffer to the `http.ResponseWriter`.
 
-Although you can create your own buffer per-request, using a pool ([https://github.com/oxtoacart/bpool](https://github.com/oxtoacart/bpool)) reduces allocations and garbage. I benchmarked and profiled a bare approach (as above; write out directly), a 10K fixed buffer per-request (big enough for most of my responses), and a pool of buffers. The pooled approach was the fastest, at 33k req/s vs. the 26k req/s and 29k req/s of the bare and fixed approaches. Latency was no worse than the bare approach either, which is a huge plus.
+Although you can create your own buffer per-request, using a pool ([https://github.com/oxtoacart/bpool](https://github.com/oxtoacart/bpool)) reduces allocations and garbage. I benchmarked and profiled a bare approach (as above; write out directly), a 10K fixed buffer per-request (big enough for most of my responses), and a pool of buffers. The pooled approach was the fastest, at 32k req/s vs. the 26k req/s and 29k req/s of the bare and fixed approaches. Latency was no worse than the bare approach either, which is a huge plus.
 
 ```go
 
