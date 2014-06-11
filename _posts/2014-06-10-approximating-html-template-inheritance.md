@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Approximating html/template Inheritance
-categories: go, web
+categories: "go, web"
+published: true
 ---
 
 Go's [html/template](http://golang.org/pkg/html/template/) package is fairly minimal compared to templating packages associated with other languages (Jinja, Mustache, even Django's templates), although it makes up for this with [security](http://js-quasis-libraries-and-repl.googlecode.com/svn/trunk/safetemplate.html#problem_definition) and great docs.
@@ -113,9 +114,9 @@ func renderTemplate(w http.ResponseWriter, name string, data map[string]interfac
 
 We create our templates from a set of template snippets and the base layout (just the one, in our case). We can fill in our `{% raw %}{{ template "script" }}{% endraw %}` block as needed, and we can mix and match our sidebar content as well. If your pages are alike, you can generate this map with a range clause by using a slice of the template names as the keys.
 
-Slightly tangential to this, there's the common problem of dealing with the error returned from `template.ExecuteTemplate`. If we pass the writer to an error handler, it's too late: we've already written (partially) to the response and we'll end up a mess in the user's browser. It'll be part of the page before it hit the error, and then the error page's content. The solution here is to write to a `bytes.Buffer` to catch any errors during the template rendering, and *then* write out the contents of the buffer to the `http.ResponseWriter`.
+Slightly tangential to this, there's the common problem of dealing with the error returned from `template.ExecuteTemplate`. If we pass the writer to an error handler, it's too late: we've already written (partially) to the response and we'll end up with a mess in the user's browser. It'll be part of the page before it hit the error, and then the error page's content. The solution here is to write to a `bytes.Buffer` to catch any errors during the template rendering, and *then* write out the contents of the buffer to the `http.ResponseWriter`.
 
-Although you can create your own buffer per-request, using a pool ([https://github.com/oxtoacart/bpool](https://github.com/oxtoacart/bpool)) reduces allocations and garbage. I benchmarked and profiled a bare approach (as above; write out directly), a 10K fixed buffer per-request (big enough for most of my responses), and a pool of buffers. The pooled approach was the fastest, at 32k req/s vs. the 26k req/s and 29k req/s of the bare and fixed approaches. Latency was no worse than the bare approach either, which is a huge plus.
+Although you can create your own buffer per-request, using a pool ([https://github.com/oxtoacart/bpool](https://github.com/oxtoacart/bpool)) reduces allocations and garbage. I benchmarked and profiled a bare approach (as above; write out directly), a 10K fixed buffer per-request (big enough for most of my responses), and a pool of buffers. The pooled approach was the fastest, at 32k req/s vs. 26k req/s (fixed buffer) and 29k req/s (no buffer). Latency was no worse than the bare approach either, which is a huge plus.
 
 ```go
 
@@ -170,4 +171,3 @@ And that's about it. We have composable templates, we deal with our errors befor
 * This post was triggered after I [asked the question](http://www.reddit.com/r/golang/comments/27ls5a/including_htmltemplate_snippets_is_there_a_better/) on the /r/golang sub-reddit, which is what prompted me to look at re-using buffers via a pool.
 * Credit goes to [this answer on SO](http://stackoverflow.com/a/11468132/556573) for the clever `map[string]*template.Template` approach, and a thanks to [@jonathanbingram](https://twitter.com/jonathanbingram) for the great "optional blocks" trick. 
 * I highly suggest reading [Jan Newmarch's html/template tutorial](http://jan.newmarch.name/golang/template/chapter-template.html), which covers `{% raw %}{{ with }}{% endraw %}`, `{% raw %}{{ range . }}{% endraw %}` and `template.Funcs` comprehensively.
-
