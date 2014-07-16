@@ -206,6 +206,7 @@ Other than that, it just works. We've reduced repetition around our error handli
 
 * Worth reading is Justinas' [great article on errors](http://justinas.org/best-practices-for-errors-in-go/) in Go: read the section on implementing a custom `httpError`.
 * Writing some HTTP middleware for your Go application? Align with `func(http.Handler) http.Handler` and you'll end up with something portable. The only "exception" to this rule is when you need to pass state between handlers (i.e. a CSRF token), which is when you'll need to tie yourself to a request context (like Goji's [web.C](https://godoc.org/github.com/zenazn/goji/web#C), or [gorilla/context](http://gorillatoolkit.org/pkg/context)). Plenty of middleware doesn't need to do that however.
+* [This is how](https://gist.github.com/elithrar/fbf3772e6a0a6f997d8a) you would catch errors before rendering templates (in short: use a buffer pool).
 * There's a compilable version of [the final example](https://gist.github.com/elithrar/5aef354a54ba71a32e23) that you can leave comments on.
 
 
