@@ -107,7 +107,7 @@ Here's the actual global variables I had before:
 
 ```go
 var (
-    decoder   = schema.NewDecoder()
+    decoder   *schema.Decoder
     bufpool   *bpool.Bufferpool
     templates map[string]*template.Template
     db        *sqlx.DB
