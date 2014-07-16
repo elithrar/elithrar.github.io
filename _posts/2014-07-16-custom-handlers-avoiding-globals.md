@@ -3,7 +3,7 @@ layout: post
 title: Custom Handlers and Avoiding Globals in Go Web Applications
 ---
 
-Go's [net/http](http://golang.org/pkg/net/http/) package is extremely flexible, thanks to the fact that it centres on the [http.Handler](http://golang.org/pkg/net/http/#Handler) interface. But there's often times when you both want to extend what's there and still keep it compatible with existing interfaces and conventions. We'll look at how we can build our own handler type, and how to extend it so we can explicitly pass a "context" containing our database pool, template map, a custom logger and so on and remove a reliance on global variables.
+Go's [net/http](http://golang.org/pkg/net/http/) package is extremely flexible, thanks to the fact that it centres on the [http.Handler](http://golang.org/pkg/net/http/#Handler) interface. This gives you the option of extending what's there and yet still keep it compatible with other packages out in the wild. Given that, we'll look at how we can build our own handler type, and how to extend it so we can explicitly pass a "context" containing our database pool, template map, a custom logger and so on&mdash;removing a reliance on global variables along the way.
 
 ## Creating Our Custom Handler Type
 
