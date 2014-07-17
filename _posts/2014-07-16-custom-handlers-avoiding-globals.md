@@ -90,7 +90,7 @@ func myHandler(w http.ResponseWriter, r *http.Request) (int, error) {
 
 func main() {
 	// Cast myHandler to an appHandler
-	http.HandleFunc("/", appHandler(myHandler))
+	http.Handle("/", appHandler(myHandler))
 	http.ListenAndServe(":8000", nil)
 }
 ```
