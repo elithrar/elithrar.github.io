@@ -166,7 +166,8 @@ func (ah appHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
         switch status {
         case http.StatusNotFound:
             http.NotFound(w, r)
-            // And if we wanted a friendlier error page:
+            // And if we wanted a friendlier error page, we can
+            // now leverage our context instance - e.g.
             // err := ah.renderTemplate(w, "http_404.tmpl", nil)
         case http.StatusInternalServerError:
             http.Error(w, http.StatusText(status), status)
@@ -177,7 +178,7 @@ func (ah appHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	// These are 'nil' for our example, but we'd either assign
+    // These are 'nil' for our example, but we'd either assign
     // the values as below or use a constructor function like
     // (NewAppContext(conf config) *appContext) that initialises
     // it for us based on our application's configuration file.
