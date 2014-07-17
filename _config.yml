@@ -9,7 +9,7 @@ permalink:        /article/:title/
 title:            'go, web, go'
 tagline:          'On the web, Go, and building things.'
 description:      'Articles.'
-url:              http://elithrar.github.io/
+url:              http://elithrar.github.io
 baseurl:           
 
 author:
