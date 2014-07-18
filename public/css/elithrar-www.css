@@ -80,6 +80,7 @@ h3 {
   padding: .5rem 1.5rem;
   margin-bottom: 1rem;
   font-weight: 700;
+  width: 100%;
 }
 
 .header-title > a {
