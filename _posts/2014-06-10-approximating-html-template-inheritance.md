@@ -144,6 +144,7 @@ func renderTemplate(w http.ResponseWriter, name string, data map[string]interfac
 	buf := bufpool.Get()
 	err := tmpl.ExecuteTemplate(&buf, "base", data)
 	if err != nil {
+	    bufpool.Put(buf)
 		return err
 	}
 
