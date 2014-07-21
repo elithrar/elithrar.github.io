@@ -1,9 +1,9 @@
 ---
 layout: post
-title: map[string]interface{}
+title: HTTP Request Contexts &amp; Go
 ---
 
-Or, in other words, providing request contexts in Go web applications.
+Alternatively titled map[string]interface. 
 
 Request contexts, for those new to the terminology, are typically a way to pass data alongside a HTTP request as it is processed by composable handlers (or middleware). This data could be a user ID, a CSRF token, whether a user is logged in or not—something typically derived from logic that you don't want to repeat over-and-over again in every handler. If you've ever used Django, the request context is synonymous with the request.META dictionary.
 
@@ -195,9 +195,9 @@ func ShowSignupForm(c web.C, w http.ResponseWriter, r *http.Request) {
 
 [Full Example](https://gist.github.com/elithrar/015e2a561eee0ca71a77#file-goji-go)
 
-The biggest immediate gain is the performance improvement: Goji only allocates a map when you ask it to: there's no global map with locks. Note that for many applications, your database or template rendering will be the bottleneck (by far), so the "real" impact is likely pretty small, but it's a sensible touch. 
+The biggest immediate gain is the performance improvement, since Goji only allocates a map when you ask it to: there's no global map with locks. Note that for many applications, your database or template rendering will be the bottleneck (by far), so the "real" impact is likely pretty small, but it's a sensible touch. 
 
-Most useful is that you retain the ability to write modular middleware that doesn't need further information about your application: if you want to use the request context, you can do so, but for anything else it's just `http.Handler`. The downside is that you still need to type assert anything you retrieve from the context, although like gorilla/context we can simplify this by writing helper functions. A `map[string]interface{}` also restricts us to string keys: not a deal-breaker, but it does make things less flexible.
+Most useful is that you retain the ability to write modular middleware that doesn't need further information about your application: if you want to use the request context, you can do so, but for anything else it's just `http.Handler`. The downside is that you still need to type assert anything you retrieve from the context, although like gorilla/context we can simplify this by writing helper functions. A `map[string]interface{}` also restricts us to string keys: simpler for most (myself included), but potentially less flexible for some.
 
 ## Context Structs
 
