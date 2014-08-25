@@ -19,7 +19,8 @@ import(
 
 func main() {
 
-    goji.Use(httpauth.SimpleBasicAuth("dave", "password"), SomeOtherMiddleware)
+    goji.Use(httpauth.SimpleBasicAuth("dave", "password"))
+    goji.Use(SomeOtherMiddleware)
     // myHandler requires HTTP Basic Auth to access
     goji.Get("/thing", myHandler)
     
