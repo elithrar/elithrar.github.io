@@ -3,14 +3,12 @@ layout: default
 ---
 <div class="related">
   <h2>Recently:</h2>
-  <ul class="related-posts">
+  <ul class="related-posts center">
     {% for post in site.posts limit:3 %}
-      <li>
-        <h3>
+      <li class="small">
           <a href="{{ site.baseurl }}{{ post.url }}">
             {{ post.title }}
           </a>
-        </h3>
       </li>
     {% endfor %}
   </ul>
