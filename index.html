@@ -4,7 +4,7 @@ layout: default
 <div class="related">
   <h2>Recently:</h2>
   <ul class="related-posts center">
-    {% for post in site.posts limit:3 %}
+    {% for post in site.posts limit:4 %}
       <li class="small">
           <a href="{{ site.baseurl }}{{ post.url }}">
             {{ post.title }}
@@ -13,7 +13,7 @@ layout: default
     {% endfor %}
   </ul>
 </div>
-  
+<hr>
 <div class="posts">
   {% for post in paginator.posts %}
   <div class="post">
