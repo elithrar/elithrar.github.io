@@ -1,0 +1,74 @@
+
+==================================================================
+https://keybase.io/silverlock
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://elithrar.github.io
+  * I am silverlock (https://keybase.io/silverlock) on keybase.
+  * I have a public key with fingerprint 73E6 AFB3 9131 E24C A140  F660 D6E8 9C78 40EB 8D6B
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "73e6afb39131e24ca140f660d6e89c7840eb8d6b",
+            "host": "keybase.io",
+            "key_id": "d6e89c7840eb8d6b",
+            "kid": "0101c80ca6a8da711b909fcf3239ab950de9365c47068f78a277adfaf6fd063f5bbf0a",
+            "uid": "7377073f85fec1319e73493d70a6b300",
+            "username": "silverlock"
+        },
+        "service": {
+            "hostname": "elithrar.github.io",
+            "protocol": "https:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1427198528,
+    "expire_in": 157680000,
+    "prev": "41c5920341445d3afabda46f89956491ef630046d17d7f04d87bdd608fc65116",
+    "seqno": 17,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.8
+Comment: https://keybase.io/crypto
+
+yMM/AnicbVJ9UBRlGL87wfgoPNKKwGJcRwyDm93b3Xd3z2JIrjyJGAiwCONmP96F
+9bjb424PxQMKxxkVNbEDmwz5mCztRmeYZphGmOLDhkSKI2fIUkxJhxE/IpAgwbRd
+sv96/3nmfZ7f7/c8v2eeb59YoovS/3SjaXv6rQMO/WBvpk9XEPtmuh/hZKESsfgR
+B1wMouQqgR63R3IpiAWhcAhYkcMZDMegmeBZjEBFAFABQJrhKZpAIUcLgENSkFLZ
+qzFUGY71QpMkqzn1Y5cENfs/eMdiAcVQjKdRngUsLbAUhnEMyoi8iJtxhuUYEhUg
+gwOSJygU0CJFs2aKYgWRFYEooAAXSY4TUVaV8y3KUThFoRQu0qQIeXVmBlI4weAC
+hbKAw1FUA3qhx8U6oYr2SmUV0FMm8w6kOgVR8xUSD7UlaF4eYWCZpJR6WI+pRI0+
+7l9fbo+syLxcptZLFcXttWh8pdKtEbZBzv5Iys5JLkHdp8pQ+3gl2YVYMBXJK5Km
+jRFmCmNo0kynIHC7W/JAu6QhSArQqPq0PrBClSQwnmTMKE5gBEEKOCuynMASQKQZ
+hgQEg0ERqN4IIGCUQIkoIdAUJwgApUUekBgGEM1cuUtWtSl1TrZk0XuJi1V8HohU
+9/VuCdPpo3RLww3aSeiiIo3/HYrp1LKH9kMNphPFu778KPl+izE8J7jnalvOdOqK
+awPxte64fQWBjHRCXjvSAmNaQ/dmD9YZrFUNl7Pi2iIiQ1Zl+jbZXvXrHVMjN3Hk
+up/aYetqyffur8dilKT8Y4b57At5p2rqRw/3RL8xGBXngIkHNw/1rym4snD/WvIL
+YcZLTYeO/mn/FNzbFlxvPPYb0jD1dzNy4QQQVrmHFv5YPVvbIAXPDS/Pa/wxbGTZ
+hmY0onlyc/Luipvnm+bTTn4dmPp8VB+MmM9Ouwge67GdXnm2c3pHzRldIKEcb8fG
+BuZuzrEdzX/1BGdttu+XJBnDNuwlDoe2mImO/dFfOM7mxWR04cMfO2I2FW58qpKw
+jjwreR7W7op1r+CG43c3znRMrL7bsZW0DLwTePH0vmc+zOhrm+GznSB3Ul/3nrfM
+1JlW32+tfin1eGtfa26g0H/ed7Wp+0HunYtrP9gZ5tS/VpxO7WnIiPpqIP748Fur
+anInLWu6swazOze9u/VKkaE3bSKLK0/qX4DPd/qX3/ju96O3UoeC4O3bOaGilWMJ
+mXMJiUW/gJffX1fl7N5ZdPf1iHq/1WAz2On8RFNduM36zZkn5Z6nncUztSHcmVn3
+Q1fmuejGcetE5PjjY5fK238ufUVZmvig8LLvudCRjca4VMVSy02OUvUnX/UMmsc/
+mZKKM2M/W7c39fp69B/fKqT6
+=d2ub
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/silverlock
+
+==================================================================
