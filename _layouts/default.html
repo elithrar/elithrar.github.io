@@ -11,12 +11,14 @@
         <p class="lead header-lead">
           {{ site.tagline }}
         </p>
-      </div>
+        <p class="lead header-lead">
+        (written by <a href="https://twitter.com/@{{ site.author.twitter }}">@{{ site.author.twitter }}</a>)</p>
+        </div>
       {{ content }}
     </div>
 
     <hr>
-    <small>&copy; {{ site.time | date: "%Y" }} <a href="mailto:{{ site.author.email }}">{{ site.author.name }}</a>. | Code snippets are <a href="http://choosealicense.com/licenses/mit/" title="MIT license">MIT licensed</a>. | Built with <a href="http://jekyllrb.com/">Jekyll</a></small>
+    <small>&copy; {{ site.time | date: "%Y" }} <a href="mailto:{{ site.author.email }}">{{ site.author.name }}</a>. | His <a href="{{ site.author.othersite }}">other site</a>. | Code snippets are <a href="http://choosealicense.com/licenses/mit/" title="MIT license">MIT licensed</a>. | Built with <a href="http://jekyllrb.com/">Jekyll</a></small>
 
   </body>
 </html>

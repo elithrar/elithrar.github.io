@@ -7,8 +7,8 @@ permalink:        /article/:title/
 
 # Setup
 title:            'go, web, go'
-tagline:          'On the web, Go, and building things.'
-description:      'Articles.'
+tagline:          'On the web, Go, and building things'
+description:      'Go programming, web security and side projects.'
 url:              http://elithrar.github.io
 baseurl:           
 
@@ -17,6 +17,7 @@ author:
   email:          'matt@eatsleeprepeat.net'
   url:            https://github.com/elithrar
   twitter:        elithrar
+  othersite:      'https://www.eatsleeprepeat.net'
 
 paginate:         5
 
