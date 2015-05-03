@@ -11,7 +11,7 @@ scrypt itself, for those that don't know, is a memory-hard key derivation functi
 
 Here's an example of how to get started with it for deriving strong keys from user passwords (e.g. via a web form):
 
-{% highlight go linenos=table %}
+{% highlight go %}
 package main
 
 import(
