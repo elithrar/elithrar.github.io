@@ -1,5 +1,5 @@
 html {
-  font-family: "freight-text-pro", "Georgia", serif;
+  font-family: "pt-sans", "Helvetica", "Arial", sans-serif;
   font-weight: 400;
 }
 
@@ -31,7 +31,7 @@ a:focus {
 .btn {
   display: inline-block;
   padding: .25rem 1rem;
-  font-family: "freight-text-pro", "Georgia", serif;
+  font-family: "pt-sans", "Helvetica", "Arial", sans-serif;
   border: .1rem solid #32343c;
   border-radius: .1rem;
   background-color: #FFCD2B;
@@ -117,7 +117,7 @@ pre, code {
 }
 
 .pagination {
-  font-family: "freight-text-pro", "Georgia", serif;
+  font-family: "pt-sans", "Helvetica", "Arial", sans-serif;
 }
 
 .pagination-item {
