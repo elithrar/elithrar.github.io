@@ -5,6 +5,7 @@ categories: "go, web"
 published: true
 ---
 
+
 Go's [html/template](http://golang.org/pkg/html/template/) package is fairly minimal compared to templating packages associated with other languages (Jinja, Mustache, even Django's templates), although it makes up for this with [security](http://js-quasis-libraries-and-repl.googlecode.com/svn/trunk/safetemplate.html#problem_definition) and great docs.
 
 There are however a few "tricks" to using it: specifically when it comes to approximating template inheritance. Being able to specify a base layout (or layouts), stake out your blocks and then fill those blocks with template snippets isn't immediately clear. So how do we do this?
@@ -142,16 +143,16 @@ func renderTemplate(w http.ResponseWriter, name string, data map[string]interfac
 
 	// Create a buffer to temporarily write to and check if any errors were encounted.
 	buf := bufpool.Get()
-	err := tmpl.ExecuteTemplate(&buf, "base", data)
+	defer bufpool.Put()
+    
+	err := tmpl.ExecuteTemplate(buf, "base", data)
 	if err != nil {
-	    bufpool.Put(buf)
 		return err
 	}
 
 	// Set the header and write the buffer to the http.ResponseWriter
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	buf.WriteTo(w)
-	bufpool.Put(buf)
 	return nil
 }
 
