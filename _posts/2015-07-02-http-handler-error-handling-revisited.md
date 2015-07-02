@@ -81,12 +81,11 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	err := h.h(h.Env, w, r)
 	if err != nil {
 		switch e := err.(type) {
-		case StatusError:
+		case Error:
 			// We can retrieve the status here and write out a specific
 			// HTTP status code.
 			log.Printf("HTTP %d - %s", e.Status(), e)
-			http.Error(w, http.StatusText(e.Status()),
-            http.StatusInternalServerError)
+			http.Error(w, e.Error(), e.Status())
 		default:
 			// Any error types we don't specifically look out for default
 			// to serving a HTTP 500
@@ -160,12 +159,11 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	err := h.h(h.Env, w, r)
 	if err != nil {
 		switch e := err.(type) {
-		case StatusError:
+		case Error:
 			// We can retrieve the status here and write out a specific
 			// HTTP status code.
 			log.Printf("HTTP %d - %s", e.Status(), e)
-			http.Error(w, http.StatusText(e.Status()),
-            http.StatusInternalServerError)
+			http.Error(w, e.Error(), e.Status())
 		default:
 			// Any error types we don't specifically look out for default
 			// to serving a HTTP 500
