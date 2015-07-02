@@ -152,9 +152,20 @@ pre, code {
     color: #555;
 }
 
+.post-archive-item {
+    text-align: left;
+    margin-top: 1.5rem;
+    margin-bottom: 0.1rem;
+}
+
 .related {
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.small-date {
+    font-size: 75%;
+    margin-top: .2rem;
 }
 
 .themes {

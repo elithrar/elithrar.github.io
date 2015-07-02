@@ -4,21 +4,17 @@ title: Archive
 ---
 
 <div class="related">
-    <h2>The Archives.</h2>
-</div>
+    <h2>Recent Posts</h2>
 <hr>
 <div class="posts">
-  {% for post in site.posts %}
-  <div class="post">
-    <h1 class="post-title">
-        <a href="{{ site.baseurl}}{{ post.url }}">
-        {{ post.title }}
-      </a>
-    </h1>
-    <span class="post-bullets">&#8226;&#8226;&#8226;</span>
-    {{ post.excerpt | truncatewords:20 }}
-    <span class="post-date">Posted on {{ post.date | date_to_string }}</span>
-  </div>
-  <hr>
-  {% endfor %}
+    {% for post in site.posts %}
+    <div class="post post-archive-item">
+        <h3 class="post-title post-archive-item">
+            <a href="{{ site.baseurl}}{{ post.url }}">
+                {{ post.title }}
+            </a>
+        </h3>
+        <span class="post-date small-date">Posted on {{ post.date | date_to_string }}</span>
+    </div>
+    {% endfor %}
 </div>
