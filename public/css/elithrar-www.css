@@ -28,6 +28,13 @@ a:focus {
   text-decoration: none;
 }
 
+.anchorjs-link {
+    text-decoration: none !important;
+    border: none !important;
+    color: #333;
+    line-height: 30px !important;
+}
+
 .btn {
   display: inline-block;
   padding: .25rem 1rem;

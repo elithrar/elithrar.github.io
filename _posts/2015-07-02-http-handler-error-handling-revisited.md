@@ -100,7 +100,7 @@ The code above should be self-explanatory, but to clarify any outstanding points
 
 * We create a custom `Error` type (an interface) that embeds Go's built-in error interface and also has a `Status() int` method.
 * We provide a simple `StatusError` type (a struct) that satisfies our `handler.Error` type. Our StatusError type accepts a HTTP status code (an int) and an error that allows us to wrap the root cause for logging/inspection.
-* Our `ServeHTTP` method contains a type switch—which is the `e := err.(type)` part that tests for the errors we care about and allows us to handle those specific cases. In our example that's just `StatusError` Other error types—be they from other packages (e.g. `net.Error`) or additional error types we have defined—can also be inspected (if we care about their details).
+* Our `ServeHTTP` method contains a type switch—which is the `e := err.(type)` part that tests for the errors we care about and allows us to handle those specific cases. In our example that's just the `handler.Error` type. Other error types—be they from other packages (e.g. `net.Error`) or additional error types we have defined—can also be inspected (if we care about their details).
 
 If we don't want to inspect them, our `default` case catches them. Remember that the `ServeHTTP` method allows our `Handler` type to satisfy the `http.Handler` interface and be used anywhere http.Handler is accepted: Go's net/http package and all good third party frameworks. This is what makes custom handler types so useful: they're flexible about where they can be used. 
 
@@ -173,7 +173,7 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func GetIndex(w http.ResponseWriter, r *http.Request) error {
+func GetIndex(env Env, w http.ResponseWriter, r *http.Request) error {
     users, err := env.DB.GetAllUsers()
     if err != nil {
         // We return a status error here, which conveniently wraps the error
@@ -231,10 +231,10 @@ In the real world, you're likely to define your `Handler` and `Env` types in a s
   frameworks like [net/http](http://golang.org/pkg/net/http/), [gorilla/mux](http://www.gorillatoolkit.org/pkg/mux),
   [Goji](https://goji.io/) and any others that sensibly accept a `http.Handler` type.
 * Clear, centralised error handling. We inspect the errors we want to handle
-  specifically&mdash;our `StatusError` type&mdash;and fall back to a default
+  specifically&mdash;our `handler.Error` type&mdash;and fall back to a default
   for generic errors. If you're interested in better error handling practices in Go, 
   read [Dave Cheney's blog post](http://dave.cheney.net/2014/12/24/inspecting-errors), 
-  which dives a into defining package-level `Error` interfaces.
+  which dives into defining package-level `Error` interfaces.
 * A useful application-wide "environment" via our `Env` type. We don't have to
   scatter a bunch of globals across our applications: instead we define them in
   one place and pass them explicitly to our handlers.
