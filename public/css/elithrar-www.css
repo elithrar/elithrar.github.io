@@ -32,7 +32,9 @@ a:focus {
     text-decoration: none !important;
     border: none !important;
     color: #333;
-    line-height: 30px !important;
+    line-height: inherit !important;
+    position: relative !important;
+    position: relative !important;
 }
 
 .btn {
