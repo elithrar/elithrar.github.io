@@ -6,6 +6,7 @@ published: true
 ---
 
 
+
 Go's [html/template](http://golang.org/pkg/html/template/) package is fairly minimal compared to templating packages associated with other languages (Jinja, Mustache, even Django's templates), although it makes up for this with [security](http://js-quasis-libraries-and-repl.googlecode.com/svn/trunk/safetemplate.html#problem_definition) and great docs.
 
 There are however a few "tricks" to using it: specifically when it comes to approximating template inheritance. Being able to specify a base layout (or layouts), stake out your blocks and then fill those blocks with template snippets isn't immediately clear. So how do we do this?
@@ -114,6 +115,8 @@ func renderTemplate(w http.ResponseWriter, name string, data map[string]interfac
 ```
 
 We create our templates from a set of template snippets and the base layout (just the one, in our case). We can fill in our `{% raw %}{{ template "script" }}{% endraw %}` block as needed, and we can mix and match our sidebar content as well. If your pages are alike, you can generate this map with a range clause by using a slice of the template names as the keys.
+
+## Error Handling
 
 Slightly tangential to this, there's the common problem of dealing with the error returned from `template.ExecuteTemplate`. If we pass the writer to an error handler, it's too late: we've already written (partially) to the response and we'll end up with a mess in the user's browser. It'll be part of the page before it hit the error, and then the error page's content. The solution here is to write to a `bytes.Buffer` to catch any errors during the template rendering, and *then* write out the contents of the buffer to the `http.ResponseWriter`.
 
