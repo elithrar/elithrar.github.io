@@ -117,11 +117,11 @@ p {
 
 pre, code {
     font-family: "fira-mono", Menlo, Monaco, "Courier New", monospace;
+    color: #c83955;
     text-align: left;
     border-radius: .2rem;
-    background-color: #eee;
+    background-color: transparent;transparent;
     font-size: .75rem;
-    vertical-align: middle;
 }
 
 @media (max-device-width: 667px) {
@@ -131,7 +131,7 @@ pre, code {
 }
 
 code {
-    padding: .10em .5em;
+    padding: 0;
 }
 
 .highlight pre, .highlight code {
@@ -139,6 +139,8 @@ code {
     white-space: pre;
     word-break: normal;
     word-wrap: normal;
+    color: rgb(51, 51, 51);
+    background-color: #eee;
 }
 
 .pagination {
