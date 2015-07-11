@@ -116,7 +116,7 @@ p {
 }
 
 pre, code {
-    font-family: "droid-sans-mono", Menlo, Monaco, "Courier New", monospace;
+    font-family: "fira-mono", Menlo, Monaco, "Courier New", monospace;
     text-align: left;
     border-radius: .2rem;
     background-color: #eee;
@@ -128,6 +128,10 @@ pre, code {
     pre, code {
         font-size: .85rem
     }
+}
+
+code {
+    padding: .10em .5em;
 }
 
 .highlight pre, .highlight code {
