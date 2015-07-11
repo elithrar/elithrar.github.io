@@ -120,9 +120,12 @@ pre, code {
     font-family: "droid-sans-mono", Menlo, Monaco, "Courier New", monospace;
     text-align: left;
     border-radius: .2rem;
-    background-color: #333;
-    color: #ddd;
+    background-color: #eee;
     font-size: .75rem;
+    overflow-x: scroll;
+    white-space: pre;
+    word-break: normal;
+    word-wrap: normal;
 }
 
 .pagination {

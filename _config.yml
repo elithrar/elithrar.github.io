@@ -1,8 +1,9 @@
 # Dependencies
-markdown:         redcarpet
-redcarpet:
-  extensions:     ["with_toc_data"]
-highlighter:      pygments
+markdown:         kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+highlighter:      rouge
 
 # Permalinks
 permalink:        /article/:title/
