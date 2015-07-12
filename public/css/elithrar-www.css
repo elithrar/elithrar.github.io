@@ -11,7 +11,7 @@ body {
   text-align: center;
 }
 
-@media (max-width: 766px) {
+@media (max-width: 768px) {
   body {
     padding: 2rem 1rem;
     font-size: 1.25rem;
@@ -62,7 +62,6 @@ a:focus {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #333;
   margin-bottom: 25px;
   font-family: "jaf-facitweb", Helvetica, Arial, sans-serif;
 }
@@ -122,6 +121,16 @@ pre, code {
     border-radius: .2rem;
     background-color: #eee;
     font-size: .75rem;
+    vertical-align: middle;
+}
+
+@media (max-device-width: 667px) {
+    pre, code {
+        font-size: .85rem
+    }
+}
+
+.highlight pre, .highlight code {
     overflow-x: scroll;
     white-space: pre;
     word-break: normal;
