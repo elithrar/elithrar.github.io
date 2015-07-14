@@ -9,11 +9,11 @@ published: true
 
 Go's [html/template](http://golang.org/pkg/html/template/) package is fairly minimal compared to templating packages associated with other languages (Jinja, Mustache, even Django's templates), although it makes up for this with [security](http://js-quasis-libraries-and-repl.googlecode.com/svn/trunk/safetemplate.html#problem_definition) and great docs.
 
-There are however a few "tricks" to using it: specifically when it comes to approximating template inheritance. Being able to specify a base layout (or layouts), stake out your blocks and then fill those blocks with template snippets isn't immediately clear. So how do we do this?
+There are however a few "tricks" to using it: specifically when it comes to approximating template inheritance (aka "nesting"). Being able to specify a base layout (or layouts), stake out your blocks and then fill those blocks with template snippets isn't immediately clear. So how do we do this?
 
 First, we define `base.tmpl`:
 
-```jinja
+```go
 {% raw %}
 {{ define "base" }}
 <html>
@@ -38,7 +38,7 @@ First, we define `base.tmpl`:
 
 And `index.tmpl`, which effectively extends our base template.
 
-```jinja
+```go
 
 {% raw %}
 {{ define "title"}}<title>Index Page</title>{{ end }}
