@@ -149,6 +149,10 @@ code {
 
 .pagination-item {
     border: none;
+    margin: 0 auto;
+    display: inline-block;
+    width: 25%;
+    float: none;
 }
 
 .post {
