@@ -1,8 +1,10 @@
 ---
 layout: post
 title: http.Handler and Error Handling in Go
-categories: golang, http, web
+categories: "golang, http, web"
+published: true
 ---
+
 
 I wrote [an article a while back](http://elithrar.github.io/article/custom-handlers-avoiding-globals/) on implementing custom handler types to avoid a few common problems with the existing `http.HandlerFunc`—the `func MyHandler(w http.ResponseWriter, r *http.Request)` signature you often see. It's a useful "general purpose" handler type that covers the basics, but&mdash;as with anything generic&mdash;there are a few shortcomings:
 
@@ -173,7 +175,7 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func GetIndex(env Env, w http.ResponseWriter, r *http.Request) error {
+func GetIndex(env *Env, w http.ResponseWriter, r *http.Request) error {
     users, err := env.DB.GetAllUsers()
     if err != nil {
         // We return a status error here, which conveniently wraps the error
@@ -240,6 +242,4 @@ In the real world, you're likely to define your `Handler` and `Env` types in a s
   one place and pass them explicitly to our handlers.
 
 If you have questions about the post, drop me a line via [@elithrar](https://twitter.com/elithrar) on Twitter,
-or the [Gopher community](http://blog.gopheracademy.com/gophers-slack-community/) on Slack. 
-
-
+or the [Gopher community](http://blog.gopheracademy.com/gophers-slack-community/) on Slack.
