@@ -1,5 +1,5 @@
 html {
-  font-family: "pt-sans", "Helvetica", "Arial", sans-serif;
+  font-family: "freight-text-pro", "Cambria", "Times", sans-serif;
   font-weight: 400;
 }
 
@@ -40,7 +40,7 @@ a:focus {
 .btn {
   display: inline-block;
   padding: .25rem 1rem;
-  font-family: "pt-sans", "Helvetica", "Arial", sans-serif;
+  font-family: "freight-text-pro", "Cambria", "Times", sans-serif;
   border: .1rem solid #32343c;
   border-radius: .1rem;
   background-color: #FFCD2B;
@@ -63,7 +63,7 @@ a:focus {
 
 h1, h2, h3, h4, h5, h6 {
   margin-bottom: 25px;
-  font-family: "jaf-facitweb", Helvetica, Arial, sans-serif;
+  font-family: "freight-text-pro", "Cambria", "Times", sans-serif;
 }
 
 h1 {
@@ -121,12 +121,12 @@ pre, code {
     text-align: left;
     border-radius: .2rem;
     background-color: transparent;transparent;
-    font-size: .75rem;
+    font-size: .70rem;
 }
 
 @media (max-device-width: 667px) {
     pre, code {
-        font-size: .85rem
+        font-size: .80rem
     }
 }
 
@@ -144,7 +144,7 @@ code {
 }
 
 .pagination {
-  font-family: "pt-sans", "Helvetica", "Arial", sans-serif;
+    font-family: "freight-text-pro", "Cambria", "Times", sans-serif;
 }
 
 .pagination-item {
