@@ -75,12 +75,12 @@ type Env struct {
 // our useful signature.
 type Handler struct {
 	*Env
-	h func(e *Env, w http.ResponseWriter, r *http.Request) error
+	H func(e *Env, w http.ResponseWriter, r *http.Request) error
 }
 
 // ServeHTTP allows our Handler type to satisfy http.Handler.
 func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	err := h.h(h.Env, w, r)
+	err := h.H(h.Env, w, r)
 	if err != nil {
 		switch e := err.(type) {
 		case Error:
@@ -153,12 +153,12 @@ type Env struct {
 // our useful signature.
 type Handler struct {
 	*Env
-	h func(e *Env, w http.ResponseWriter, r *http.Request) error
+	H func(e *Env, w http.ResponseWriter, r *http.Request) error
 }
 
 // ServeHTTP allows our Handler type to satisfy http.Handler.
 func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	err := h.h(h.Env, w, r)
+	err := h.H(h.Env, w, r)
 	if err != nil {
 		switch e := err.(type) {
 		case Error:
@@ -209,12 +209,12 @@ func main() {
 
     // Initialise our app-wide environment with the services/info we need.
     env := &handler.Env{
-             DB: db,
-             Port: os.Getenv("PORT"),
-             Host: os.Getenv("HOST"),
-             // We might also have a custom log.Logger, our 
-             // template instance, and a config struct as fields 
-             // in our Env struct.
+        DB: db,
+        Port: os.Getenv("PORT"),
+        Host: os.Getenv("HOST"),
+        // We might also have a custom log.Logger, our 
+        // template instance, and a config struct as fields 
+        // in our Env struct.
     }
 
     // Note that we're using http.Handle, not http.HandleFunc. The 
