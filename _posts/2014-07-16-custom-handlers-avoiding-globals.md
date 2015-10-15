@@ -155,14 +155,14 @@ type appContext struct {
 // - An embedded field of type *appContext
 type appHandler struct {
 	*appContext
-	h func(*appContext, http.ResponseWriter, *http.Request) (int, error)
+	H func(*appContext, http.ResponseWriter, *http.Request) (int, error)
 }
 
 // Our ServeHTTP method is mostly the same, and also has the ability to
 // access our *appContext's fields (templates, loggers, etc.) as well.
 func (ah appHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
     // Updated to pass ah.appContext as a parameter to our handler type.
-    status, err := ah.h(ah.appContext, w, r)
+    status, err := ah.H(ah.appContext, w, r)
     if err != nil {
         log.Printf("HTTP %d: %q", status, err)
         switch status {
