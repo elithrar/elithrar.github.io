@@ -21,6 +21,7 @@ author:
   twitter:        elithrar
   othersite:      'https://www.eatsleeprepeat.net'
 
+gems:             ["jekyll-paginate"]
 paginate:         5
 
 # Custom vars
