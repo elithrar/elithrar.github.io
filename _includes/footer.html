@@ -1,0 +1,13 @@
+<small>&copy; {{ site.time | date: "%Y" }} <a href="mailto:{{ site.author.email }}">{{ site.author.name }}</a> | His <a href="{{ site.author.othersite }}">other site</a> | Code snippets are <a href="http://choosealicense.com/licenses/mit/" title="MIT license">MIT licensed</a> | Built with <a href="http://jekyllrb.com/">Jekyll</a></small>
+<!-- AnchorJS -->
+<script type="text/javascript" src="{{ site.baseurl }}/public/js/anchor.min.js"></script>
+<script>
+(function () {
+    'use strict';
+
+    anchors.options.placement = 'left';
+
+    anchors.add('.post > h2, .post > h3, .post > h4, .post > h5, .post > h6');
+
+})();
+</script>
