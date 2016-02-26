@@ -107,9 +107,7 @@ func renderTemplate(w http.ResponseWriter, name string, data map[string]interfac
 	}
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	tmpl.ExecuteTemplate(w, "base", data)
-
-	return nil
+	return tmpl.ExecuteTemplate(w, "base", data)
 }
 
 ```
