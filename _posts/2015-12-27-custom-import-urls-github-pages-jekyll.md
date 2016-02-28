@@ -4,24 +4,24 @@ title: "Combining Custom Domains, Go Packages and Jekyll"
 categories: golang, versioning, jekyll
 ---
 
-Here's a short demonstration on how to combine [GitHub
-Pages](https://pages.github.com) (Jekyll) and Go's [remote import
-paths](https://golang.org/cmd/go/#hdr-Remote_import_paths) to provide a simple
-and reliable way to use your own domain ("vanity domain") as an import path for
-your Go libraries and projects: `yourdomain.com/pkgname` instead of the usual
-`github.com/user/pkgname`.
+**Update:** With Jekyll & GitHub Pages' ability to serve [extensionless
+permalinks](http://jekyllrb.com/docs/permalinks/#extensionless-permalinks), I've updated the article
+to show you how to use your own domain of top of the (ever reliable) [gopkg.in](https://gopkg.in) -
+turning `example.com/repo.v1` into the canonical import URL, but with gopkg.in serving the latest
+tag for you.
 
-I wanted a way to host simple pages with the requisite go-imports `<meta>` tag
-and a re-direct to the documentation site without requiring me to run a server
-process somewhere.
+Here's a short tutorial on how to combine [GitHub Pages]() and [gopkg.in]() to both *version* and
+serve your Go libraries and projects from a vanity import. Think `yourdomain.com/pkgname.v1` instead
+of gopkg directly, or `github.com/you/yourproject`. This allows you to vendor your libraries without
+having to create multiple repositories, and therefore multiple sets of documentation, issues, and
+distinct/confusing import URLs.
 
-This was primarily driven by the desire to start versioning some of my packages
-beyond just git tags, so that I can make breaking API changes without causing
-current users significant headache. I also wanted to avoid having to avoid
-running separate repositories, but the go-imports tag won't be able to specify a
-branch/revision until [issue 10913](https://github.com/golang/go/issues/10913) is
-resolved. Further, the approach had to be friendly for users of the `go get` tool
-and `/vendor` directory alike.
+Importantly, it works today, is maintainable, and is compatible with those vendoring your library
+downstream.
+
+Note: the go-imports tag will be able to specify a branch/revision when [issue
+10913](https://github.com/golang/go/issues/10913) is resolved, but users on older versions of Go
+won't be able to pull your package down.
 
 ## Domain Setup
 
@@ -72,16 +72,26 @@ fetch our API documentation from, and a re-direct so that anyone hitting that
 page in the browser is re-directed to GoDoc. You could alternatively
 have this re-direct to the domain itself, the GitHub repo or no-where at all.
 
-Once you've done this, you can create a directory/URL structure that meets your
-requirements. In our case, we want it to be `example.com/v1/pkgname`, as it
-allows us the increment the version number and retains the package name as the
-last part of the import URL (a user-friendly idiom).
+We'll also need to configure our Jekyll installation to use [extensionless
+permalinks](http://jekyllrb.com/docs/permalinks/#extensionless-permalinks) in `_config.yml`:
 
 ```sh
-$ mkdir -p v1/pkgname
-# By making this `index.html` the URL can be presented as
-# 'example.com/v1/pkgname/' without needing to mention the filename explicitly. 
-$ vim v1/pkgname/index.html
+vim _config.yml
+
+# Site settings
+title: 'your project'
+tagline: 'Useful X for solving Y'
+baseurl: "/" 
+permalink:  "/:title"
+```
+
+Once you've done this, create a `pkgname.vN.html` file at (e.g.) root of your Jekyll project: e.g.
+`pkgname.v1.html`. Future versions 
+
+
+```sh
+# GitHub Pages + Jekyll 3.x can serve this as example.com/pkgame.v1 without the extension.
+$ vim pkgname.v1.html
 ```
 
 Now you can configure the template&mdash;this is the one you'll re-use for future
@@ -92,21 +102,21 @@ versions or other packages you create.
 ---
 layout: imports
 
-go-import: "example.com/v1/pkgname git https://github.com/elithrar/some-repo"
+go-import: "example.com/pkgname.v1 git https://gopkg.in/someuser/pkgname.v1
 go-source: 
     > 
-      example.com/v1/pkgname
-      https://github.com/elithrar/some-repo/
-      https://github.com/elithrar/some-repo/tree/master{/dir}
-      https://github.com/elithrar/some-repo/blob/master{/dir}/{file}#L{line}
+      example.com/pkgname.v1
+      _
+      https://github.com/someuser/pkgname/tree/v1{/dir}
+      https://github.com/someuser/pkgname/blob/v1{/dir}/{file}#L{line}
 
-redirect: "https://godoc.org/example.com/v1/pkgname"
+redirect: "https://godoc.org/example.com/pkgname.v1"
 ---
 {% endraw %}
 ```
 
 Commit that and push it to your GitHub Pages repository, and users can now import
-your package via `go get -u example.com/v1/pkgname`.
+your package via `go get -u example.com/pkgname.v1` (and eventually, a v2!).
 
 ## Canonical Import Paths
 
@@ -119,7 +129,7 @@ Thankfully, this is easy enough to fix&mdash;add the canonical path alongside
 your package declarations:
 
 ```go
-package mypkg // import example.com/v1/mypkg
+package mypkg // import example.com/pkgname.v1
 ```
 
 Users can't 'accidentally' import `github.com/you/mypkg` now (it won't compile).
