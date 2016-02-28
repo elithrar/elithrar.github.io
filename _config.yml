@@ -2,7 +2,7 @@
 markdown:         redcarpet
 redcarpet:
   extensions: ["with_toc_data", "fenced_code_blocks"]
-highlighter: pygments
+highlighter: rouge 
 
 # Permalinks
 permalink:        /article/:title/
