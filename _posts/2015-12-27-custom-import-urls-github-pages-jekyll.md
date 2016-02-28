@@ -4,11 +4,11 @@ title: "Combining Custom Domains, Go Packages and Jekyll"
 categories: golang, versioning, jekyll
 ---
 
-**Update:** With Jekyll & GitHub Pages' ability to serve [extensionless
-permalinks](http://jekyllrb.com/docs/permalinks/#extensionless-permalinks), I've updated the article
-to show you how to use your own domain of top of the (ever reliable) [gopkg.in](https://gopkg.in) -
-turning `example.com/repo.v1` into the canonical import URL, but with gopkg.in serving the latest
-tag for you.
+> **Update:** With Jekyll & GitHub Pages' ability to serve [extensionless
+> permalinks](http://jekyllrb.com/docs/permalinks/#extensionless-permalinks), I've updated the article
+> to show you how to use your own domain of top of the (ever reliable) [gopkg.in](https://gopkg.in) -
+> turning `example.com/repo.v1` into the canonical import URL, but with gopkg.in serving the latest
+> tag for you.
 
 Here's a short tutorial on how to combine [GitHub Pages]() and [gopkg.in]() to both *version* and
 serve your Go libraries and projects from a vanity import. Think `yourdomain.com/pkgname.v1` instead
