@@ -14,7 +14,7 @@ rest.
 
 ## A Basic Handler
 
-We'll start by testing a basic test: we want to make sure our handler returns a HTTP 200 (OK) status code. This is our handler:
+We'll start by writing a basic test: we want to make sure our handler returns a HTTP 200 (OK) status code. This is our handler:
 
 ```go
 // handlers.go
@@ -63,7 +63,7 @@ func TestHealthCheckHandler(t *testing.T) {
     // Check the status code is what we expect.
     if status := rr.Code; status != http.StatusOK {
         t.Errorf("handler returned wrong status code: got %v want %v",
-            rr.Code, http.StatusOK)
+            status, http.StatusOK)
     }
 
     // Check the response body is what we expect.
@@ -143,9 +143,9 @@ populate it with (e.g.) an auth token and/or our User type?
 > http.ResponseWriter, *http.Request)`. Go 1.7 will [add context.Context to
 > http.Request](https://github.com/golang/go/issues/14660), which will make this even easier.
 
-
-I use the [Goji](https://goji.io/) mux/router for `context.Context` compatible handlers today, but
-this approach will work for any router/mux/framework that works with `context.Context`.
+Note that for the below example, I'm using the [Goji](https://goji.io/) mux/router for 
+`context.Context` compatible handlers today, but this approach will work for any 
+router/mux/framework that works with `context.Context`.
 
 ```go
 func TestGetProjectsHandler(t *testing.T) {
@@ -170,7 +170,7 @@ func TestGetProjectsHandler(t *testing.T) {
     // Check the status code is what we expect.
     if status := rr.Code; status != http.StatusOK {
         t.Errorf("handler returned wrong status code: got %v want %v",
-            rr.Code, http.StatusOK)
+            status, http.StatusOK)
     }
 
     // We could also test that our handler correctly mutates our context.Context:
@@ -255,10 +255,10 @@ This was a slightly more complex example—but highlights how we might:
 * Create a stub that intentionally throws errors, so we can test that our
   handlers throw the right status code (e.g. a HTTP 500) and/or write the
   expected response.
-* Create a 'good' stub that returns a (static) `*datastore.Project` and test
-  that (for example) we can marshal it as JSON. This would catch the case where
-  changes to the upstream type might cause it to be incompatible with
-  `encoding/json`.
+* How you might go about creating a 'good' stub that returns a (static) 
+  `*datastore.Project` and test that (for example) we can marshal it as JSON.
+  This would catch the case where changes to the upstream type might cause 
+  it to be incompatible with `encoding/json`.
 
 ## What Next?
 
@@ -266,4 +266,3 @@ This is by no means an exhaustive guide, but it should get you started. If you'r
 more complex example, then ask over on the [Gophers Slack
 community](https://gophersinvite.herokuapp.com/), or take a look at [the packages that import
 httptest](https://godoc.org/net/http/httptest?importers) via GoDoc.
-
