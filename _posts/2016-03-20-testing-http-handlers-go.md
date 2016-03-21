@@ -28,7 +28,7 @@ func HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
 
     // In the future we could report back on the status of our DB, or our cache 
     // (e.g. Redis) by performing a simple PING, and include them in the response.
-    w.Write(`{"alive": true}`)
+    io.WriteString(w, `{"alive": true}`)
 }
 
 ```
@@ -53,7 +53,7 @@ func TestHealthCheckHandler(t *testing.T) {
     }
 
     // We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response.
-    rr := httptest.NewResponseRecorder()
+    rr := httptest.NewRecorder()
     handler := HealthCheckHandler
 
     // Our handlers satisfy http.Handler, so we can call their ServeHTTP method 
@@ -154,7 +154,7 @@ func TestGetProjectsHandler(t *testing.T) {
         t.Fatal(err)
     }
 
-    rr := httptest.NewResponseRecorder()
+    rr := httptest.NewRecorder()
     // e.g. func GetUsersHandler(ctx context.Context, w http.ResponseWriter, r *http.Request)
     handler := goji.HandlerFunc(GetUsersHandler)
 
@@ -175,7 +175,7 @@ func TestGetProjectsHandler(t *testing.T) {
 
     // We could also test that our handler correctly mutates our context.Context:
     // this is useful if our handler is a piece of middleware.
-    if id , ok := ctx.Value("app.req.id"); !ok {
+    if id , ok := ctx.Value("app.req.id").(string); !ok {
         t.Errorf("handler did not populate the request ID: got %v", id)
     }
 }
@@ -226,7 +226,7 @@ func TestGetProjectsHandlerError(t *testing.T) {
         t.Fatal(err)
     }
 
-    rr := httptest.NewResponseRecorder()
+    rr := httptest.Recorder()
     // Handler is a custom handler type that accepts an env and a http.Handler
     // GetProjectsHandler here calls GetProject, and should raise a HTTP 500 if
     // it fails.
