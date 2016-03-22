@@ -54,7 +54,7 @@ func TestHealthCheckHandler(t *testing.T) {
 
     // We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response.
     rr := httptest.NewRecorder()
-    handler := HealthCheckHandler
+    handler := http.HandlerFunc(HealthCheckHandler)
 
     // Our handlers satisfy http.Handler, so we can call their ServeHTTP method 
     // directly and pass in our Request and ResponseRecorder.
@@ -93,7 +93,7 @@ headers, we could also test those:
     }
 
     // Our handler might also expect an API key.
-    r.Header.Set("Authorization", "Bearer abc123")
+    req.Header.Set("Authorization", "Bearer abc123")
 
     // Then: call handler.ServeHTTP(rr, req) like in our first example.
 ```
@@ -105,7 +105,7 @@ declaring them in the outer scope.
 ```go
     // Declare it outside the anonymous function
     var token string
-    testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+    test http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
         // Note: Use the assignment operator '=' and not the initialize-and-assign 
         // ':=' operator so we don't shadow our token variable above.
         token = GetToken(r)
@@ -156,7 +156,7 @@ func TestGetProjectsHandler(t *testing.T) {
 
     rr := httptest.NewRecorder()
     // e.g. func GetUsersHandler(ctx context.Context, w http.ResponseWriter, r *http.Request)
-    handler := goji.HandlerFunc(GetUsersHandler)
+     goji.HandlerFunc(GetUsersHandler)
 
     // Create a new context.Context and populate it with data.
     ctx = context.Background()
@@ -230,7 +230,7 @@ func TestGetProjectsHandlerError(t *testing.T) {
     // Handler is a custom handler type that accepts an env and a http.Handler
     // GetProjectsHandler here calls GetProject, and should raise a HTTP 500 if
     // it fails.
-    handler := Handler{env, GetProjectsHandler)
+     Handler{env, GetProjectsHandler)
     handler.ServeHTTP(rr, req)
 
     // We're now checking that our handler throws an error (a HTTP 500) when it
