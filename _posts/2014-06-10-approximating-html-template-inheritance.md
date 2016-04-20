@@ -144,7 +144,7 @@ func renderTemplate(w http.ResponseWriter, name string, data map[string]interfac
 
 	// Create a buffer to temporarily write to and check if any errors were encounted.
 	buf := bufpool.Get()
-	defer bufpool.Put()
+	defer bufpool.Put(buf)
     
 	err := tmpl.ExecuteTemplate(buf, "base", data)
 	if err != nil {
