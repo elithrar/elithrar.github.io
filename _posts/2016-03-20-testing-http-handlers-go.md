@@ -156,7 +156,7 @@ func TestGetProjectsHandler(t *testing.T) {
 
     rr := httptest.NewRecorder()
     // e.g. func GetUsersHandler(ctx context.Context, w http.ResponseWriter, r *http.Request)
-     goji.HandlerFunc(GetUsersHandler)
+    handler := goji.HandlerFunc(GetUsersHandler)
 
     // Create a new context.Context and populate it with data.
     ctx = context.Background()
@@ -230,7 +230,7 @@ func TestGetProjectsHandlerError(t *testing.T) {
     // Handler is a custom handler type that accepts an env and a http.Handler
     // GetProjectsHandler here calls GetProject, and should raise a HTTP 500 if
     // it fails.
-     Handler{env, GetProjectsHandler)
+    handler := Handler{env, GetProjectsHandler)
     handler.ServeHTTP(rr, req)
 
     // We're now checking that our handler throws an error (a HTTP 500) when it
