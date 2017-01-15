@@ -9,10 +9,21 @@ In a migration of an internal admin dashboard from Vue 1 to [Vue 2](https://vuej
 In the process of re-writing the filter as a [custom form input component](https://vuejs.org/v2/guide/components.html#Form-Input-Components-using-Custom-Events), it needed to:
 
 * Be able to check the type of the data it was handling, and validate input against that type (if it was a Number, then Strings are invalid)
-* No need to know the type of the data ahead-of-time (the API was in-flux, and I wanted it to adaptive)
-* Format more complex types Objects/Arrays appropriately.
+* Be unaware the type of the data ahead-of-time (the API was in-flux, and I wanted it to adaptive)
+* Format more complex types (Objects/Arrays) appropriately for a form field.
 
-Custom input components accept a value prop and emit an input event via the familiar `v-model` directive in Vue. Customising what happens in-between is where the value of writing your own input implementation comes in.
+Custom input components accept a value prop and emit an input event via the familiar `v-model` directive in Vue. Customising what happens in-between is where the value of writing your own input implementation comes in:
+
+```html
+<tr v-for="(val, key) in item">
+  <td class="label">{{ key }}</td>
+  <td>
+    <json-input :label=key v-model="item[key]"></json-input>
+  </td>
+</tr>
+```
+
+The parent component otherwise passes values to this component in `v-model` just like any other.
 
 ## The Code
 
@@ -164,20 +175,11 @@ export default {
 
 There's a reasonable amount to digest here, but it makes sense if you think of it in three steps:
 
-1. We call the `init()` method on the initial format *only*: this type-checks the initial data, and sets `typeChecked = true` so we don't run this again for the life of the component. The Lodash functions we import simplify this for us.
-2. The `format` method is responsible for emitting the value (e.g. to the DOM): it stringifies objects, converts any number back to a `Number` proper, etc.
-3. We validate all user input against that initial type via the `parse` method. If the user input is invalid, we set `this.dirty = true` (and add a CSS class of 'dirty') and emit the invalid value as-is, for the user to correct. TODO: return "input should be a Number" as a helpful error.
+1. `init()` - called on the initial format *only*. It type-checks the initial data, and sets `typeChecked = true` so we don't run this again for the life of the component. The Lodash functions we import simplify this for us.
+2. `format()` - this method is responsible for emitting the value (e.g. to the DOM): it stringifies objects, converts any number back to a `Number` proper, etc.
+3. `parse()` - validates all user input against that initial type we asserted in the `init` method. If the user input is invalid, we set `this.dirty = true` (and add a CSS class of 'dirty') and emit the invalid value as-is, for the user to correct. TODO: return "input should be a Number" as a helpful error.
 
-The parent component otherwise passes values to this component in `v-model` just like any other:
-
-```html
-<tr v-for="(val, key) in item">
-  <td class="label">{{ key }}</td>
-  <td>
-    <json-input :label=key v-model="item[key]"></json-input>
-  </td>
-</tr>
-```
+Steps #2 and #3 are universal to any custom form input component: how the data comes in, and how it goes out. This doesn't just apply to `<input>` either: you could easily write your own `<select>` or `<textarea>` component by adapting this approach.
 
 ## Wrap
 
