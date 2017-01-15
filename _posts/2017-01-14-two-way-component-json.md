@@ -41,6 +41,7 @@ The `template` section of the component is fairly straightforward:
   >
 </template>
 ```
+
 The key parts are `v-bind:value` (what we emit) and `v-on:input` (the input). The `ref="input"` attribute allows us to emit events via the `this.$emit(ref, data)` API.
 
 [Lodash](https://lodash.com/docs) includes well-tested type-checking functions: I use these for the initial checks instead of reinventing the wheel. Notably, `isPlainObject` should be preferred over [`isObject`](https://lodash.com/docs/4.17.4#isObject), as the latter has a broader meaning. I also use `debounce` to add a short delay to the input -> parse function call, so that we're not overly aggressive about saying 'invalid' before the user has a chance to correct typos.

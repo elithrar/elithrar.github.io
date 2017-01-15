@@ -15,7 +15,7 @@ body {
   body {
     padding: 2rem 1rem;
     font-size: 1.25rem;
-  } 
+  }
 }
 
 a {
@@ -93,7 +93,7 @@ h3 {
 
 .header-title > a {
   border: none;
-  color: #313131;   
+  color: #313131;
 }
 
 .header-lead {
@@ -120,7 +120,6 @@ pre, code {
     color: #c83955;
     text-align: left;
     border-radius: .2rem;
-    background-color: transparent;
     font-size: .70rem;
 }
 
