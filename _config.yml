@@ -1,14 +1,12 @@
 # Dependencies
-markdown:         redcarpet
-redcarpet:
-  extensions: ["with_toc_data", "fenced_code_blocks"]
+markdown:         kramdown
 highlighter: rouge
 
 # Permalinks
 permalink:        /article/:title/
 
 # Setup
-title:            'request · response'
+title:            'request  response'
 tagline:          'a blog about the web, Go, and building things'
 byline:           'by Matt Silverlock'
 description:      'Go programming, web security and side projects.'
