@@ -2,23 +2,24 @@
 markdown:         redcarpet
 redcarpet:
   extensions: ["with_toc_data", "fenced_code_blocks"]
-highlighter: rouge 
+highlighter: rouge
 
 # Permalinks
 permalink:        /article/:title/
 
 # Setup
-title:            'go, web, go'
-tagline:          'On the web, Go, and building things'
+title:            'request · response'
+tagline:          'a blog about the web, Go, and building things'
+byline:           'by Matt Silverlock'
 description:      'Go programming, web security and side projects.'
 url:              http://elithrar.github.io
-baseurl:           
+baseurl:
 
 author:
   name:           'Matt Silverlock'
   email:          'matt@eatsleeprepeat.net'
   url:            https://github.com/elithrar
-  twitter:        elithrar
+  twitter:        'elithrar'
   othersite:      'https://www.eatsleeprepeat.net'
 
 gems:             ["jekyll-paginate"]
