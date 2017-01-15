@@ -121,6 +121,10 @@ pre, code {
     text-align: left;
     border-radius: .2rem;
     font-size: .70rem;
+    overflow-x: scroll;
+    white-space: pre;
+    word-break: normal;
+    word-wrap: normal;
 }
 
 @media (max-device-width: 667px) {
