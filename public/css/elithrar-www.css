@@ -110,6 +110,12 @@ hr {
   border-bottom: 0;
 }
 
+img {
+  margin: 0 auto;
+  border: none;
+  max-width: 100%;
+}
+
 p {
   text-align: start;
   word-wrap: break-word;
