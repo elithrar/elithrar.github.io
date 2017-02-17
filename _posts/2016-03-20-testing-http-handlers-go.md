@@ -139,13 +139,9 @@ What about when our handlers are expecting data to be passed to them in a
 [`context.Context`](https://godoc.org/golang.org/x/net/context)? How we can create a context and
 populate it with (e.g.) an auth token and/or our User type?
 
-> Assumption: you have a custom handler type that provides a `ServeHTTPC(context.Context,
-> http.ResponseWriter, *http.Request)`. Go 1.7 will [add context.Context to
-> http.Request](https://github.com/golang/go/issues/14660), which will make this even easier.
+> Go 1.7 added the [`Request.Context()`](https://golang.org/pkg/net/http/#Request.Context) method, thus supporting request contexts natively. We'll use what net/http provides to make our application compatible with as many libraries as we might need in the future.
 
-Note that for the below example, I'm using the [Goji](https://goji.io/) mux/router for 
-`context.Context` compatible handlers today, but this approach will work for any 
-router/mux/framework that works with `context.Context`.
+Note that for the below example, the standard `http.Handler` and `http.HandlerFunc` types. Whilst these testing methods are easy enough to 'port' to other routers using their own types, the best routers are those that are compatible with Go's existing interfaces. [chi](https://github.com/pressly/chi) and [gorilla/mux](https://github.com/gorilla/mux) are my picks.
 
 ```go
 func TestGetProjectsHandler(t *testing.T) {
@@ -156,30 +152,65 @@ func TestGetProjectsHandler(t *testing.T) {
 
     rr := httptest.NewRecorder()
     // e.g. func GetUsersHandler(ctx context.Context, w http.ResponseWriter, r *http.Request)
-    handler := goji.HandlerFunc(GetUsersHandler)
+    handler := http.HandlerFunc(GetUsersHandler)
 
-    // Create a new context.Context and populate it with data.
-    ctx = context.Background()
+    // Populate the request's context with our test data.
+    ctx := req.Context()
     ctx = context.WithValue(ctx, "app.auth.token", "abc123")
     ctx = context.WithValue(ctx, "app.user",
         &YourUser{ID: "qejqjq", Email: "user@example.com"})
-
-    // Pass in our context, *http.Request and ResponseRecorder.
-    handler.ServeHTTPC(ctx, rr, req)
+    
+    // Add our context to the request: note that WithContext returns a copy of
+    // the request, which we must assign.
+    req = req.WithContext(ctx)
+    handler.ServeHTTP(rr, req)
 
     // Check the status code is what we expect.
     if status := rr.Code; status != http.StatusOK {
         t.Errorf("handler returned wrong status code: got %v want %v",
             status, http.StatusOK)
     }
-
-    // We could also test that our handler correctly mutates our context.Context:
-    // this is useful if our handler is a piece of middleware.
-    if id , ok := ctx.Value("app.req.id").(string); !ok {
-        t.Errorf("handler did not populate the request ID: got %v", id)
-    }
 }
 ```
+
+Extending this, we can also test that middleware populating the context does so correctly:
+
+```go
+// e.g. middleware.go
+func RequestIDMiddleware(h http.Handler) http.Handler {
+	fn := func(w http.ResponseWriter, r *http.Request) {
+		// More correctly, we'd use a const key of type struct{} and a random ID via
+		// crypto/rand.
+		ctx := context.WithValue(r.Context(), "app.req.id", "12345")
+
+		h.ServeHTTP(w, r.WithContext(ctx))
+	}
+
+	return http.HandlerFunc(fn)
+}
+
+// e.g. middleware_test.go
+func TestPopulateContext(t *testing.T) {
+	req, err := http.NewRequest("GET", "/api/users", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if val, ok := r.Context().Value("app.req.id").(string); !ok {
+			t.Errorf("app.req.id not in request context: got %q", val)
+		}
+	})
+
+	rr := httptest.NewRecorder()
+	// func RequestIDMiddleware(h http.Handler) http.Handler
+	// Stores an "app.req.id" in the request context.
+	handler := RequestIDMiddleware(testHandler)
+	handler.ServeHTTP(rr, req)
+}
+```
+
+Running `go test` in our package should see this pass. The inverse of this approach is also useful - e.g. testing that admin tokens aren't incorrectly applied to the wrong users or contexts aren't passing the wrong values to wrapped handlers.
 
 ## Mocking Database Calls
 
