@@ -26,7 +26,7 @@ Worth noting before you read on:
 
 Saying that, the autocompletion in vscode-go is richer and clearer, thanks to VS Code's better autocompletion as-a-whole, and will get better.
 
-![vscode-autocompletion](public/files/vscode-autocompletion.png)
+![vscode-autocompletion](/public/files/vscode-autocompletion.png)
 
 ## Workflow
 
@@ -47,7 +47,7 @@ Observations:
 
 Despite these things, it's still capable of these tasks. vim just had a huge head-start, and is most at home in a terminal-based environment.
 
-![vscode-native-terminal](public/files/vscode-native-terminal.png)
+![vscode-native-terminal](/public/files/vscode-native-terminal.png)
 
 ### Whole Projects
 
@@ -59,8 +59,8 @@ VS Code is really good here, and I think whole-project workflows are its strengt
 
 I should note that opening a directory in VS Code triggers a full reload, which can be a little disruptive.
 
-![vscode-git-diff-ui](public/files/vscode-git-diff.png)
-![vscode-git-commands](public/files/vscode-git-commands.png)
+![vscode-git-diff-ui](/public/files/vscode-git-diff.png)
+![vscode-git-commands](/public/files/vscode-git-commands.png)
 
 ## Other Things
 
