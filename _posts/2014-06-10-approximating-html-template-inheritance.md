@@ -107,7 +107,7 @@ func renderTemplate(w http.ResponseWriter, name string, data map[string]interfac
 	}
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	return tmpl.ExecuteTemplate(w, "base", data)
+	return tmpl.ExecuteTemplate(w, "base.tmpl", data)
 }
 
 ```
@@ -146,7 +146,7 @@ func renderTemplate(w http.ResponseWriter, name string, data map[string]interfac
 	buf := bufpool.Get()
 	defer bufpool.Put(buf)
     
-	err := tmpl.ExecuteTemplate(buf, "base", data)
+	err := tmpl.ExecuteTemplate(buf, "base.tmpl", data)
 	if err != nil {
 		return err
 	}
