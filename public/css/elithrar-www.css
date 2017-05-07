@@ -15,12 +15,11 @@ body {
     body {
         padding: 2rem 1rem;
         font-size: 1.25rem;
-        .
     }
 }
 
 a {
-    color: #5827a2;
+    color: #445588;
     border-bottom: 1px solid;
 }
 
@@ -100,7 +99,9 @@ h3 {
 
 .header-title>a {
     border: none;
-    color: #313131;
+    color: white;
+    background-color: #445588;
+    padding: 5px;
 }
 
 .header-lead {

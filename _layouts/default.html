@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 
-  {% include head.html %}
+{% include head.html %}
 
-  <body>
+<body>
     <div class="container">
 
-      <div class="header">
-          <h1 class="header-title"><a href="/">{{ site.title }}</a></h1>
-        <p class="lead header-lead">
-          {{ site.tagline }}
-        </p>
-        <p class="lead header-lead">
-        (written by <a href="https://twitter.com/@{{ site.author.twitter }}">{{ site.author.name }}</a>)</p>
+        <div class="header">
+            <h1 class="header-title"><a href="/">{{ site.title }}</a></h1>
+            <p class="lead header-lead">
+                {{ site.tagline }}
+            </p>
+            <p class="lead header-lead">
+                (by <a href="https://twitter.com/@{{ site.author.twitter }}">{{ site.author.name }}</a>)</p>
         </div>
-      {{ content }}
+        {{ content }}
     </div>
 
-    <hr>
-    {% include footer.html %}
-  </body>
+    <hr> {% include footer.html %}
+</body>
+
 </html>
