@@ -16,7 +16,7 @@ Thus, I decided to run with VS Code for a month to see whether I could live with
 
 Note that I still used vim keybindings via [VSCodeVim](https://github.com/VSCodeVim/Vim). I can't imagine programming another way.
 
-# Notes
+## Notes
 
 Worth noting before you read on:
 
