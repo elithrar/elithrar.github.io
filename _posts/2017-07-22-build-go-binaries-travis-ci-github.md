@@ -73,6 +73,6 @@ Pretty easy, right? If you're already using Travis CI to test your Go projects, 
 
 ## Further Reading
 
-- In the wild: https://github.com/cloudflare/logshare
-- Go on Travis: https://docs.travis-ci.com/user/languages/go/
-- GitHub Releases Uploading: https://docs.travis-ci.com/user/deployment/releases/
+- In the wild: [https://github.com/cloudflare/logshare]
+- Go on Travis: [https://docs.travis-ci.com/user/languages/go/]
+- GitHub Releases Uploading: [https://docs.travis-ci.com/user/deployment/releases/]
