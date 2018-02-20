@@ -12,7 +12,7 @@ title:            'request / response'
 tagline:          'a blog about the web, Go, and building things'
 byline:           'by Matt Silverlock'
 description:      'Go programming, web security and side projects.'
-url:              http://elithrar.github.io
+url:              http://blog.questionable.services
 baseurl:
 
 author:
@@ -35,7 +35,7 @@ github:
 # prose.io
 prose:
   rooturl: '_posts'
-  siteurl: 'http://elithrar.github.io/'
+  siteurl: 'http://blog.questionable.services/'
   media: 'media'
   metadata:
     _posts:
