@@ -25,6 +25,9 @@ author:
 plugins:
   - "jekyll-paginate"
   - "jekyll-feed"
+  
+feed:
+  path: atom.xml
 
 paginate:         5
 
