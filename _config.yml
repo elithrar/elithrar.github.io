@@ -12,8 +12,8 @@ title:            'request / response'
 tagline:          'a blog about the web, Go, and building things'
 byline:           'by Matt Silverlock'
 description:      'Go programming, web security and side projects.'
-url:              http://blog.questionable.services
-baseurl:
+url:              http://blog.questionable.services/
+baseurl:              http://blog.questionable.services/
 
 author:
   name:           'Matt Silverlock'
@@ -34,35 +34,3 @@ paginate:         5
 # Custom vars
 github:
   repo:           https://github.com/elithrar/elithrar.github.io
-
-# prose.io
-prose:
-  rooturl: '_posts'
-  siteurl: 'http://blog.questionable.services/'
-  media: 'media'
-  metadata:
-    _posts:
-      - name: "title"
-        field:
-          element: "text"
-          label: "Title"
-          value: ""
-      - name: "categories"
-        field:
-          element: "multiselect"
-          label: "Add Tags"
-          placeholder: "Choose categories..."
-          options:
-            - name: "go"
-              value: "go"
-            - name: "security"
-              value: "security"
-            - name: "web"
-              value: "web"
-            - name: "meta"
-              value: "meta"
-      - name: "layout"
-        field:
-          element: "hidden"
-          value: "post"
-
