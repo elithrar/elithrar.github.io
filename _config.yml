@@ -22,7 +22,10 @@ author:
   twitter:        'elithrar'
   othersite:      'https://www.eatsleeprepeat.net'
 
-gems:             ["jekyll-paginate"]
+plugins:
+  - "jekyll-paginate"
+  - "jekyll-feed"
+
 paginate:         5
 
 # Custom vars
