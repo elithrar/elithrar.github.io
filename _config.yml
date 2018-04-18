@@ -13,7 +13,7 @@ tagline:          'a blog about the web, Go, and building things'
 byline:           'by Matt Silverlock'
 description:      'Go programming, web security and side projects.'
 url:              http://blog.questionable.services/
-baseurl:          blog.questionable.services/
+baseurl:          //blog.questionable.services/
 
 author:
   name:           'Matt Silverlock'
