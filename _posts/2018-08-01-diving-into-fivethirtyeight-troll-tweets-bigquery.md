@@ -19,7 +19,7 @@ SELECT
   COUNT(*) AS tweets,
   followers
 FROM
-  `optimum-rock-145719.fivethirtyeight_russian_troll_tweets.russian_troll_tweets`
+  `silverlock-bigquery.public_datasets.fivethirtyeight_troll_tweets`
 GROUP BY
   author,
   followers
@@ -32,7 +32,7 @@ For everyone else: read on.
 
 ## Accessing the Dataset
 
-We're going to use the BigQuery web UI, so navigate to [the BigQuery interface](https://console.cloud.google.com/bigquery) and select the project you want to access it from. You can't (yet) see the schema from the new (beta) BigQuery UI, so I'm posting it here to save you switching back:
+We're going to use the BigQuery web UI, so navigate to [the BigQuery interface](https://console.cloud.google.com/bigquery?p=silverlock-bigquery) and select the project you want to access it from. You'll see the `fivethirtyeight_russian_troll_tweets` table appear on the left-hand-side, in the Resource tab. From there, you can inspect the table `russian_troll_tweets`, look at the schema (also pasted below), and see a preview of the data.
 
 | name               | type      | mode     |
 | ------------------ | --------- | -------- |
@@ -52,7 +52,7 @@ We're going to use the BigQuery web UI, so navigate to [the BigQuery interface](
 | retweet            | INTEGER   | NULLABLE |
 | account_category   | STRING    | NULLABLE |
 
-Specifically, we can look at how these tweets were amplified (updates), what language the tweet was posted in (what audience was it for?), and the direct audience of the account (followers). We don't get details on the followers themselves however, which makes it hard to know how impactful the reach was: is it trolls/bots followed by other trolls, or members of the general Twitter populace?
+So with the data above, what can we do? We can look at how these tweets were amplified (updates), what language the tweet was posted in (what audience was it for?), and the direct audience of the account (followers). We don't get details on the followers themselves however, which makes it hard to know how impactful the reach was: is it trolls/bots followed by other trolls, or members of the general Twitter populace?
 
 ## Analyzing It
 
@@ -71,9 +71,9 @@ SELECT
     SELECT
       COUNT(*)
     FROM
-      `optimum-rock-145719.fivethirtyeight_russian_troll_tweets.russian_troll_tweets`) * 100) AS percent
+      `silverlock-bigquery.public_datasets.fivethirtyeight_troll_tweets`) * 100) AS percent
 FROM
-  `optimum-rock-145719.fivethirtyeight_russian_troll_tweets.russian_troll_tweets`
+  `silverlock-bigquery.public_datasets.fivethirtyeight_troll_tweets`
 GROUP BY
   author
 ORDER BY
@@ -107,7 +107,7 @@ SELECT
       publish_date) ) AS date,
   COUNT(*) AS count
 FROM
-  `optimum-rock-145719.fivethirtyeight_russian_troll_tweets.russian_troll_tweets`
+  `silverlock-bigquery.public_datasets.fivethirtyeight_troll_tweets`
 GROUP BY
   date
 ORDER BY
@@ -144,7 +144,7 @@ FROM (
     updates,
     RANK() OVER (PARTITION BY language ORDER BY updates DESC) AS tweet_rank
   FROM
-    `optimum-rock-145719.fivethirtyeight_russian_troll_tweets.russian_troll_tweets`
+    `silverlock-bigquery.public_datasets.fivethirtyeight_troll_tweets`
   GROUP BY
     language,
     updates,
