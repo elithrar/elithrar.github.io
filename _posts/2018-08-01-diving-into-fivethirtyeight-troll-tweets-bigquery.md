@@ -14,17 +14,25 @@ If you're already familiar with BigQuery & accessing public datasets, then you c
 
 ```sql
 #standardSQL
-SELECT author, COUNT(*) as tweets, followers
-FROM `optimum-rock-145719.fivethirtyeight_russian_troll_tweets.russian_troll_tweets`
-GROUP BY author, followers
-ORDER BY tweets DESC, followers DESC
+SELECT
+  author,
+  COUNT(*) AS tweets,
+  followers
+FROM
+  `optimum-rock-145719.fivethirtyeight_russian_troll_tweets.russian_troll_tweets`
+GROUP BY
+  author,
+  followers
+ORDER BY
+  tweets DESC,
+  followers DESC
 ```
 
 For everyone else: read on.
 
 ## Accessing the Dataset
 
-We're going to use the BigQuery web UI, so navigate to https://console.cloud.google.com/bigquery and select the project you want to access it from. You can't (yet) see the schema from the new (beta) BigQuery UI, so I'm posting it here to save you switching back:
+We're going to use the BigQuery web UI, so navigate to [the BigQuery interface](https://console.cloud.google.com/bigquery) and select the project you want to access it from. You can't (yet) see the schema from the new (beta) BigQuery UI, so I'm posting it here to save you switching back:
 
 | name               | type      | mode     |
 | ------------------ | --------- | -------- |
