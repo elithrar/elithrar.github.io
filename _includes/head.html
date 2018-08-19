@@ -9,16 +9,13 @@
   <meta name="description" content="{{ site.tagline }}">
 
   <title>
-    {% if page.title %}
-      {{ page.title }} &middot; {{ site.title }}
-    {% else %}
-      {{ site.title }} &middot; {{ site.tagline }}
-    {% endif %}
+    {% if page.title %} {{ page.title }} &middot; {{ site.title }} {% else %} {{ site.title }} &middot; {{ site.tagline }} {%
+    endif %}
   </title>
 
   <!-- Typekit -->
   <script type="text/javascript" src="//use.typekit.net/cxf2crd.js"></script>
-  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  <script type="text/javascript">try { Typekit.load(); } catch (e) { }</script>
 
   <!-- CSS -->
   <link rel="stylesheet" href="{{ site.baseurl }}/public/css/poole.css">
@@ -32,13 +29,15 @@
   <link rel="alternate" type="application/rss+xml" href="/atom.xml">
 
   <!-- Google Analytics -->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  <script>
+    (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date(); a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-  ga('create', 'UA-51517082-1', 'auto');
-  ga('send', 'pageview');
-</script>
+    ga('create', 'UA-51517082-1', 'auto');
+    ga('send', 'pageview');
+  </script>
 </head>

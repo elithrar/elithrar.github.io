@@ -1,36 +1,36 @@
 # Dependencies
-markdown:         kramdown
+markdown: kramdown
 kramdown:
   syntax_highlighter: rouge
 highlighter: rouge
 
 # Permalinks
-permalink:        /article/:title/
+permalink: /article/:title/
 
 # Setup
-title:            'request / response'
-tagline:          'a blog about the web, Go, and building things'
-byline:           'by Matt Silverlock'
-description:      'Go programming, web security and side projects.'
-url:              http://blog.questionable.services/
-baseurl:          //blog.questionable.services/
+title: "request / response"
+tagline: "a blog about the web, Go, and building things"
+byline: "by Matt Silverlock"
+description: "Go programming, web security and side projects."
+url: http://blog.questionable.services/
+baseurl: //blog.questionable.services
 
 author:
-  name:           'Matt Silverlock'
-  email:          'matt@eatsleeprepeat.net'
-  url:            https://github.com/elithrar
-  twitter:        'elithrar'
-  othersite:      'https://www.eatsleeprepeat.net'
+  name: "Matt Silverlock"
+  email: "matt@eatsleeprepeat.net"
+  url: https://github.com/elithrar
+  twitter: "elithrar"
+  othersite: "https://www.eatsleeprepeat.net"
 
 plugins:
   - "jekyll-paginate"
   - "jekyll-feed"
-  
+
 feed:
   path: atom.xml
 
-paginate:         5
+paginate: 5
 
 # Custom vars
 github:
-  repo:           https://github.com/elithrar/elithrar.github.io
+  repo: https://github.com/elithrar/elithrar.github.io
