@@ -56,20 +56,14 @@ OK, let's take a quick look at the data to get you thinking about it. We'll answ
 
 ```sql
 -- Was there a specific account with a non-negligible fraction of tweets?
-WITH
-  total AS (
-  SELECT
-    COUNT(*) AS count
-  FROM
-    `optimum-rock-145719.fivethirtyeight_russian_troll_tweets.russian_troll_tweets` )
 SELECT
   author,
   COUNT(*) AS count,
   FORMAT("%.2f", COUNT(*) / (
     SELECT
-      count
+      COUNT(*)
     FROM
-      total) * 100) AS percent
+      `optimum-rock-145719.fivethirtyeight_russian_troll_tweets.russian_troll_tweets`) * 100) AS percent
 FROM
   `optimum-rock-145719.fivethirtyeight_russian_troll_tweets.russian_troll_tweets`
 GROUP BY
