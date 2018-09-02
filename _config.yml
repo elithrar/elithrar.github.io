@@ -18,9 +18,9 @@ baseurl: //blog.questionable.services
 author:
   name: "Matt Silverlock"
   email: "matt@eatsleeprepeat.net"
-  url: https://github.com/elithrar
+  url: "https://github.com/elithrar"
   twitter: "elithrar"
-  othersite: "https://www.eatsleeprepeat.net"
+  othersite: "https://vsco.co/silverlock"
 
 plugins:
   - "jekyll-paginate"
