@@ -4,7 +4,9 @@ title: Connecting to a Coral TPU Dev Board with Windows
 categories: windows, hardware, machine-learning
 ---
 
-The Coral TPU's [setup instructions](https://coral.withgoogle.com/tutorials/devboard-datasheet/#serial-console-port) only document a native Linux process, but it's entirely possible to flash the boot image via native Windows (without WSL).  
+The [Coral Dev Board](https://coral.withgoogle.com/) is a TPU-enabled (a co-processor designed to speed up machine learning models) development board for testing out machine learning models with a requirement for near-real-time inference: for instance, image classification or object detection on video feeds.
+
+However, the dev board's [setup instructions](https://coral.withgoogle.com/tutorials/devboard-datasheet/#serial-console-port) only document a native Linux process, but it's entirely possible to flash the boot image via native Windows (without WSL): here's how!
 
 ### Pre-requisites
 
