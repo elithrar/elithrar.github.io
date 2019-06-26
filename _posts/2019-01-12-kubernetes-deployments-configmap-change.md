@@ -4,6 +4,8 @@ title: Updating Kubernetes Deployments on a ConfigMap Change
 categories: kubernetes, tools, k8s
 ---
 
+> **Update (June 2019)**: kubectl v1.15 now provides a [`rollout restart`](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.15.md#cli-improvements) sub-command that allows you to restart Pods in a `Deployment` - taking into account your surge/unavailability config - and thus have them pick up changes to a referenced `ConfigMap`, `Secret` or similar. It's worth noting that you can use this with clusters older than v1.15, as it's implemented in the client. 
+
 One initially non-obvious thing to me about Kubernetes was that changing a [ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/) (a set of configuration values) is not detected as a change to [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) (how a Pod, or set of Pods, should be deployed onto the cluster) or Pods that reference that configuration. That expectation can result in unintentionally stale configuration persisting until a change to the Pod spec. This could include freshly created Pods due to an autoscaling event, or even restarts after a crash, resulting in misconfiguration and unexpected behaviour across the cluster.
 
 > Note: This doesn't impact ConfigMaps mounted as volumes, which are periodically synced by the
