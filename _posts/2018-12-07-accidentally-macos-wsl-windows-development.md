@@ -4,6 +4,12 @@ title: Accidentally From macOS to Windows and WSL
 categories: windows, wsl, macos, tools
 ---
 
+> **Update (June 2019)**: Much of this post remains true, and is still relevant ~six months later (slow IO perf, WSL feeling like a shim), but there are some *major* improvements just around the corner.
+>
+> Specifically, with [WSL2](https://docs.microsoft.com/en-us/windows/wsl/wsl2-install) moving to a VM-based architecture, a lot of the perf woes are scheduled to disappear. With [VS Code's Remote extension](https://code.visualstudio.com/docs/remote/remote-overview), the "two halves of the same system" problem - where you have to duplicate your toolchain - is effectively gone (this has been my favorite improvement so far, by a long shot). On the terminal front, we're almost there: Alacritty still (unfortunately) struggles with Unicode glyph rendering on Windows, but Microsoft has [open-sourced their own Windows Terminal](https://github.com/microsoft/terminal), and it's _actually really good_, even in this preview state.
+>
+> I'd say that, six months after writing this post, that WSL (as it exists in June 2019) is not a replacement for every dev environment  just yet. But there's been meaningful steps to make it better, and I'm fighting the "shim" less and less now with WSL2 & the remote extension. macOS is still likely the best 'default' choice for many, but it's good to have options.
+
 It's been ~5 months since I've used macOS proper, after 13+ years of personal use and a handful of work-use. This began when I started using my Windows "gaming" desktop & WSL (Windows Subsystem for Linux) for maintaining OSS projects & other dev-work—in-between dungeons or rounds of Overwatch—purely out of the convenience of being on the same machine.
 
 It came to a head when I realized my 12" MacBook was collecting dust, that I wasn't using it at work (ChromeOS + Crostini), and when I saw the Surface Pro 6 on sale. I decidd to see if I could live with WSL closer to full-time, and critically, go without macOS. And so I put it up on Craigslist, sold it that weekend, and unpacked the Surface Pro a week later.
