@@ -36,10 +36,30 @@ jobs:
       - checkout
       # Logs the version in our build logs, for posterity
       - run: go version
-      - run: go get -t -v ./...
-      - run: diff -u <(echo -n) <(gofmt -d .)
-      # vet's rules sometimes change; so we only run this on the latest version of Go.
-      - run: if [[ "$LATEST" = true ]]; then go vet -v .; fi
+      - run:
+          name: "Fetch dependencies"
+          command: >
+            go get -t -v ./...
+      # Only run gofmt, vet & lint against the latest Go version
+      - run:
+          name: "Run golint"
+          command: >
+            if [[ "${LATEST}" = true ] && [ -z "${SKIP_GOLINT}" ]]; then
+              go get -u golang.org/x/lint/golint
+              golint ./...
+            fi
+      - run:
+          name: "Run gofmt"
+          command: >
+            if [[ "${LATEST}" = true ]]; then
+              diff -u <(echo -n) <(gofmt -d -e .)
+            fi
+      - run:
+          name: "Run go vet"
+          command:  >
+            if [[ "${LATEST}" = true ]]; then
+              go vet -v ./...
+            fi
       - run: go test -v -race ./...
 
   "latest":
@@ -103,6 +123,38 @@ Pretty straightforward, huh? We define a base job configuration, create a refere
 By default, the `jobs` in our `workflows.build` list run in parallel, so we don't need to do anything special there. A workflow with sequential build steps can set a `requires` value to indicate the jobs that must run before it ([docs](https://circleci.com/docs/2.0/workflows/#sequential-job-execution-example)).
 
 > Note: If you're interested in what the previous TravisCI config looked like vs. the new CircleCI config, [see here](https://gist.github.com/elithrar/4fa799c66b2c9932ac33f450f0787a58).
+
+### Go Modules?
+
+If you have a project defined as a Go [Module](https://github.com/golang/go/wiki/Modules) - that is, there's a `go.mod` present - then you can make a couple of minor adjustments to the Job definition:
+
+```
+    # Setting the env var will allow the rest of the Go toolchain to
+    # correctly enable Module support
+    environment:
+      GO111MODULE: "on"
+    steps: &steps
+      - checkout
+      - run: go version
+      - run:
+          name: "Fetch dependencies"
+          command: >
+            go mod download
+
+  "latest":
+    <<: *test-and-build
+    environment:
+      LATEST: "true"
+      # Since we re-define the "environment" here, we need to add "GO111MODULE=on" back
+      GO111MODULE: "on"
+
+  "1.12":
+    <<: *test-and-build
+    docker:
+      - image: circleci/golang:1.12
+```
+
+If you're also vendoring dependencies with `go mod vendor`, then you'll want to make sure you pass the `-mod=vendor` flag to `go test` or `go build` [as per the Module docs](https://github.com/golang/go/wiki/Modules#how-do-i-use-vendoring-with-modules-is-vendoring-going-away).
 
 ### Other Tips
 
