@@ -140,6 +140,7 @@ If you have a project defined as a Go [Module](https://github.com/golang/go/wiki
           name: "Fetch dependencies"
           command: >
             go mod download
+      - run: # Rest of the steps here...
 
   "latest":
     <<: *test-and-build
