@@ -128,7 +128,7 @@ By default, the `jobs` in our `workflows.build` list run in parallel, so we don'
 
 If you have a project defined as a Go [Module](https://github.com/golang/go/wiki/Modules) - that is, there's a `go.mod` present - then you can make a couple of minor adjustments to the Job definition:
 
-```
+```yaml
     # Setting the env var will allow the rest of the Go toolchain to
     # correctly enable Module support
     environment:
