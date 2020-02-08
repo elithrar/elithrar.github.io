@@ -102,7 +102,7 @@ versions or other packages you create.
 ---
 layout: imports
 
-go-import: "example.com/pkgname.v1 git https://gopkg.in/someuser/pkgname.v1
+go-import: "example.com/pkgname.v1 git https://gopkg.in/someuser/pkgname.v1"
 go-source: 
     > 
       example.com/pkgname.v1
