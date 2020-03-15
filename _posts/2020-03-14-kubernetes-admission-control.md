@@ -16,7 +16,7 @@ For example, you can write admission controllers for:
 
 The last example - a [`MutatingWebhookConfiguration`](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#mutatingadmissionwebhook) can be extremely powerful, but you should consider how mutating live objects might make troubleshooting more challenging down the road vs. rejecting admission outright.
 
-### Writing Your Owna
+### Writing Your Own
 
 Writing your own dynamic admission controller is fairly simple, and has three key parts:
 
