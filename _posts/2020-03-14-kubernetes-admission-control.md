@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Admission Control: A Kubernetes Admission Controller Framework"
+title: "Admission Control: A helpful micro-framework for Kubernetes"
 categories: opensource, kubernetes, k8s, golang
 ---
 
