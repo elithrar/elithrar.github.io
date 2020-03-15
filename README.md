@@ -1,5 +1,4 @@
 🚀🚀🚀
-==================
 
 Repository for https://blog.questionable.services/
 
