@@ -78,7 +78,7 @@ You would deploy this as `Service` to your cluster: an admission controller is u
 r := mux.NewRouter().StrictSlash(true)
 admissions := r.PathPrefix("/admission-control").Subrouter()
 admissions.Handle("/enforce-static-annotation", &admissioncontrol.AdmissionHandler{
-	AdmitFunc:  admissioncontrol.ServiceHasAnnotations("k8s.example.com", "hello-world"),
+	AdmitFunc:  admissioncontrol.ServiceHasAnnotation("k8s.example.com", "hello-world"),
 	Logger:     logger,
 }).Methods(http.MethodPost)
 ```
