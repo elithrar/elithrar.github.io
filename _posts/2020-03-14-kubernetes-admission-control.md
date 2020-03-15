@@ -4,14 +4,14 @@ title: "Admission Control: A helpful micro-framework for Kubernetes"
 categories: opensource, kubernetes, k8s, golang
 ---
 
-_Admission Control_ ([GitHub](https://github.com/elithrar/admission-control)) is a micro-framework written in Go for building and deploying [dynamic admission controllers](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/) for your Kubernetes clusters. It reduces the boilerplate needed to inspect, validate and/or reject the admission of objects to your cluster, allowing you to focus on writing the specific business logic you want to enforce.
+_Admission Control_ ([GitHub](https://github.com/elithrar/admission-control)) is a micro-framework written in Go for building and deploying dynamic admission controllers for your Kubernetes clusters. It reduces the boilerplate needed to inspect, validate and/or reject the admission of objects to your cluster, allowing you to focus on writing the specific business logic you want to enforce.
 
 > **What is an Admission Controller?**: When you deploy, update or otherwise change the state of a Kubernetes (k8s) cluster, your change needs to be validated by the control plane. By default, Kubernetes has [a number of built-in](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#which-plugins-are-enabled-by-default) "admission controllers" that validate and (in some cases) enforce resource quotas, service account automation, and other cluster-critical tasks. Usefully, Kubernetes also supports [dynamic admission controllers](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/): that is, admission controllers you can write yourself.
 
 For example, you can write admission controllers for:
 
 - Validating that specific annotations are present on all of your Services - such as a valid DNS hostname on your company domain.
-- Rejecting `Ingress` or `Service` objects that would create a public-facing load-balancer/VIP as part of a defense-in-depth approach for a private cluster
+- Rejecting `Ingress` or `Service` objects that would create a public-facing load-balancer/VIP as part of a defense-in-depth approach for a private cluster.
 - Mutating fields: resolving container image tags into hashes for security, or generating side-effects such as pushing state or status updates into another system.
 
 The last example - a [`MutatingWebhookConfiguration`](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#mutatingadmissionwebhook) can be extremely powerful, but you should consider how mutating live objects might make troubleshooting more challenging down the road vs. rejecting admission outright.
