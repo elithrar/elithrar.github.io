@@ -8,7 +8,7 @@ highlighter: rouge
 permalink: /article/:title/
 
 # Setup
-title: "questionable.services"
+title: "questionable services"
 tagline: "Technical writings about computing infrastructure, HTTP & security."
 byline: "by Matt Silverlock"
 description: "Go programming, web security and side projects."

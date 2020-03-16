@@ -143,7 +143,6 @@ code {
   border-radius: 0.2rem;
   font-size: 0.7rem;
   overflow-x: scroll;
-  white-space: pre;
   word-break: break-word;
   word-wrap: break-word;
 }
