@@ -8,8 +8,8 @@ highlighter: rouge
 permalink: /article/:title/
 
 # Setup
-title: "request / response"
-tagline: "a blog about the web, Go, and building things"
+title: "questionable.services"
+tagline: "technical articles about computing infrastructure, HTTP & security."
 byline: "by Matt Silverlock"
 description: "Go programming, web security and side projects."
 url: http://blog.questionable.services/

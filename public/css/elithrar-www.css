@@ -1,5 +1,5 @@
 html {
-  font-family: "pt-sans", "Helvetica", "Arial", sans-serif;
+  font-family: "ff-tisa-sans-web-pro", "Helvetica", "Arial", sans-serif;
   font-weight: 400;
 }
 
@@ -44,7 +44,7 @@ a:focus {
 .btn {
   display: inline-block;
   padding: 0.25rem 1rem;
-  font-family: "pt-sans", "Helvetica", "Arial", sans-serif;
+  font-family: "ff-tisa-sans-web-pro", "Helvetica", "Arial", sans-serif;
   border: 0.1rem solid #32343c;
   border-radius: 0.1rem;
   background-color: #ffcd2b;
@@ -73,7 +73,9 @@ h4,
 h5,
 h6 {
   margin-bottom: 25px;
-  font-family: "freight-text-pro", "pt-sans", "Helvetica", "Arial", sans-serif;
+  font-family: montserrat, sans-serif;
+  font-weight: 900;
+  font-style: italic;
 }
 
 h1 {
@@ -161,14 +163,14 @@ code {
 .highlight code {
   overflow-x: scroll;
   white-space: pre;
-  word-break: normal;
+  word-break: nor;
   word-wrap: normal;
   color: rgb(51, 51, 51);
   background-color: #f8f8f8;
 }
 
 .pagination {
-  font-family: "pt-sans", "Helvetica", "Arial", sans-serif;
+  font-family: "ff-tisa-sans-web-pro", "Helvetica", "Arial", sans-serif;
 }
 
 .pagination-item {
