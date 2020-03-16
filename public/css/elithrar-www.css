@@ -126,7 +126,7 @@ img {
 
 p {
   text-align: start;
-  word-wrap: break-word;
+  word-wrap: anywhere;
 }
 
 pre,
