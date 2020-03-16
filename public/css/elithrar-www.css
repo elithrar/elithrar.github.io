@@ -142,8 +142,8 @@ code {
   font-size: 0.7rem;
   overflow-x: scroll;
   white-space: pre;
-  word-break: normal;
-  word-wrap: normal;
+  word-break: break-word;
+  word-wrap: break-word;
 }
 
 @media (max-device-width: 667px) {
