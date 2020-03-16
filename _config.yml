@@ -9,7 +9,7 @@ permalink: /article/:title/
 
 # Setup
 title: "questionable.services"
-tagline: "technical articles about computing infrastructure, HTTP & security."
+tagline: "Technical writings about computing infrastructure, HTTP & security."
 byline: "by Matt Silverlock"
 description: "Go programming, web security and side projects."
 url: http://blog.questionable.services/
