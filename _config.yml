@@ -11,7 +11,7 @@ permalink: /article/:title/
 title: "questionable services"
 tagline: "Technical writings about computing infrastructure, HTTP & security."
 byline: "by Matt Silverlock"
-description: "Go programming, web security and side projects."
+description: "Technical writings about computing infrastructure, HTTP & security."
 url: http://blog.questionable.services/
 baseurl: //blog.questionable.services
 
@@ -28,6 +28,7 @@ plugins:
 
 feed:
   path: atom.xml
+  url: "http://blog.questionable.services/"
 
 paginate: 5
 
