@@ -28,11 +28,11 @@ plugins:
 
 feed:
   path: atom.xml
-  url: "https://blog.questionable.services/"
+  url: "https://blog.questionable.services"
 
 paginate: 5
 
 # Custom vars
 github:
-  url: "https://blog.questionable.services/"
+  url: "https://blog.questionable.services"
   repo: https://github.com/elithrar/elithrar.github.io
