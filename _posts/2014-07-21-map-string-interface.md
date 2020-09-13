@@ -3,6 +3,10 @@ layout: post
 title: HTTP Request Contexts &amp; Go
 ---
 
+> **Updated (2020)**: The approaches discussed here were once all valid options, but Go has matured significantly since then! You should use Go's [`http.Request.WithContext()`](https://golang.org/pkg/net/http/#Request.WithContext) method for per-request contexts, passing a [`context.Background()`](https://golang.org/pkg/context/) around as needed.
+>
+> For outbound requests, use [`NewRequestWithContext`](https://golang.org/pkg/net/http/#NewRequestWithContext) and [`ctx.WithTimeout()`](https://golang.org/pkg/context/#WithTimeout) to enforce timeouts on those requests as needed.
+
 Alternatively titled map[string]interface. 
 
 Request contexts, for those new to the terminology, are typically a way to pass data alongside a HTTP request as it is processed by composable handlers (or middleware). This data could be a user ID, a CSRF token, whether a user is logged in or not—something typically derived from logic that you don't want to repeat over-and-over again in every handler. If you've ever used Django, the request context is synonymous with the request.META dictionary.
