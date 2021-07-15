@@ -3,11 +3,11 @@ layout: default
 ---
 
 <div class="related">
-  <h2>From the <a href="{{ site.baseurl }}/archive/">Archives</a></h2>
+  <h2>From the <a href="/archive/">Archives</a></h2>
   <ul class="related-posts center">
     {% for post in site.posts limit:3 %}
     <li class="small">
-      <a href="{{ site.baseurl }}{{ post.url }}">
+      <a href="{{ post.url }}">
         {{ post.title }}
       </a>
     </li>
