@@ -1,1 +1,1 @@
-blog-questionable-services.pages.dev blog.questionable.services 301
+blog-questionable-services.pages.dev/* https://blog.questionable.services/:splat 301
