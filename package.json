@@ -1,0 +1,35 @@
+{
+  "name": "blog.questionable.services",
+  "version": "1.0.0",
+  "description": "\"The Cloudflare Worker for blog.questionable.services\"",
+  "main": "workers/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elithrar/elithrar.github.io.git"
+  },
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "blog",
+    "javascript"
+  ],
+  "author": "Matt Silverlock <matt@eatsleeprepeat.net>",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/elithrar/elithrar.github.io/issues"
+  },
+  "homepage": "https://github.com/elithrar/elithrar.github.io#readme",
+  "prettier": {
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "printWidth": 120,
+    "semi": false,
+    "singleQuote": false,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  }
+}
