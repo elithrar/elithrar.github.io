@@ -41,6 +41,24 @@ a:focus {
   position: relative !important;
 }
 
+blockquote {
+  padding: .5rem 1rem;
+  margin: .8rem 0;
+  color: #575757;
+  border-left: .25rem solid #e5e5e5;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 30rem) {
+  blockquote {
+    padding-right: 5rem;
+    padding-left: 1.25rem;
+  }
+}
+
 .btn {
   display: inline-block;
   padding: 0.25rem 1rem;
