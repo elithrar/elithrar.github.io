@@ -35,18 +35,13 @@ export default {
     let response = await fetch(request)
     let respHeaders = new Headers(response.headers)
 
-    // This sets the headers for HTML responses:
+    // This sets the headers for HTML responses (only) as other MIME types do
+    // not need to set security headers.
     if (respHeaders.has(CONTENT_TYPE_HEADER) && respHeaders.get(CONTENT_TYPE_HEADER).includes(CTYPE_TEXT_HTML)) {
-      return new Response(response.body, {
-        status: response.status,
-        statusText: response.statusText,
-        headers: respHeaders,
+      Object.keys(DEFAULT_SECURITY_HEADERS).map(function (name) {
+        respHeaders.set(name, DEFAULT_SECURITY_HEADERS[name])
       })
     }
-
-    Object.keys(DEFAULT_SECURITY_HEADERS).map(function (name) {
-      respHeaders.set(name, DEFAULT_SECURITY_HEADERS[name])
-    })
 
     return new Response(response.body, {
       status: response.status,
