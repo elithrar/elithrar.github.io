@@ -17,4 +17,6 @@ workers_dev = true
 command = "npm install --no-fund"
 
 [build.upload]
-format = "service-worker"
+format = "modules"
+dir = "./workers"
+main = "index.mjs"

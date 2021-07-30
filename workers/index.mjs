@@ -22,24 +22,36 @@ const DEFAULT_SECURITY_HEADERS = {
 const CONTENT_TYPE_HEADER = "content-type"
 const CTYPE_TEXT_HTML = "text/html"
 
-addEventListener("fetch", (event) => {
-  event.respondWith(addHeaders(event.request))
-})
+export default {
+  /**
+   * Handle the incoming HTTP Request and return a Response.
+   *
+   * @param {Request} request - the incoming FetchRequest instance
+   * @param {Object} env - environmental variables, bindings and runtime config
+   * @param {Object} ctx - exposes helper functions - e.g. waitUntil() and passThroughOnException()
+   * @returns {Promise<Response>} - the Response to return to the client
+   */
+  async fetch(request, env, ctx) {
+    let response = await fetch(request)
+    let respHeaders = new Headers(response.headers)
 
-async function addHeaders(req) {
-  let response = await fetch(req)
-  let newHeaders = new Headers(response.headers)
+    // This sets the headers for HTML responses:
+    if (respHeaders.has(CONTENT_TYPE_HEADER) && respHeaders.get(CONTENT_TYPE_HEADER).includes(CTYPE_TEXT_HTML)) {
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: respHeaders,
+      })
+    }
 
-  // This sets the headers for HTML responses:
-  if (newHeaders.has(CONTENT_TYPE_HEADER) && newHeaders.get(CONTENT_TYPE_HEADER).includes(CTYPE_TEXT_HTML)) {
     Object.keys(DEFAULT_SECURITY_HEADERS).map(function (name) {
-      newHeaders.set(name, DEFAULT_SECURITY_HEADERS[name])
+      respHeaders.set(name, DEFAULT_SECURITY_HEADERS[name])
     })
-  }
 
-  return new Response(response.body, {
-    status: response.status,
-    statusText: response.statusText,
-    headers: newHeaders,
-  })
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: respHeaders,
+    })
+  },
 }

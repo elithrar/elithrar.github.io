@@ -1,8 +1,11 @@
 {
   "name": "blog.questionable.services",
   "version": "1.0.0",
-  "description": "\"The Cloudflare Worker for blog.questionable.services\"",
-  "main": "workers/index.js",
+  "description": "The Cloudflare Worker for blog.questionable.services",
+  "author": "Matt Silverlock <matt@eatsleeprepeat.net>",
+  "url": "https://blog.questionable.services/",
+  "license": "MIT",
+  "main": "workers/index.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,8 +19,6 @@
     "blog",
     "javascript"
   ],
-  "author": "Matt Silverlock <matt@eatsleeprepeat.net>",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/elithrar/elithrar.github.io/issues"
   },
