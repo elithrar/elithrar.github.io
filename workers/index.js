@@ -31,17 +31,11 @@ async function addHeaders(req) {
   let newHeaders = new Headers(response.headers)
 
   // This sets the headers for HTML responses:
-  if (newHeaders.has(CONTENT_TYPE_HEADER) && !newHeaders.get(CONTENT_TYPE_HEADER).includes(CTYPE_TEXT_HTML)) {
-    return new Response(response.body, {
-      status: response.status,
-      statusText: response.statusText,
-      headers: newHeaders,
+  if (newHeaders.has(CONTENT_TYPE_HEADER) && newHeaders.get(CONTENT_TYPE_HEADER).includes(CTYPE_TEXT_HTML)) {
+    Object.keys(DEFAULT_SECURITY_HEADERS).map(function (name) {
+      newHeaders.set(name, DEFAULT_SECURITY_HEADERS[name])
     })
   }
-
-  Object.keys(DEFAULT_SECURITY_HEADERS).map(function (name) {
-    newHeaders.set(name, DEFAULT_SECURITY_HEADERS[name])
-  })
 
   return new Response(response.body, {
     status: response.status,
