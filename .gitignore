@@ -2,3 +2,5 @@
 _site/*
 _drafts/*
 .jekyll-cache/*
+node_modules/
+.npm

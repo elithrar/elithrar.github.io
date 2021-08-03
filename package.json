@@ -32,5 +32,8 @@
     "tabWidth": 2,
     "trailingComma": "es5",
     "useTabs": false
+  },
+  "devDependencies": {
+    "miniflare": "^1.3.3"
   }
 }
