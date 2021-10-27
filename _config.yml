@@ -31,7 +31,7 @@ feed:
   path: atom.xml
   url: "https://blog.questionable.services"
 
-paginate: 5
+paginate: 10
 
 # Custom vars
 github:
