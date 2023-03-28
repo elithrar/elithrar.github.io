@@ -34,6 +34,6 @@
     "useTabs": false
   },
   "devDependencies": {
-    "miniflare": "^1.3.3"
+    "miniflare": "^2.13.0"
   }
 }
