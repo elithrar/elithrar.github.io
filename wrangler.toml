@@ -1,13 +1,13 @@
 name = "blog-worker"
-type = "javascript"
-
 account_id = "d458dbe698b8eef41837f941d73bc5b3"
-zone_id = "efd73e4a8b362105ccef5f8a75e4061b"
 workers_dev = false
+compatibility_date = "2023-04-05"
+
+main = "workers/index.mjs"
 
 # "/*" matches both "/" and all paths under /
 routes = [
-    "blog.questionable.services/*"
+    { pattern = "blog.questionable.services/*", zone_name = "questionable.services" }
 ]
 
 [env.staging]
@@ -16,7 +16,3 @@ workers_dev = true
 [build]
 command = "npm install --no-fund"
 
-[build.upload]
-format = "modules"
-dir = "./workers"
-main = "index.mjs"
