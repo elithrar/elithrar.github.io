@@ -34,7 +34,7 @@
     "useTabs": false
   },
   "devDependencies": {
-    "miniflare": "^2.13.0"
+    "miniflare": "^4.20251011.1"
   },
   "dependencies": {
     "wrangler": "^4.45.1"
