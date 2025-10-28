@@ -7,7 +7,7 @@
   "license": "MIT",
   "main": "workers/index.mjs",
   "scripts": {
-    "build": "gem install bundle && npm install --no-fund"
+    "build": "gem install bundle && npm install --no-fund",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
