@@ -33,9 +33,6 @@
     "trailingComma": "es5",
     "useTabs": false
   },
-  "devDependencies": {
-    "miniflare": "^2.13.0"
-  },
   "dependencies": {
     "wrangler": "^4.45.1"
   }
