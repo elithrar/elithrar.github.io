@@ -17,7 +17,7 @@
     },
   },
   "build": {
-    "command": "gem install bundle && npm install --no-fund",
+    "command": "npm run build",
   },
   "observability": {
     "enabled": false,
