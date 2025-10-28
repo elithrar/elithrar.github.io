@@ -1,0 +1,37 @@
+{
+  "name": "blog-worker",
+  "account_id": "d458dbe698b8eef41837f941d73bc5b3",
+  "workers_dev": false,
+  "compatibility_date": "2025-10-28",
+  "main": "workers/index.mjs",
+  // "/*" matches both "/" and all paths under /
+  "routes": [
+    {
+      "pattern": "blog.questionable.services/*",
+      "zone_name": "questionable.services"
+    }
+  ],
+  "env": {
+    "staging": {
+      "workers_dev": true
+    }
+  },
+  "build": {
+    "command": "npm install --no-fund"
+  },
+  "observability": {
+    "enabled": false,
+    "head_sampling_rate": 1,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "persist": true,
+      "invocation_logs": true
+    },
+    "traces": {
+      "enabled": true,
+      "persist": true,
+      "head_sampling_rate": 1
+    }
+  }
+}
