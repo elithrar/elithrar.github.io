@@ -1,4 +1,6 @@
-const DEFAULT_SECURITY_HEADERS = {
+/// <reference types="@cloudflare/workers-types" />
+
+const DEFAULT_SECURITY_HEADERS: Record<string, string> = {
   // Ref: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
   "Content-Security-Policy":
     "script-src 'self' 'unsafe-inline' use.typekit.net p.typekit.net cloudflareinsights.com static.cloudflareinsights.com",
@@ -22,25 +24,25 @@ const DEFAULT_SECURITY_HEADERS = {
 const CONTENT_TYPE_HEADER = "content-type"
 const CTYPE_TEXT_HTML = "text/html"
 
+export interface Env {
+  // Add any environment bindings here if needed
+}
+
 export default {
   /**
    * Handle the incoming HTTP Request and return a Response.
-   *
-   * @param {Request} request - the incoming FetchRequest instance
-   * @param {Object} env - environmental variables, bindings and runtime config
-   * @param {Object} ctx - exposes helper functions - e.g. waitUntil() and passThroughOnException()
-   * @returns {Promise<Response>} - the Response to return to the client
    */
-  async fetch(request, env, ctx) {
-    let response = await fetch(request)
-    let respHeaders = new Headers(response.headers)
+  async fetch(request: Request, _env: Env, _ctx: ExecutionContext): Promise<Response> {
+    const response = await fetch(request)
+    const respHeaders = new Headers(response.headers)
 
     // This sets the headers for HTML responses (only) as other MIME types do
     // not need to set security headers.
-    if (respHeaders.has(CONTENT_TYPE_HEADER) && respHeaders.get(CONTENT_TYPE_HEADER).includes(CTYPE_TEXT_HTML)) {
-      Object.keys(DEFAULT_SECURITY_HEADERS).map(function (name) {
-        respHeaders.set(name, DEFAULT_SECURITY_HEADERS[name])
-      })
+    const contentType = respHeaders.get(CONTENT_TYPE_HEADER)
+    if (contentType && contentType.includes(CTYPE_TEXT_HTML)) {
+      for (const [name, value] of Object.entries(DEFAULT_SECURITY_HEADERS)) {
+        respHeaders.set(name, value)
+      }
     }
 
     return new Response(response.body, {

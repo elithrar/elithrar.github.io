@@ -5,10 +5,11 @@
   "author": "Matt Silverlock <matt@eatsleeprepeat.net>",
   "url": "https://blog.questionable.services/",
   "license": "MIT",
-  "main": "workers/index.mjs",
+  "main": "workers/index.ts",
   "scripts": {
-    "build": "gem install bundle && npm install --no-fund",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "bundle install && tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "deploy": "wrangler deploy"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,7 @@
     "cloudflare",
     "workers",
     "blog",
-    "javascript"
+    "typescript"
   ],
   "bugs": {
     "url": "https://github.com/elithrar/elithrar.github.io/issues"
@@ -35,6 +36,10 @@
     "useTabs": false
   },
   "dependencies": {
-    "wrangler": "^4.45.1"
+    "wrangler": "^4.0.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250109.0",
+    "typescript": "^5.7.0"
   }
 }
