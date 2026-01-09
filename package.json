@@ -5,9 +5,9 @@
   "author": "Matt Silverlock <matt@eatsleeprepeat.net>",
   "url": "https://blog.questionable.services/",
   "license": "MIT",
-  "main": "workers/index.ts",
+  "main": "src/index.ts",
   "scripts": {
-    "build": "bundle install && tsc --noEmit",
+    "build": "bundle exec jekyll build && tsc --noEmit",
     "typecheck": "tsc --noEmit",
     "deploy": "wrangler deploy"
   },

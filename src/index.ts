@@ -24,9 +24,13 @@ const DEFAULT_SECURITY_HEADERS: Record<string, string> = {
 const CONTENT_TYPE_HEADER = "content-type"
 const CTYPE_TEXT_HTML = "text/html"
 
+interface Env {
+  ASSETS: Fetcher
+}
+
 export default {
-  async fetch(request: Request): Promise<Response> {
-    const response = await fetch(request)
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const response = await env.ASSETS.fetch(request)
     const respHeaders = new Headers(response.headers)
 
     // This sets the headers for HTML responses (only) as other MIME types do
