@@ -24,15 +24,8 @@ const DEFAULT_SECURITY_HEADERS: Record<string, string> = {
 const CONTENT_TYPE_HEADER = "content-type"
 const CTYPE_TEXT_HTML = "text/html"
 
-export interface Env {
-  // Add any environment bindings here if needed
-}
-
 export default {
-  /**
-   * Handle the incoming HTTP Request and return a Response.
-   */
-  async fetch(request: Request, _env: Env, _ctx: ExecutionContext): Promise<Response> {
+  async fetch(request: Request): Promise<Response> {
     const response = await fetch(request)
     const respHeaders = new Headers(response.headers)
 
