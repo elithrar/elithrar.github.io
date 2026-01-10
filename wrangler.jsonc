@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "blog-worker",
+  "name": "blog",
   "account_id": "d458dbe698b8eef41837f941d73bc5b3",
   "workers_dev": false,
   "compatibility_date": "2025-10-28",
@@ -15,7 +15,7 @@
   "assets": {
     "directory": "./_site",
     "binding": "ASSETS",
-    "run_worker_first": true
+    "run_worker_first": true,
   },
   "env": {
     "staging": {
@@ -26,7 +26,7 @@
     "command": "npm run build"
   },
   "observability": {
-    "enabled": false,
+    "enabled": true,
     "head_sampling_rate": 1,
     "logs": {
       "enabled": true,
@@ -37,7 +37,17 @@
     "traces": {
       "enabled": true,
       "persist": true,
+<<<<<<< HEAD
       "head_sampling_rate": 1
     }
   }
+||||||| parent of 2757ead (update worker name)
+      "head_sampling_rate": 1,
+    },
+  },
+=======
+      "head_sampling_rate": 0.1,
+    },
+  },
+>>>>>>> 2757ead (update worker name)
 }
