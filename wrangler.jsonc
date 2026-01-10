@@ -3,9 +3,11 @@
   "name": "blog",
   "account_id": "d458dbe698b8eef41837f941d73bc5b3",
   "workers_dev": false,
-  "compatibility_date": "2025-10-28",
+  "compatibility_date": "2026-01-06",
   "main": "src/index.ts",
-  "custom_domains": ["blog.questionable.services"],
+  "routes": [
+    { "pattern": "blog.questionable.services", "custom_domain": true }
+  ],
   "assets": {
     "directory": "./_site",
     "binding": "ASSETS",
