@@ -17,8 +17,9 @@
   <!-- CSS -->
   <link rel="stylesheet" href="/public/css/poole.css" />
   <link rel="stylesheet" href="/public/css/app.css" />
-  <!-- Preload code syntax CSS -->
-  <link rel="preload" as="style" href="/public/css/syntax.css" />
+  <!-- Preload code syntax CSS (non-blocking) -->
+  <link rel="preload" as="style" href="/public/css/syntax.css" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="/public/css/syntax.css"></noscript>
   
   <!-- Typekit -->
   <link rel="preconnect" href="https://use.typekit.net" crossorigin>
