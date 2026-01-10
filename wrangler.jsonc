@@ -9,8 +9,8 @@
   "routes": [
     {
       "pattern": "blog.questionable.services/*",
-      "zone_name": "questionable.services"
-    }
+      "zone_name": "questionable.services",
+    },
   ],
   "assets": {
     "directory": "./_site",
@@ -19,11 +19,11 @@
   },
   "env": {
     "staging": {
-      "workers_dev": true
-    }
+      "workers_dev": true,
+    },
   },
   "build": {
-    "command": "npm run build"
+    "command": "npm run build",
   },
   "observability": {
     "enabled": true,
@@ -32,22 +32,12 @@
       "enabled": true,
       "head_sampling_rate": 1,
       "persist": true,
-      "invocation_logs": true
+      "invocation_logs": true,
     },
     "traces": {
       "enabled": true,
       "persist": true,
-<<<<<<< HEAD
-      "head_sampling_rate": 1
-    }
-  }
-||||||| parent of 2757ead (update worker name)
-      "head_sampling_rate": 1,
-    },
-  },
-=======
       "head_sampling_rate": 0.1,
     },
   },
->>>>>>> 2757ead (update worker name)
 }
