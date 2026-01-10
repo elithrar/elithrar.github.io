@@ -1,23 +1,29 @@
 {
+  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "blog-worker",
   "account_id": "d458dbe698b8eef41837f941d73bc5b3",
   "workers_dev": false,
   "compatibility_date": "2025-10-28",
-  "main": "workers/index.mjs",
+  "main": "src/index.ts",
   // "/*" matches both "/" and all paths under /
   "routes": [
     {
       "pattern": "blog.questionable.services/*",
-      "zone_name": "questionable.services",
-    },
+      "zone_name": "questionable.services"
+    }
   ],
+  "assets": {
+    "directory": "./_site",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
   "env": {
     "staging": {
-      "workers_dev": true,
-    },
+      "workers_dev": true
+    }
   },
   "build": {
-    "command": "npm run build",
+    "command": "npm run build"
   },
   "observability": {
     "enabled": false,
@@ -26,12 +32,12 @@
       "enabled": true,
       "head_sampling_rate": 1,
       "persist": true,
-      "invocation_logs": true,
+      "invocation_logs": true
     },
     "traces": {
       "enabled": true,
       "persist": true,
-      "head_sampling_rate": 1,
-    },
-  },
+      "head_sampling_rate": 1
+    }
+  }
 }

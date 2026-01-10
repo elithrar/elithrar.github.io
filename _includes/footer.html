@@ -8,13 +8,11 @@
   | Built with <a href="http://jekyllrb.com/">Jekyll</a></small
 >
 <!-- AnchorJS -->
-<script async type="text/javascript" src="/public/js/anchor.min.js"></script>
-<script defer>
-  ;(function() {
+<script src="/public/js/anchor.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
     "use strict"
-
     anchors.options.placement = "left"
-
     anchors.add(".post > h2, .post > h3, .post > h4, .post > h5, .post > h6")
-  })()
+  })
 </script>

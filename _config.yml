@@ -4,6 +4,15 @@ kramdown:
   syntax_highlighter: rouge
 highlighter: rouge
 
+# Disable theme (using custom CSS)
+theme: null
+
+# Sass configuration (UTF-8 encoding for theme compatibility)
+encoding: utf-8
+sass:
+  style: compressed
+  sass_dir: _sass
+
 # Permalinks
 permalink: "/article/:title/"
 
@@ -29,7 +38,6 @@ plugins:
 
 feed:
   path: atom.xml
-  url: "https://blog.questionable.services"
 
 paginate: 5
 
