@@ -36,10 +36,10 @@
     "useTabs": false
   },
   "dependencies": {
-    "wrangler": "^4.63.0"
+    "wrangler": "^4.107.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20260109.0",
-    "typescript": "^5.9.3"
+    "@cloudflare/workers-types": "^4.20260702.1",
+    "typescript": "^6.0.3"
   }
 }
