@@ -10,9 +10,9 @@ jobs:
     name: deploy
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
       - name: Publish to Cloudflare
-        uses: cloudflare/wrangler-action@2.0.0
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CF_WORKERS_SECRET }}
-          wranglerVersion: '2.20.0'
+          wranglerVersion: "4"
