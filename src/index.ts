@@ -3,7 +3,7 @@
 const DEFAULT_SECURITY_HEADERS: Record<string, string> = {
   // Ref: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
   "Content-Security-Policy":
-    "script-src 'self' 'unsafe-inline' use.typekit.net p.typekit.net cloudflareinsights.com static.cloudflareinsights.com",
+    "script-src 'self' 'unsafe-inline' cloudflareinsights.com static.cloudflareinsights.com",
   // Ref: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
   "X-XSS-Protection": "1; mode=block",
   // Ref: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
@@ -23,6 +23,7 @@ const DEFAULT_SECURITY_HEADERS: Record<string, string> = {
 
 const CONTENT_TYPE_HEADER = "content-type"
 const CTYPE_TEXT_HTML = "text/html"
+const CACHE_CONTROL_IMMUTABLE = "public, max-age=31536000, immutable"
 
 interface Env {
   ASSETS: Fetcher
@@ -32,6 +33,12 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const response = await env.ASSETS.fetch(request)
     const respHeaders = new Headers(response.headers)
+    const pathname = new URL(request.url).pathname
+
+    // Font filenames are versioned, so browsers can keep them without revalidation.
+    if (pathname.endsWith(".woff2")) {
+      respHeaders.set("Cache-Control", CACHE_CONTROL_IMMUTABLE)
+    }
 
     // This sets the headers for HTML responses (only) as other MIME types do
     // not need to set security headers.
