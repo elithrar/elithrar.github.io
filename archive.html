@@ -3,21 +3,23 @@ layout: default
 title: Archive
 ---
 
-<div class="related">
-  <h2>All Posts</h2>
+<section class="related">
+  <h1>All Posts</h1>
   <hr />
-  <div class="posts">
+  <ul class="archive-list">
     {% for post in site.posts %}
-    <div class="post post-archive-item">
-      <h3 class="post-title post-archive-item">
+    <li class="archive-item">
+      <h2 class="post-title archive-title">
         <a href="{{ site.baseurl}}{{ post.url }}">
           {{ post.title }}
         </a>
-      </h3>
-      <span class="post-date small-date"
-        >Posted on {{ post.date | date_to_string }}</span
+      </h2>
+      <time
+        class="post-date small-date"
+        datetime="{{ post.date | date_to_xmlschema }}"
+        >Posted on {{ post.date | date_to_string }}</time
       >
-    </div>
+    </li>
     {% endfor %}
-  </div>
-</div>
+  </ul>
+</section>

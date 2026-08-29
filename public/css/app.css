@@ -34,9 +34,9 @@ body {
   background-color: var(--paper);
   text-align: center;
   word-wrap: break-word;
-  word-break: break-word;
+  word-break: normal;
   overflow-wrap: break-word;
-  hyphens: auto;
+  hyphens: none;
 }
 
 @media (max-width: 768px) {
@@ -48,15 +48,16 @@ body {
 
 a {
   color: var(--link);
-  border-bottom: 1px solid;
-  text-decoration: none;
-  text-underline-offset: 0.14em;
+  border-bottom: 0;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
 }
 
 a:hover,
 a:focus {
   color: var(--link-active);
-  text-decoration: none;
+  text-decoration-thickness: 2px;
 }
 
 a:focus-visible {
@@ -108,6 +109,7 @@ blockquote p:last-child {
 }
 
 .container {
+  max-width: 36rem;
   padding: 0rem 0.5rem;
 }
 
@@ -157,14 +159,20 @@ h3 {
   margin: 0 0 0.75rem;
   padding: 0;
   font-size: clamp(2.4rem, 7vw, 3.25rem);
+  color: var(--ink-strong);
+  font-family: "Newsreader", Georgia, "Times New Roman", serif;
   font-weight: 600;
   line-height: 0.98;
+  letter-spacing: -0.025em;
+  text-align: center;
+  text-wrap: balance;
   width: 100%;
 }
 
 .header-title > a {
   border: none;
   color: var(--ink-strong);
+  text-decoration: none;
 }
 
 .header-title > a:hover,
@@ -194,7 +202,6 @@ img {
 
 p {
   text-align: start;
-  word-wrap: anywhere;
 }
 
 pre,
@@ -203,31 +210,45 @@ code {
   color: var(--code);
   text-align: left;
   border-radius: 0.2rem;
-  font-size: 0.7rem;
-  overflow-x: scroll;
-  word-break: break-word;
-  word-wrap: break-word;
-}
-
-@media (max-device-width: 667px) {
-  pre,
-  code {
-    font-size: 0.8rem;
-  }
 }
 
 code {
+  padding: 0.08em 0.2em;
+  font-size: 0.84em;
+  background-color: var(--paper-deep);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+pre {
+  font-size: 0.75rem;
+  overflow-x: auto;
+  white-space: pre;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+pre code {
   padding: 0;
+  font-size: inherit;
+  background-color: transparent;
+  overflow-wrap: normal;
 }
 
 .highlight pre,
 .highlight code {
-  overflow-x: scroll;
+  overflow-x: auto;
   white-space: pre;
   word-break: normal;
   word-wrap: normal;
   color: var(--ink);
   background-color: var(--paper-deep);
+}
+
+@media (max-width: 667px) {
+  pre {
+    font-size: 0.85rem;
+  }
 }
 
 .pagination {
@@ -244,6 +265,11 @@ code {
 
 .post {
   margin-bottom: 3rem;
+}
+
+.post-title {
+  font-size: clamp(1.9rem, 5.5vw, 2.2rem);
+  line-height: 1.1;
 }
 
 .post-bullets {
@@ -264,17 +290,31 @@ code {
 
 .post-title > a {
   border: none;
+  text-decoration: none;
 }
 
 .post-title > a:hover,
 .post-title > a:focus {
-  border-bottom: 1px dotted;
   color: var(--link-active);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
 }
 
-.post-archive-item {
-  margin-top: 1.5rem;
-  margin-bottom: 0.1rem;
+.archive-list {
+  padding-left: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.archive-item {
+  margin: 1.5rem 0;
+  padding: 0;
+}
+
+.archive-title {
+  margin: 0 0 0.2rem;
+  font-size: 1.15rem;
+  line-height: 1.2;
 }
 
 .related {
@@ -283,8 +323,31 @@ code {
 }
 
 .small-date {
-  font-size: 75%;
+  font-size: 0.75rem;
   margin-top: 0.2rem;
+}
+
+.site-footer {
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: 0 1rem 2rem;
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+}
+
+.site-footer a {
+  color: inherit;
+}
+
+.site-footer small {
+  font-size: inherit;
+}
+
+@media (max-width: 768px) {
+  h3,
+  .archive-title {
+    font-size: 1.3rem;
+  }
 }
 
 .themes {

@@ -2,17 +2,21 @@
 layout: default
 ---
 
-<div class="post">
+<article class="post">
   <hr />
   <h1 class="post-title">
     <a href="{{ page.url }}">
       {{ page.title }}
     </a>
   </h1>
-  <span class="post-bullets">&#8226;&#8226;&#8226;</span>
-  {{ content }}
-  <span class="post-date">Posted on {{ page.date | date_to_long_string }}</span>
-</div>
+  <span class="post-bullets" aria-hidden="true">&#8226;&#8226;&#8226;</span>
+  <div class="post-content">
+    {{ content }}
+  </div>
+  <time class="post-date" datetime="{{ page.date | date_to_xmlschema }}"
+    >Posted on {{ page.date | date_to_long_string }}</time
+  >
+</article>
 
 <div class="related">
   <h2>Recent Posts</h2>
