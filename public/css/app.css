@@ -156,6 +156,13 @@ h3 {
   margin-bottom: 2.25rem;
 }
 
+.header-mark {
+  display: block;
+  width: 4.25rem;
+  height: 4.25rem;
+  margin: -0.75rem auto 0;
+}
+
 .header-title {
   margin: 0 0 0.75rem;
   padding: 0;
