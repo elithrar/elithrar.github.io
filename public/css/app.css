@@ -137,17 +137,17 @@ h6 {
 }
 
 h1 {
-  font-size: clamp(1.9rem, 5.5vw, 2.2rem);
+  font-size: clamp(1.625rem, 4.7vw, 1.875rem);
   line-height: 1.1;
 }
 
 h2 {
-  font-size: 1.45rem;
+  font-size: 1.2rem;
   line-height: 1.15;
 }
 
 h3 {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   line-height: 1.2;
 }
 
@@ -280,7 +280,7 @@ pre code {
 .post-title {
   font-family: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia,
     "Times New Roman", serif;
-  font-size: clamp(1.625rem, 4.7vw, 1.875rem);
+  font-size: clamp(1.375rem, 4vw, 1.6rem);
   font-weight: 500;
   font-style: italic;
   line-height: 1.06;
@@ -328,7 +328,7 @@ pre code {
 
 .archive-title {
   margin: 0 0 0.2rem;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   line-height: 1.2;
 }
 
@@ -359,9 +359,12 @@ pre code {
 }
 
 @media (max-width: 768px) {
-  h3,
+  h3 {
+    font-size: 1.1rem;
+  }
+
   .archive-title {
-    font-size: 1.3rem;
+    font-size: 1.15rem;
   }
 }
 
