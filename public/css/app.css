@@ -166,7 +166,7 @@ h3 {
 .header-title {
   margin: 0 0 0.75rem;
   padding: 0;
-  font-size: clamp(2.4rem, 7vw, 3.25rem);
+  font-size: clamp(2.1rem, 6.1vw, 2.85rem);
   color: var(--ink-strong);
   font-family: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia,
     "Times New Roman", serif;
