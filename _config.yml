@@ -17,7 +17,7 @@ sass:
 permalink: "/article/:title/"
 
 # Setup
-title: "questionable services"
+title: "Questionable Services"
 tagline: "Technical writings about computing infrastructure, HTTP & security."
 byline: "by Matt Silverlock"
 description: "Technical writings about computing infrastructure, HTTP & security."
