@@ -273,7 +273,7 @@ pre code {
 .post-title {
   font-family: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia,
     "Times New Roman", serif;
-  font-size: clamp(1.9rem, 5.5vw, 2.2rem);
+  font-size: clamp(1.625rem, 4.7vw, 1.875rem);
   font-weight: 500;
   font-style: italic;
   line-height: 1.06;
