@@ -12,6 +12,7 @@ encoding: utf-8
 sass:
   style: compressed
   sass_dir: _sass
+  sourcemap: never
 
 # Permalinks
 permalink: "/article/:title/"
