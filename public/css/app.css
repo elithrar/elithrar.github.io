@@ -5,8 +5,9 @@
   --ink-strong: #1d1916;
   --ink-muted: #746c63;
   --rule: #d9d0c4;
-  --link: #445a72;
-  --link-active: #263b52;
+  --link: #8b3a49;
+  --link-visited: #672633;
+  --link-active: #541f2b;
   --code: #a13f52;
   --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-heading: Georgia, "Times New Roman", serif;
@@ -58,6 +59,10 @@ a {
   text-decoration-line: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.16em;
+}
+
+a:visited {
+  color: var(--link-visited);
 }
 
 a:hover,
@@ -351,6 +356,13 @@ pre code {
 .related {
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.related-posts li a:hover,
+.related-posts li a:focus {
+  color: var(--link-active);
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
 }
 
 .home-archives h2,
