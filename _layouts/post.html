@@ -9,13 +9,13 @@ layout: default
       {{ page.title }}
     </a>
   </h1>
+  <time class="post-month" datetime="{{ page.date | date_to_xmlschema }}"
+    >{{ page.date | date: "%B, %Y" }}</time
+  >
   <span class="post-bullets" aria-hidden="true">&#8226;&#8226;&#8226;</span>
   <div class="post-content">
     {{ content }}
   </div>
-  <time class="post-date" datetime="{{ page.date | date_to_xmlschema }}"
-    >Posted on {{ page.date | date_to_long_string }}</time
-  >
 </article>
 
 <div class="related">
