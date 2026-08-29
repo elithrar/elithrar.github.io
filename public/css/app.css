@@ -278,6 +278,7 @@ pre code {
 }
 
 .post-title {
+  margin-bottom: 0;
   font-family: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia,
     "Times New Roman", serif;
   font-size: clamp(1.55rem, 4.5vw, 1.8rem);
@@ -287,9 +288,21 @@ pre code {
   letter-spacing: -0.025em;
 }
 
+.post-month {
+  display: block;
+  margin-top: 0.6rem;
+  color: var(--ink-muted);
+  font-family: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia,
+    "Times New Roman", serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.2;
+}
+
 .post-bullets {
   display: block;
-  margin-top: 1rem;
+  margin-top: 0.75rem;
   margin-bottom: 1rem;
   color: #aa8b6f;
   letter-spacing: 0.5rem;
