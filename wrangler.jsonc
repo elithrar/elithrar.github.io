@@ -1,9 +1,9 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
+  "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "blog",
   "account_id": "d458dbe698b8eef41837f941d73bc5b3",
   "workers_dev": false,
-  "compatibility_date": "2026-01-06",
+  "compatibility_date": "2026-08-29",
   "main": "src/index.ts",
   "routes": [
     { "pattern": "blog.questionable.services", "custom_domain": true }
