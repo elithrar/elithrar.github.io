@@ -36,7 +36,7 @@
   <rect width="1200" height="630" fill="#fbf7ef" />
 
   <g transform="translate(536 80) scale(2)">
-    <path class="line" d="M9 16.5h40.5a5 5 0 0 1 4.8 3.6l4.2 14.7a4.8 4.8 0 0 1-4.6 6.2H10.1a4.8 4.8 0 0 1-4.6-6.2l4.2-14.7a5 5 0 0 1 4.8-3.6Z" />
+    <path class="line" d="M14.5 16.5h35a5 5 0 0 1 4.8 3.6l4.2 14.7a4.8 4.8 0 0 1-4.6 6.2H10.1a4.8 4.8 0 0 1-4.6-6.2l4.2-14.7a5 5 0 0 1 4.8-3.6Z" />
     <path class="line" d="M6.2 39.1v5.2a4.8 4.8 0 0 0 4.8 4.8h42a4.8 4.8 0 0 0 4.8-4.8v-5.2" />
     <rect class="ink" x="13" y="22" width="7" height="5" rx="1" />
     <rect class="ink" x="23" y="22" width="7" height="5" rx="1" />
@@ -46,7 +46,6 @@
     <rect class="ink" x="22" y="30" width="7" height="5" rx="1" />
     <rect class="ink" x="32" y="30" width="7" height="5" rx="1" />
     <rect class="ink" x="42" y="30" width="9" height="5" rx="1" />
-    <rect class="ink" x="18" y="38" width="29" height="3" rx="1" />
   </g>
 
   <text class="masthead" x="600" y="342" text-anchor="middle">Questionable Services</text>
