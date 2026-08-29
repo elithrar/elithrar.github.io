@@ -8,6 +8,11 @@
   --link: #445a72;
   --link-active: #263b52;
   --code: #a13f52;
+  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-heading: Georgia, "Times New Roman", serif;
+  --font-editorial: "Newsreader", "Iowan Old Style", "Palatino Linotype",
+    Georgia, "Times New Roman", serif;
+  --font-code: Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 @font-face {
@@ -23,7 +28,7 @@
 }
 
 html {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: var(--font-body);
   font-weight: 400;
 }
 
@@ -95,7 +100,7 @@ blockquote p:last-child {
 .btn {
   display: inline-block;
   padding: 0.25rem 1rem;
-  font-family: inherit;
+  font-family: var(--font-body);
   border: 0.1rem solid var(--ink-strong);
   border-radius: 0.1rem;
   background-color: #d8aa58;
@@ -123,7 +128,7 @@ h2,
 h3 {
   margin-bottom: 25px;
   color: var(--ink-strong);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-heading);
   font-weight: 600;
   font-style: normal;
   letter-spacing: -0.015em;
@@ -168,8 +173,7 @@ h3 {
   padding: 0;
   font-size: clamp(2.1rem, 6.1vw, 2.85rem);
   color: var(--ink-strong);
-  font-family: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia,
-    "Times New Roman", serif;
+  font-family: var(--font-editorial);
   font-weight: 500;
   font-style: italic;
   line-height: 0.96;
@@ -216,7 +220,7 @@ p {
 
 pre,
 code {
-  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: var(--font-code);
   color: var(--code);
   text-align: left;
   border-radius: 0.2rem;
@@ -262,7 +266,7 @@ pre code {
 }
 
 .pagination {
-  font-family: inherit;
+  font-family: var(--font-body);
 }
 
 .pagination-item {
@@ -279,8 +283,7 @@ pre code {
 
 .post-title {
   margin-bottom: 0;
-  font-family: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia,
-    "Times New Roman", serif;
+  font-family: var(--font-editorial);
   font-size: clamp(1.55rem, 4.5vw, 1.8rem);
   font-weight: 500;
   font-style: italic;
@@ -292,8 +295,7 @@ pre code {
   display: block;
   margin-top: 0.6rem;
   color: var(--ink-muted);
-  font-family: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia,
-    "Times New Roman", serif;
+  font-family: var(--font-editorial);
   font-size: 0.9rem;
   font-weight: 500;
   font-style: italic;
@@ -312,6 +314,7 @@ pre code {
 .post-date {
   margin-top: 2rem;
   margin-bottom: 0.5rem;
+  font-family: var(--font-body);
   font-size: 0.9rem;
   color: var(--ink-muted);
 }
@@ -352,8 +355,7 @@ pre code {
 
 .home-archives h2,
 .home-archives .related-posts {
-  font-family: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia,
-    "Times New Roman", serif;
+  font-family: var(--font-editorial);
   font-weight: 500;
   font-style: italic;
 }
@@ -368,6 +370,7 @@ pre code {
   margin: 0 auto;
   padding: 0 1rem 2rem;
   color: var(--ink-muted);
+  font-family: var(--font-body);
   font-size: 0.8rem;
 }
 
