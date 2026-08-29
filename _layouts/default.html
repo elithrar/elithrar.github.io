@@ -5,7 +5,11 @@
   <body>
     <div class="container">
       <div class="header">
+        {% if page.url == "/" or paginator %}
         <h1 class="header-title"><a href="/">{{ site.title }}</a></h1>
+        {% else %}
+        <p class="header-title"><a href="/">{{ site.title }}</a></p>
+        {% endif %}
         <p class="lead header-lead">
           {{ site.tagline }}
         </p>

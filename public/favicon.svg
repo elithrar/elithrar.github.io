@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .ink { fill: #1d1916; }
+    .line {
+      fill: none;
+      stroke: #1d1916;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 3.5;
+    }
+    @media (prefers-color-scheme: dark) {
+      .ink { fill: #fbf7ef; }
+      .line { stroke: #fbf7ef; }
+    }
+  </style>
+
+  <!-- A compact, slightly isometric keyboard with a BeOS-era hardware profile. -->
+  <path class="line" d="M14.5 16.5h35a5 5 0 0 1 4.8 3.6l4.2 14.7a4.8 4.8 0 0 1-4.6 6.2H10.1a4.8 4.8 0 0 1-4.6-6.2l4.2-14.7a5 5 0 0 1 4.8-3.6Z" />
+  <path class="line" d="M6.2 39.1v5.2a4.8 4.8 0 0 0 4.8 4.8h42a4.8 4.8 0 0 0 4.8-4.8v-5.2" />
+
+  <rect class="ink" x="13" y="22" width="7" height="5" rx="1" />
+  <rect class="ink" x="23" y="22" width="7" height="5" rx="1" />
+  <rect class="ink" x="33" y="22" width="7" height="5" rx="1" />
+  <rect class="ink" x="43" y="22" width="7" height="5" rx="1" />
+
+  <rect class="ink" x="11" y="30" width="8" height="5" rx="1" />
+  <rect class="ink" x="22" y="30" width="7" height="5" rx="1" />
+  <rect class="ink" x="32" y="30" width="7" height="5" rx="1" />
+  <rect class="ink" x="42" y="30" width="9" height="5" rx="1" />
+
+</svg>

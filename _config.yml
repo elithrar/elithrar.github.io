@@ -17,10 +17,10 @@ sass:
 permalink: "/article/:title/"
 
 # Setup
-title: "questionable services"
-tagline: "Technical writings about computing infrastructure, HTTP & security."
+title: "Questionable Services"
+tagline: "Writings about computing, agents, and the Internet."
 byline: "by Matt Silverlock"
-description: "Technical writings about computing infrastructure, HTTP & security."
+description: "Writings about computing, agents, and the Internet."
 domain: "blog.questionable.services"
 url: "https://blog.questionable.services"
 baseurl: ""

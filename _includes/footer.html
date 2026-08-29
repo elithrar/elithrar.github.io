@@ -1,18 +1,23 @@
-<small
-  >&copy; {{ site.time | date: "%Y" }}
-  <a href="mailto:{{ site.author.email }}">{{ site.author.name }}</a> | 
-  <a rel="me" href="https://mastodon.social/@elithrar">Mastodon</a> | Code snippets are
-  <a href="http://choosealicense.com/licenses/mit/" title="MIT license"
-    >MIT licensed</a
+<footer class="site-footer">
+  <small
+    >&copy; {{ site.time | date: "%Y" }}
+    <a href="mailto:{{ site.author.email }}">{{ site.author.name }}</a> |
+    <a rel="me" href="https://mastodon.social/@elithrar">Mastodon</a> | Code
+    snippets are
+    <a href="https://choosealicense.com/licenses/mit/" title="MIT license"
+      >MIT licensed</a
+    >
+    | Built with <a href="https://jekyllrb.com/">Jekyll</a></small
   >
-  | Built with <a href="http://jekyllrb.com/">Jekyll</a></small
->
+</footer>
 <!-- AnchorJS -->
 <script src="/public/js/anchor.min.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", function () {
     "use strict"
     anchors.options.placement = "left"
-    anchors.add(".post > h2, .post > h3, .post > h4, .post > h5, .post > h6")
+    anchors.add(
+      ".post-content > h2, .post-content > h3, .post-content > h4, .post-content > h5, .post-content > h6"
+    )
   })
 </script>
