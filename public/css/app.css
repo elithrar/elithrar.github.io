@@ -350,6 +350,14 @@ pre code {
   padding-bottom: 1rem;
 }
 
+.home-archives h2,
+.home-archives .related-posts {
+  font-family: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia,
+    "Times New Roman", serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
 .small-date {
   font-size: 0.75rem;
   margin-top: 0.2rem;
