@@ -44,7 +44,7 @@ p { margin: 0 0 1.25rem; }
 .post-meta { display: flex; flex-direction: column; align-items: flex-start; gap: .65rem; font: .8125rem/1.5 var(--mono); }
 time { color: var(--muted); font: .8125rem/1.5 var(--mono); }
 .featured-content { max-width: 52rem; min-width: 0; }
-.featured-content :is(h2, h3) { max-width: 20ch; font-size: clamp(1.875rem, 4.3vw, 3.75rem); line-height: 1.03; letter-spacing: -.045em; }
+.featured-content :is(h2, h3) { max-width: 24ch; text-wrap: balance; font-size: clamp(1.875rem, 4.3vw, 3.75rem); line-height: 1.03; letter-spacing: -.045em; }
 .featured-content :is(h2, h3) a, .writing-row a { color: var(--ink); text-decoration: none; }
 .featured-content :is(h2, h3) a:hover, .writing-row a:hover { color: var(--link); }
 .excerpt { margin: 1.25rem 0 0; max-width: 65ch; color: var(--muted); }
@@ -54,7 +54,7 @@ time { color: var(--muted); font: .8125rem/1.5 var(--mono); }
 .writing-row h2, .writing-row h3 { min-width: 0; font-size: clamp(1.25rem, 2.3vw, 1.875rem); line-height: 1.16; }
 .writing-row a { overflow-wrap: anywhere; display: flex; justify-content: space-between; align-items: baseline; gap: 1.5rem; min-height: 44px; }
 .row-arrow { flex-shrink: 0; color: var(--link); font: 1.5rem var(--mono); }
-.pagination { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: 1.5rem 0 4rem; font: .875rem var(--mono); }
+.pagination { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin: 1.5rem 0 4rem; font: .875rem var(--mono); }
 .pagination > * { display: inline-flex; align-items: center; min-height: 44px; }
 .pagination [aria-disabled] { color: var(--muted); }
 .compact-masthead { margin: 0; padding: 1.75rem 0; font-size: clamp(1.75rem, 4vw, 3rem); font-weight: 800; letter-spacing: -.06em; line-height: 1; border-bottom: 4px solid var(--ink); }
@@ -108,10 +108,9 @@ main:focus { outline: none; }
   .masthead h1 { font-size: clamp(2.75rem, 14vw, 5.5rem); }
   .masthead-caption { grid-template-columns: 1fr; gap: .5rem; margin-top: 1.25rem; }
   .byline { text-align: left; }
-  .featured-post, .article-header { grid-template-columns: 1fr; gap: 1.5rem; padding: 2rem 0; }
+  .featured-post, .article-header { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding: 2rem 0; }
   .featured-post { gap: .75rem; padding: 1.5rem 0 2rem; }
   .post-meta { flex-direction: row; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; }
-  .featured-content :is(h2, h3) { max-width: 24ch; }
   .writing-row { grid-template-columns: 1fr; gap: .5rem; padding: 1.25rem 0; }
   .writing-row a { gap: 1rem; }
   .post-content { width: 100%; padding: 0; margin: 2rem 0 3rem; font-size: 1.0625rem; }
