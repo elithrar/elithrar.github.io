@@ -1,37 +1,32 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<html lang="en-US">
   {% include head.html %}
-
-  <body>
-    <div class="container">
-      <div class="header">
-        <img
-          class="header-mark"
-          src="/public/favicon.svg"
-          width="64"
-          height="64"
-          alt=""
-          aria-hidden="true"
-        />
+  <body{% if page.url == "/" or paginator %} class="home"{% endif %}>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="utility-bar">
+          <a class="wordmark" href="/" aria-label="Questionable Services home"><img src="/public/favicon.svg" width="32" height="32" alt="" />QS<span aria-hidden="true"> / </span></a>
+          <nav aria-label="Main navigation">
+            <a href="/"{% if page.url == "/" or paginator %} aria-current="page"{% endif %}>Writing</a>
+            <a href="/archive/"{% if page.url == "/archive/" %} aria-current="page"{% endif %}>Archive</a>
+            <a href="/atom.xml">RSS <span aria-hidden="true">↗</span></a>
+          </nav>
+        </div>
         {% if page.url == "/" or paginator %}
-        <h1 class="header-title"><a href="/">{{ site.title }}</a></h1>
+        <div class="masthead">
+          <h1>Questionable<br />Services<span class="signal" aria-hidden="true">.</span></h1>
+          <div class="masthead-caption">
+            <p>{{ site.tagline }}</p>
+            <p class="byline">By <a href="https://twitter.com/@{{ site.author.twitter }}">{{ site.author.name }}</a></p>
+          </div>
+        </div>
         {% else %}
-        <p class="header-title"><a href="/">{{ site.title }}</a></p>
+        <p class="compact-masthead"><a href="/">{{ site.title }}</a></p>
         {% endif %}
-        <p class="lead header-lead">
-          {{ site.tagline }}
-        </p>
-        <p class="lead header-lead">
-          (by
-          <a href="https://twitter.com/@{{ site.author.twitter }}"
-            >{{ site.author.name }}</a
-          >)
-        </p>
-      </div>
-      {{ content }}
+      </header>
+      <main id="main" tabindex="-1">{{ content }}</main>
+      {% include footer.html %}
     </div>
-
-    <hr />
-    {% include footer.html %}
   </body>
 </html>

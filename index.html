@@ -2,54 +2,35 @@
 layout: default
 ---
 
-<div class="related home-archives">
-  <h2>From the <a href="/archive/">Archives</a></h2>
-  <ul class="related-posts center">
-    {% for post in site.posts limit:3 %}
-    <li class="small">
-      <a href="{{ post.url }}">
-        {{ post.title }}
-      </a>
-    </li>
-    {% endfor %}
-  </ul>
-</div>
-<hr />
-<div class="posts">
+<section class="writing" aria-labelledby="writing-title">
+  <div class="section-bar">
+    <h2 id="writing-title">{% if paginator.page == 1 %}Latest Writing{% else %}Earlier Writing{% endif %}</h2>
+    <span class="annotation">{{ paginator.page }} / {{ paginator.total_pages }}</span>
+  </div>
   {% for post in paginator.posts %}
-  <article class="post">
-    <h2 class="post-title">
-      <a href="{{ post.url }}">
-        {{ post.title }}
-      </a>
-    </h2>
-    <time class="post-month" datetime="{{ post.date | date_to_xmlschema }}"
-      >{{ post.date | date: "%B, %Y" }}</time
-    >
-    <span class="post-bullets" aria-hidden="true">&#8226;&#8226;&#8226;</span>
-    <div class="post-content">
-      {{ post.content }}
+  {% if forloop.first %}
+  <article class="featured-post">
+    <div class="post-meta"><span class="annotation">{% if paginator.page == 1 %}Latest Entry{% else %}From the Archive{% endif %}</span><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B, %Y" }}</time></div>
+    <div class="featured-content">
+      <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+      <div class="excerpt">{{ post.excerpt }}</div>
+      <a class="read-link" href="{{ post.url }}">Read article <span aria-hidden="true">↗</span><span class="sr-only">: {{ post.title }}</span></a>
     </div>
   </article>
-  <hr />
-  {% endfor %}
-</div>
-
-<div class="pagination">
-  {% if paginator.next_page %}
-  <a class="pagination-item older" href="/page{{paginator.next_page}}/"
-    >Older</a
-  >
   {% else %}
-  <span class="pagination-item older">Older</span>
-  {% endif %} {% if paginator.previous_page %} {% if paginator.previous_page ==
-  1 %}
-  <a class="pagination-item newer" href="/">Newer</a>
-  {% else %}
-  <a class="pagination-item newer" href="/page{{paginator.previous_page}}/"
-    >Newer</a
-  >
-  {% endif %} {% else %}
-  <span class="pagination-item newer">Newer</span>
+  <article class="writing-row">
+    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B, %Y" }}</time>
+    <h3><a href="{{ post.url }}">{{ post.title }}<span class="row-arrow" aria-hidden="true">↗</span></a></h3>
+  </article>
   {% endif %}
-</div>
+  {% endfor %}
+</section>
+<nav class="pagination" aria-label="Writing pagination">
+  {% if paginator.previous_page %}
+  <a href="{{ paginator.previous_page_path }}"><span aria-hidden="true">←</span> Newer</a>
+  {% else %}<span aria-disabled="true">← Newer</span>{% endif %}
+  <a class="archive-link" href="/archive/">All Posts <span aria-hidden="true">↗</span></a>
+  {% if paginator.next_page %}
+  <a href="{{ paginator.next_page_path }}">Older <span aria-hidden="true">→</span></a>
+  {% else %}<span aria-disabled="true">Older →</span>{% endif %}
+</nav>

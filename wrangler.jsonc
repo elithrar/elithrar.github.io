@@ -3,6 +3,7 @@
   "name": "blog",
   "account_id": "d458dbe698b8eef41837f941d73bc5b3",
   "workers_dev": false,
+  "preview_urls": true,
   "compatibility_date": "2026-08-29",
   "main": "src/index.ts",
   "routes": [

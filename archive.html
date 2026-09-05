@@ -1,24 +1,15 @@
 ---
 layout: default
 title: Archive
+permalink: /archive/
 ---
-
-<section class="related">
-  <h1>All Posts</h1>
-  <hr />
+<section class="archive" aria-labelledby="archive-title">
+  <div class="archive-header"><h1 id="archive-title">All Posts<span class="signal" aria-hidden="true">.</span></h1><span class="annotation">{{ site.posts | size }} Entries</span></div>
   <ul class="archive-list">
     {% for post in site.posts %}
-    <li class="archive-item">
-      <h2 class="post-title archive-title">
-        <a href="{{ site.baseurl}}{{ post.url }}">
-          {{ post.title }}
-        </a>
-      </h2>
-      <time
-        class="post-date small-date"
-        datetime="{{ post.date | date_to_xmlschema }}"
-        >Posted on {{ post.date | date_to_string }}</time
-      >
+    <li class="writing-row">
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B, %Y" }}</time>
+      <h2><a href="{{ post.url }}">{{ post.title }}<span class="row-arrow" aria-hidden="true">↗</span></a></h2>
     </li>
     {% endfor %}
   </ul>

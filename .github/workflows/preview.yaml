@@ -1,0 +1,58 @@
+name: Branch Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install npm dependencies
+        run: npm ci
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+      - name: Build and typecheck
+        run: npm run build
+      - name: Preserve rendered site for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: rendered-site
+          path: _site
+          retention-days: 7
+      - name: Upload preview version
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_SECRET }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx wrangler versions upload --preview-alias "pr-${PR_NUMBER}" 2>&1 | tee preview.log
+          node <<'NODE'
+          const fs = require('node:fs');
+          const log = fs.readFileSync('preview.log', 'utf8');
+          const urls = [...new Set(log.match(/https:\/\/[a-z0-9.-]+\.workers\.dev\/?/g) || [])];
+          const alias = urls.find(url => new URL(url).hostname.startsWith(`pr-${process.env.PR_NUMBER}-`));
+          if (!alias) throw new Error('Wrangler did not return the branch preview URL');
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `Branch preview: ${alias}\n`);
+          NODE
