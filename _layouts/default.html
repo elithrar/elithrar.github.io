@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en-US">
   {% include head.html %}
-  <body{% if page.url == "/" or paginator %} class="home"{% endif %}>
+  <body{% if paginator.page == 1 %} class="home"{% endif %}>
     <a class="skip-link" href="#main">Skip to content</a>
     <div class="site-shell">
       <header class="site-header">
         <div class="utility-bar">
-          <a class="wordmark" href="/" aria-label="Questionable Services home"><img src="/public/favicon.svg" width="32" height="32" alt="" />QS<span aria-hidden="true"> / </span></a>
+          <a class="wordmark" href="/" aria-label="Questionable Services home"><img src="/public/favicon.svg" width="32" height="32" alt="" />QS</a>
           <nav aria-label="Main navigation">
             <a href="/"{% if page.url == "/" or paginator %} aria-current="page"{% endif %}>Writing</a>
             <a href="/archive/"{% if page.url == "/archive/" %} aria-current="page"{% endif %}>Archive</a>
-            <a href="/atom.xml">RSS <span aria-hidden="true">↗</span></a>
+            <a href="/atom.xml">RSS</a>
           </nav>
         </div>
-        {% if page.url == "/" or paginator %}
+        {% if paginator.page == 1 %}
         <div class="masthead">
           <h1>Questionable<br />Services<span class="signal" aria-hidden="true">.</span></h1>
           <div class="masthead-caption">

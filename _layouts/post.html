@@ -9,10 +9,10 @@ layout: default
   <div class="post-content">{{ content }}</div>
 </article>
 <section class="related" aria-labelledby="related-title">
-  <div class="section-bar"><h2 id="related-title">Recent Posts</h2><a href="/archive/">All Posts <span aria-hidden="true">↗</span></a></div>
+  <div class="section-bar"><h2 id="related-title">Recent Posts</h2><a href="/archive/">All Posts <span aria-hidden="true">→</span></a></div>
   <ul class="related-posts">
     {% for post in site.related_posts limit:4 %}
-    <li><a href="{{ post.url }}">{{ post.title }}<span aria-hidden="true">↗</span></a></li>
+    <li><a href="{{ post.url }}">{{ post.title }}<span aria-hidden="true">→</span></a></li>
     {% endfor %}
   </ul>
 </section>
