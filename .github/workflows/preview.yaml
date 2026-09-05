@@ -40,6 +40,24 @@ jobs:
           name: rendered-site
           path: _site
           retention-days: 7
+      - name: Enable version preview URLs
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_SECRET }}
+        run: |
+          node --input-type=module <<'NODE'
+          const endpoint = 'https://api.cloudflare.com/client/v4/accounts/d458dbe698b8eef41837f941d73bc5b3/workers/scripts/blog/subdomain';
+          const headers = { Authorization: `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`, 'Content-Type': 'application/json' };
+          async function request(options = {}) {
+            const response = await fetch(endpoint, { ...options, headers });
+            const data = await response.json();
+            if (!response.ok || !data.success) throw new Error(`Preview settings failed: ${JSON.stringify(data.errors)}`);
+            return data.result;
+          }
+          const current = await request();
+          if (!current.previews_enabled) {
+            await request({ method: 'POST', body: JSON.stringify({ enabled: current.enabled, previews_enabled: true }) });
+          }
+          NODE
       - name: Upload preview version
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_SECRET }}
@@ -47,10 +65,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          npx wrangler versions upload --preview-alias "pr-${PR_NUMBER}" 2>&1 | tee preview.log
+          npx wrangler versions upload --preview-alias "pr-${PR_NUMBER}" 2>&1 | tee "$RUNNER_TEMP/preview.log"
           node <<'NODE'
           const fs = require('node:fs');
-          const log = fs.readFileSync('preview.log', 'utf8');
+          const log = fs.readFileSync(`${process.env.RUNNER_TEMP}/preview.log`, 'utf8');
           const urls = [...new Set(log.match(/https:\/\/[a-z0-9.-]+\.workers\.dev\/?/g) || [])];
           const alias = urls.find(url => new URL(url).hostname.startsWith(`pr-${process.env.PR_NUMBER}-`));
           if (!alias) throw new Error('Wrangler did not return the branch preview URL');
