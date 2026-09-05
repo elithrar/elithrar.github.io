@@ -4,6 +4,7 @@
   --ink: #111310;
   --muted: #5a5f56;
   --rule: #a6aaa3;
+  /* Signal marks actions and selection, plus the single homepage masthead accent. */
   --signal: #ff4f00;
   --link: #ad3500;
   --code-paper: #e7e5dc;
@@ -46,8 +47,7 @@ time { color: var(--muted); font: .8125rem/1.5 var(--mono); }
 .featured-content :is(h2, h3) { max-width: 20ch; font-size: clamp(1.875rem, 4.3vw, 3.75rem); line-height: 1.03; letter-spacing: -.045em; }
 .featured-content :is(h2, h3) a, .writing-row a { color: var(--ink); text-decoration: none; }
 .featured-content :is(h2, h3) a:hover, .writing-row a:hover { color: var(--link); }
-.excerpt { margin-top: 1.25rem; max-width: 65ch; color: var(--muted); }
-.excerpt p:last-child { margin-bottom: 0; }
+.excerpt { margin: 1.25rem 0 0; max-width: 65ch; color: var(--muted); }
 .read-link { display: inline-flex; align-items: center; justify-content: space-between; gap: 2rem; min-height: 44px; margin-top: 1.25rem; padding: .65rem 1rem; border: 1px solid var(--ink); color: var(--paper); background: var(--ink); font: .875rem var(--mono); text-decoration: none; }
 .read-link:hover { color: var(--ink); background: var(--signal); }
 .writing-row { display: grid; grid-template-columns: 1fr 3fr; align-items: baseline; gap: 2rem; padding: 1.6rem 0; border-bottom: 1px solid var(--rule); }
