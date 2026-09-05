@@ -21,11 +21,11 @@ img { display: block; max-width: 100%; height: auto; }
 h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: 750; line-height: 1.1; letter-spacing: -.035em; }
 p { margin: 0 0 1.25rem; }
 .site-shell { max-width: 1440px; margin: 0 auto; padding: 0 var(--gutter); }
-.utility-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 88px; border-bottom: 1px solid var(--ink); }
+.utility-bar { display: flex; flex-wrap: wrap; padding-block: .75rem; align-items: center; justify-content: space-between; gap: 1rem; min-height: 88px; border-bottom: 1px solid var(--ink); }
 .wordmark { display: flex; align-items: center; gap: .5rem; font: 700 1rem var(--mono); color: var(--ink); text-decoration: none; }
 .wordmark img { width: 32px; height: 32px; }
 .wordmark > span { color: var(--link); }
-.utility-bar nav { display: flex; gap: clamp(.75rem, 2.5vw, 2.5rem); }
+.utility-bar nav { display: flex; flex-wrap: wrap; max-width: 100%; gap: clamp(.75rem, 2.5vw, 2.5rem); }
 .utility-bar nav a { display: inline-flex; align-items: center; min-height: 44px; font: .8125rem var(--mono); text-decoration: none; color: var(--ink); }
 .utility-bar nav a[aria-current] { box-shadow: inset 0 -3px var(--signal); }
 .utility-bar nav a:hover { color: var(--link); }
@@ -63,7 +63,7 @@ time { color: var(--muted); font: .8125rem/1.5 var(--mono); }
 .compact-masthead a { color: var(--ink); text-decoration: none; }
 .article-header { display: grid; grid-template-columns: 1fr 3fr; gap: 2rem; padding: 3rem 0; border-bottom: 1px solid var(--rule); }
 .post-title { max-width: 24ch; font-size: clamp(2.125rem, 4.8vw, 4.5rem); line-height: 1.03; letter-spacing: -.05em; }
-.post-content { width: 75%; max-width: 74ch; margin: 2.5rem 0 4rem auto; padding-left: .5rem; font-size: 1.125rem; line-height: 1.65; }
+.post-content { width: calc(75% - 1.5rem); max-width: 74ch; margin: 2.5rem 0 4rem calc(25% + 1.5rem); font-size: 1.125rem; line-height: 1.65; }
 .post-content h2 { margin: 2.5rem 0 1rem; font-size: 1.875rem; }
 .post-content h3 { margin: 2rem 0 1rem; font-size: 1.5rem; }
 .post-content h4, .post-content h5, .post-content h6 { margin: 1.5rem 0 1rem; font-size: 1.125rem; }
