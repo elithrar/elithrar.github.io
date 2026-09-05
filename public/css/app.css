@@ -54,7 +54,7 @@ time { color: var(--muted); font: .8125rem/1.5 var(--mono); }
 .read-link:hover { color: var(--ink); background: var(--signal); }
 .writing-row { display: grid; grid-template-columns: 1fr 3fr; align-items: baseline; gap: 2rem; padding: 1.6rem 0; border-bottom: 1px solid var(--rule); }
 .writing-row h2, .writing-row h3 { min-width: 0; font-size: clamp(1.25rem, 2.3vw, 1.875rem); line-height: 1.16; }
-.writing-row a { display: flex; justify-content: space-between; align-items: baseline; gap: 1.5rem; min-height: 44px; }
+.writing-row a { overflow-wrap: anywhere; display: flex; justify-content: space-between; align-items: baseline; gap: 1.5rem; min-height: 44px; }
 .row-arrow { flex-shrink: 0; color: var(--link); font: 1.5rem var(--mono); }
 .pagination { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: 1.5rem 0 4rem; font: .8125rem var(--mono); }
 .pagination > * { display: inline-flex; align-items: center; min-height: 44px; }
