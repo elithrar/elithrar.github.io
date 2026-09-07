@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <path d="m3 40 31-4 12 4-30 7z" fill="#555"/>
+  <path d="m2 17 31-8 11 6v25l-32 7-10-6z" fill="#503728" stroke="#21160f"/>
+  <path d="m3 17 30-7 10 5-30 8z" fill="#bd9978"/>
+  <path d="m12 23 31-8v24l-31 7z" fill="#937050"/>
+  <path d="m14 24 27-7v20l-27 7z" fill="#aa8360"/>
+  <path d="m3 19 7 4v21l-7-4z" fill="#745239"/>
+  <path d="m4 20 5 3v18l-5-3z" fill="#8f6949"/>
+  <path d="m12 23 31-8v8l-31 8z" fill="#b8916c" stroke="#674932"/>
+  <path d="m13 24 28-7m-28 6 28-7M14 44l26-7" stroke="#dbc1a1"/>
+  <path d="m17 14 1-7 10-3 4 3v4l-3 1V8l-9 2v3z" fill="#5d402d" stroke="#21160f"/>
+  <path d="m18 7 10-3 3 2-11 3z" fill="#c1a285"/>
+  <path d="m18 20 3-1v24l-3 1zM34 16l3-1v24l-3 1z" fill="#694b35"/>
+  <path d="m18 27 4-1v5l-4 1zM34 23l4-1v5l-4 1z" fill="#ded2a3" stroke="#4f4730"/>
+  <path d="m19 28 2-.5v2l-2 .5zM35 24l2-.5v2l-2 .5z" fill="#77725c"/>
+  <path d="m5 22 0 17m10-7v9m24-17v10" stroke="#cba685" stroke-dasharray="1 2"/>
+</svg>

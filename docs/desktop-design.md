@@ -4,7 +4,7 @@ The homepage presents recent writing as independent documents and the complete a
 
 ## Current direction: NeXTSTEP over greyUI
 
-The [NeXTSTEP design system](nextstep/design-system.md), written before the skin implementation, is now the visual specification. Its [36-image primary-source corpus](nextstep/README.md) includes original NeXTSTEP 3.3 workspace captures, application windows, menus and control-state illustrations, with exact provenance and checksums. The earlier Windows 3.11 study is historical context.
+The [NeXTSTEP design system](nextstep/design-system.md), written before the skin implementation, is now the visual specification. Its [40-image corpus](nextstep/README.md) combines 36 original-manual illustrations with four user-supplied color screenshots. The latter now govern appearance; the manual governs anatomy and behavior. The first revision incorrectly used grayscale manual figures as the color target. The earlier Windows 3.11 study is historical context.
 
 WorkbenchOS supplies the independent-window model; actual greyUI Window, Button, Input, Collapsible and Layer primitives supply the component foundation. `desktop/nextstep-theme.css` owns shared tokens and component chrome; `desktop/desktop.css` owns geometry, compact layout and reader typography. The [current review record](nextstep/review.md) maps findings back to corpus IDs and distinguishes verified behavior from the blocked browser review.
 
@@ -12,7 +12,7 @@ WorkbenchOS supplies the independent-window model; actual greyUI Window, Button,
 - Compact (<=960px or coarse pointer): one active content-fitting window in native page flow, a small sticky Blog disclosure, and three app launchers when all windows are closed. Close always removes the window. About reveals the gray desktop below its content.
 - Recents always contains exactly the three newest published posts. Archive contains every post in one descending-date icon grid. Subsequence title search accepts abbreviations without reordering chronology. No year folders.
 - Canonical URLs, RSS, browser history, modifier-click, local table/code scrolling, anchors, static fallback and retained reading positions remain available. The redundant document-level web toolbar is removed.
-- Haiku document/folder/info artwork follows the user's WorkbenchOS icon request, inside NeXT-style tiles. Its MIT license and attribution are committed; it is explicitly documented as a cross-project asset exception.
+- Original shaded paper, archive-case and CRT artwork replaces the mixed Haiku/flat icon sets. Compact controls share one persistent title row; the 132px Blog palette stays black and switches to a separate 288px Recents page.
 
 ## Review record
 

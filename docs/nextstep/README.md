@@ -1,8 +1,10 @@
 # NeXTSTEP research corpus
 
+**Current target: 40 images.** The [four user-supplied color desktop references, NS37–NS40](color-references/README.md), take precedence for palette, proportions and icon treatment. The 36 manual illustrations below remain the reference for anatomy and behavior. Their grayscale colors are not the color-desktop theme.
+
 36 distinct original GIF illustrations from NeXT’s **NEXTSTEP User Interface Guidelines, Release 3.3 (1995)**, preserved at their retrieved dimensions. These include annotated workspace screenshots, application windows, menus and state diagrams. They are **not 36 independent full-desktop captures**. No OPENSTEP, Rhapsody or Window Maker images are included. The concentration on a single primary manual makes the target coherent; it does not establish how every third-party application looked.
 
-Retrieved 2026-09-07 from the [original-manual mirror](https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/). Original illustrations © NeXT Computer, Inc.; included here as attributed research references, not licensed product artwork. The implementation loads none of these images. The separate Haiku app artwork is MIT licensed. `manifest.json` records exact image and chapter URLs, dimensions, byte counts and SHA-256 checksums. Contact sheets are convenience derivatives; they do not increase the corpus count.
+Retrieved 2026-09-07 from the [original-manual mirror](https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/). Original illustrations © NeXT Computer, Inc.; included here as attributed research references, not licensed product artwork. The implementation loads none of these images. Product icons are original project-owned SVG illustrations; none of these reference images is served as product artwork. `manifest.json` records exact image and chapter URLs, dimensions, byte counts and SHA-256 checksums. Contact sheets are convenience derivatives; they do not increase the corpus count.
 
 All 36 images were visually inspected. The observations below describe their pixels; the final column records the proposed adaptation, not a claim about historic behavior. See [the implementation specification](design-system.md) for normative rules and explicitly documented departures.
 

@@ -18,6 +18,10 @@ const ABOUT = "about"
 function Desktop({ posts }: { posts: Post[] }) {
   const compact = useCompactLayout()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [recentMenuOpen, setRecentMenuOpen] = useState(false)
+  useEffect(() => {
+    if (!menuOpen && compact) setRecentMenuOpen(false)
+  }, [menuOpen, compact])
   const menuRef = useRef<HTMLElement>(null)
   useEffect(() => {
     if (!menuOpen) return
@@ -28,7 +32,7 @@ function Desktop({ posts }: { posts: Post[] }) {
     return () => document.removeEventListener("pointerdown", outside)
   }, [menuOpen])
   const pagePositions = useRef(new Map<string, number>())
-  const [viewport, setViewport] = useState({ width: innerWidth - 260, height: innerHeight - 100 })
+  const [viewport, setViewport] = useState({ width: innerWidth - 234, height: innerHeight - 100 })
   const make = (id: string, index: number): AppWindow => ({
     id,
     minimized: false,
@@ -80,6 +84,7 @@ function Desktop({ posts }: { posts: Post[] }) {
   }
   const open = (id: string, navigate = true) => {
     setMenuOpen(false)
+    setRecentMenuOpen(false)
     setWindows((old) =>
       old.some((win) => win.id === id)
         ? old.map((win) => (win.id === id ? { ...win, minimized: false } : win))
@@ -234,6 +239,7 @@ function Desktop({ posts }: { posts: Post[] }) {
         <header
           ref={menuRef}
           className="desktop-bar"
+          data-recents-open={recentMenuOpen}
           onBlur={(event) => {
             if (event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) setMenuOpen(false)
           }}
@@ -283,7 +289,14 @@ function Desktop({ posts }: { posts: Post[] }) {
             <div className="menu-heading">Blog</div>
           )}
           <nav id="desktop-commands" aria-label="Desktop" hidden={compact && !menuOpen}>
-            <WindowDisclosure label="Recents">{recentItems}</WindowDisclosure>
+            <WindowDisclosure
+              label="Recents"
+              open={recentMenuOpen}
+              onOpenChange={setRecentMenuOpen}
+              compactMenu={compact}
+            >
+              {recentItems}
+            </WindowDisclosure>
             <Button id="archive-launcher" onClick={() => open(ARCHIVE)}>
               Archive
             </Button>
@@ -408,7 +421,12 @@ function Desktop({ posts }: { posts: Post[] }) {
                       dismiss(win.id, false)
                     }}
                   >
-                    <span aria-hidden="true">×</span>
+                    <svg className="close-glyph" viewBox="0 0 14 14" width="14" height="14" aria-hidden="true">
+                      <path fill="#aaa" stroke="#000" d="M.5.5h13v13H.5z" />
+                      <path stroke="#fff" d="M1 12V1h11" />
+                      <path stroke="#555" d="M2 12h10V2" />
+                      <path stroke="#000" strokeWidth="1.2" d="m3 3 8 8M11 3l-8 8" />
+                    </svg>
                   </Button>
                 </Window.TitleBar>
                 <Window.Body>
@@ -418,7 +436,7 @@ function Desktop({ posts }: { posts: Post[] }) {
                     <Explorer posts={posts} onNavigate={onNavigate} />
                   ) : (
                     <div className="document-scroll about-content">
-                      <img src="/public/favicon.svg" width="64" height="64" alt="" />
+                      <AppIcon app="about" />
                       <h1>Questionable Services</h1>
                       <p>Writings about computing, agents, and the Internet.</p>
                       <p>

@@ -15,6 +15,14 @@ await build({
   define: { "process.env.NODE_ENV": '"production"' },
 })
 const script = await readFile(join(temp, "app.js"), "utf8")
+// Match the document's stylesheet order, including inherited legacy blog rules.
+const pageCSS = (
+  await Promise.all(
+    ["public/css/poole.css", "public/css/app.css", "public/css/syntax.css", join(temp, "app.css")].map((path) =>
+      readFile(path, "utf8")
+    )
+  )
+).join("\n")
 await build({ entryPoints: ["desktop/catalog.ts"], bundle: true, format: "esm", outfile: join(temp, "catalog.mjs") })
 const { filterPosts, clampRect, initialRect } = await import(join(temp, "catalog.mjs"))
 const catalog = JSON.parse(await readFile("_site/desktop-catalog.json", "utf8"))
@@ -95,11 +103,11 @@ function button(document, name) {
 async function switchWindow(dom, document, name) {
   click(dom, document.querySelector(".recents-trigger"))
   await until(() =>
-    [...document.querySelectorAll(".recents-list button")].some((node) => node.textContent.includes(name))
+    [...document.querySelectorAll(".recents-list nav button")].some((node) => node.textContent.includes(name))
   )
   click(
     dom,
-    [...document.querySelectorAll(".recents-list button")].find((node) => node.textContent.includes(name))
+    [...document.querySelectorAll(".recents-list nav button")].find((node) => node.textContent.includes(name))
   )
 }
 async function closeWindow(dom, document, name) {
@@ -325,7 +333,7 @@ test("Recents retains full titles, close on Escape, and recover after closing ev
     await until(() => trigger.getAttribute("aria-expanded") === "true")
     for (const post of catalog.slice(0, 3))
       assert.ok(document.querySelector(".recents-list").textContent.includes(post.title))
-    const item = document.querySelector(".recents-list button")
+    const item = document.querySelector(".recents-list nav button")
     item.focus()
     item.dispatchEvent(new dom.window.KeyboardEvent("keydown", { key: "Escape", bubbles: true }))
     await until(() => trigger.getAttribute("aria-expanded") === "false")
@@ -389,10 +397,10 @@ test("Recents contains only the three newest posts, independent of open or close
       click(dom, button(document, "Recents"))
       await until(() => document.querySelector(".recents-list"))
       assert.deepEqual(
-        [...document.querySelectorAll(".recents-list button")].map((node) => node.textContent),
+        [...document.querySelectorAll(".recents-list nav button")].map((node) => node.textContent),
         catalog.slice(0, 3).map((post) => post.title)
       )
-      click(dom, document.querySelector(".recents-list button"))
+      click(dom, document.querySelector(".recents-list nav button"))
       await until(() => region(document, first.url) && !region(document, first.url).hidden)
       assert.equal(document.querySelectorAll(`[data-window-id="${first.url}"]`).length, 1)
       assert.equal(document.querySelector(".recents-trigger").getAttribute("aria-label"), "Recents")
@@ -448,7 +456,7 @@ test("compact frame styles fit About content while the desktop background fills 
   }
 })
 
-test("empty mobile desktop exposes Haiku Recents, Archive, and About launchers", async () => {
+test("empty mobile desktop exposes consistent Recents, Archive, and About launchers", async () => {
   for (const width of [320, 390, 768]) {
     const { dom, document, close } = await launch({ width, path: first.url })
     try {
@@ -473,10 +481,10 @@ test("empty mobile desktop exposes Haiku Recents, Archive, and About launchers",
       launchIcon("Recents")
       await until(() => desktop.querySelector(".recents-list"))
       assert.deepEqual(
-        [...desktop.querySelectorAll(".recents-list button")].map((node) => node.textContent),
+        [...desktop.querySelectorAll(".recents-list nav button")].map((node) => node.textContent),
         catalog.slice(0, 3).map((post) => post.title)
       )
-      click(dom, desktop.querySelector(".recents-list button"))
+      click(dom, desktop.querySelector(".recents-list nav button"))
       await until(() => region(document, first.url))
       assert.equal(desktop.hidden, true)
       await closeWindow(dom, document, first.title)
@@ -488,7 +496,7 @@ test("empty mobile desktop exposes Haiku Recents, Archive, and About launchers",
       launchIcon("Archive")
       await until(() => region(document, "archive"))
       assert.equal(region(document, "archive").querySelectorAll(".file-grid a").length, catalog.length)
-      assert.ok((await readFile("_site/public/icons/haiku/LICENSE.txt", "utf8")).includes("Haiku, Inc."))
+      assert.ok((await readFile("public/icons/nextstep/README.md", "utf8")).includes("MIT"))
     } finally {
       close()
     }
@@ -549,7 +557,7 @@ test("miniwindows restore a non-recent document without fetching again or pollut
     click(dom, document.querySelector(".desktop-bar .recents-trigger"))
     await until(() => document.querySelector(".desktop-bar .recents-list"))
     assert.deepEqual(
-      [...document.querySelectorAll(".desktop-bar .recents-list button")].map((b) => b.textContent),
+      [...document.querySelectorAll(".desktop-bar .recents-list nav button")].map((b) => b.textContent),
       catalog.slice(0, 3).map((p) => p.title)
     )
   } finally {
@@ -570,7 +578,7 @@ test("compact palette supports actual keyboard opening, item navigation, selecti
     assert.equal(document.getElementById("desktop-commands").hidden, false)
     const trigger = document.activeElement
     key(trigger, "ArrowRight")
-    await until(() => document.activeElement === document.querySelector(".desktop-bar .recents-list button"))
+    await until(() => document.activeElement === document.querySelector(".desktop-bar .recents-list nav button"))
     key(document.activeElement, "End")
     assert.equal(document.activeElement.textContent, catalog[2].title)
     key(document.activeElement, "Home")
@@ -619,6 +627,135 @@ test("bottom resize zones change document geometry with keyboard controls and pr
     assert.equal(reader.scrollTop, 120)
     assert.equal(document.querySelector(".document-toolbar"), null)
     assert.equal(document.querySelector(".desktop-brand"), null)
+  } finally {
+    close()
+  }
+})
+
+test("final CSS preserves black menu headers and contrasting focus in every command state", async () => {
+  const { inspectCascade } = await import("./css-cascade.mjs")
+  const value = inspectCascade(pageCSS)
+  const { dom, document, close } = await launch({ width: 390 })
+  try {
+    const toggle = document.getElementById("menu-toggle")
+    for (const expanded of [false, true]) {
+      if ((toggle.getAttribute("aria-expanded") === "true") !== expanded) click(dom, toggle)
+      await until(() => toggle.getAttribute("aria-expanded") === String(expanded))
+      for (const state of ["rest", "hover", "active", "focus-visible"]) {
+        if (state !== "rest") toggle.setAttribute(`data-test-${state}`, "")
+        assert.equal(value(toggle, "background-color"), "#000", `${expanded}/${state}: title must stay black`)
+        assert.equal(value(toggle, "color"), "#fff", `${expanded}/${state}: title must stay white`)
+        if (state === "focus-visible") assert.match(value(toggle, "outline"), /#fff/)
+        toggle.removeAttribute(`data-test-${state}`)
+      }
+    }
+    const command = document.getElementById("archive-launcher")
+    command.setAttribute("data-test-active", "")
+    assert.equal(value(command, "background-color"), "#fff")
+    assert.equal(value(command, "color"), "#000")
+    assert.equal(value(document.documentElement, "--ns-workspace"), "#555577")
+    assert.equal(value(command, "--ns-face"), "#aaa")
+    const luminance = (hex) => {
+      const raw = hex.slice(1),
+        rgb = raw.length === 3 ? [...raw].map((c) => c + c).join("") : raw
+      const channels = [0, 2, 4]
+        .map((i) => parseInt(rgb.slice(i, i + 2), 16) / 255)
+        .map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4))
+      return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722
+    }
+    assert.ok(
+      (luminance(value(command, "--ns-face")) + 0.05) / (luminance(value(command, "--ns-muted")) + 0.05) >= 4.5,
+      "Secondary text must remain readable on the darker panel"
+    )
+  } finally {
+    close()
+  }
+})
+
+test("compact menus retain palette proportions and switch to a separate Recents page", async () => {
+  const { inspectCascade } = await import("./css-cascade.mjs")
+  const value = inspectCascade(pageCSS)
+  for (const width of [320, 390, 768]) {
+    const { dom, document, close } = await launch({ width })
+    try {
+      const bar = document.querySelector(".desktop-bar"),
+        toggle = document.getElementById("menu-toggle")
+      assert.equal(value(bar, "width"), "132px")
+      click(dom, toggle)
+      await until(() => !document.getElementById("desktop-commands").hidden)
+      assert.equal(value(document.getElementById("desktop-commands"), "width"), "100%")
+      click(dom, bar.querySelector(".recents-trigger"))
+      await until(() => bar.dataset.recentsOpen === "true" && button(document, "Back to Blog"))
+      assert.match(value(bar, "width"), /288px/)
+      assert.equal(value(toggle, "display"), "none")
+      assert.equal(value(document.getElementById("archive-launcher"), "display"), "none")
+      assert.equal(bar.querySelectorAll(".recents-list nav button").length, 3)
+      click(dom, button(document, "Back to Blog"))
+      await until(() => bar.dataset.recentsOpen === "false")
+      assert.equal(document.activeElement, bar.querySelector(".recents-trigger"))
+      assert.equal(value(bar, "width"), "132px")
+      const title = region(document, first.url).querySelector(".greyui-window-tab")
+      assert.equal(value(title, "position"), "sticky")
+      assert.equal(value(title, "top"), "8px")
+      assert.equal(value(bar, "position"), "fixed")
+      assert.equal(value(title, "height"), "44px")
+      assert.equal(value(region(document, first.url).querySelector(".window-close"), "width"), "44px")
+    } finally {
+      close()
+    }
+  }
+})
+
+test("color references extend the manual to a 40-image corpus with exact attachment provenance", async () => {
+  const { createHash } = await import("node:crypto")
+  const manual = JSON.parse(await readFile("docs/nextstep/manifest.json", "utf8"))
+  const color = JSON.parse(await readFile("docs/nextstep/color-references/manifest.json", "utf8"))
+  assert.equal(manual.length + color.length, 40)
+  assert.equal(new Set([...manual, ...color].map((item) => item.sha256)).size, 40)
+  for (const item of color) {
+    assert.match(item.source, /^User attachment IMG_06/)
+    const bytes = await readFile(`docs/nextstep/color-references/${item.file}`)
+    assert.equal(createHash("sha256").update(bytes).digest("hex"), item.sha256)
+  }
+  const workspace = color.find((item) => item.id === "NS38")
+  assert.equal(workspace.palette[0].hex, "#555577")
+  assert.equal(workspace.palette[1].hex, "#aaaaaa")
+})
+
+test("window, file-viewer and dock materials agree with the color references across focus states", async () => {
+  const { inspectCascade } = await import("./css-cascade.mjs")
+  const value = inspectCascade(pageCSS)
+  const { dom, document, close } = await launch()
+  try {
+    await until(() => region(document, first.url)?.querySelector(".article-content"))
+    const firstWindow = region(document, first.url),
+      secondWindow = region(document, second.url)
+    assert.equal(value(firstWindow.querySelector(".greyui-window-tab"), "background-color"), "#000")
+    assert.equal(value(secondWindow.querySelector(".greyui-window-tab"), "background-color"), "#aaa")
+    assert.equal(value(secondWindow.querySelector(".greyui-window-body"), "background-color"), "#fff")
+    assert.equal(value(secondWindow.querySelector(".greyui-window-frame"), "opacity"), "1")
+    assert.equal(value(region(document, "archive").querySelector(".file-scroll"), "background-color"), "#aaa")
+    for (const win of [firstWindow, secondWindow]) {
+      const control = win.querySelector(".window-close")
+      const padding = value(control, "padding")
+      control.setAttribute("data-test-active", "")
+      assert.equal(value(control, "padding"), padding)
+      control.removeAttribute("data-test-active")
+      control.setAttribute("data-test-focus-visible", "")
+      assert.match(value(control, "outline"), win === firstWindow ? /#fff/ : /#000/)
+    }
+    const tile = document.getElementById("archive-desktop-launcher")
+    assert.equal(value(tile, "width"), "64px")
+    assert.equal(value(tile, "height"), "64px")
+    assert.equal(document.querySelector('img[src*="haiku"]'), null)
+    for (const img of document.querySelectorAll(".desktop-app-icon, .file-icon")) {
+      assert.ok(img.getAttribute("src").startsWith("/public/icons/nextstep/"))
+      assert.equal(value(img, "border-radius"), "0")
+      assert.ok((await readFile(`_site${img.getAttribute("src")}`)).length > 0)
+    }
+    click(dom, document.getElementById("archive-launcher"))
+    await until(() => region(document, "archive").dataset.active === "true")
+    assert.equal(value(firstWindow.querySelector(".greyui-window-body"), "background-color"), "#fff")
   } finally {
     close()
   }

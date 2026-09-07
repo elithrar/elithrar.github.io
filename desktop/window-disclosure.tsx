@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState, type ReactNode } from "react"
-import { Collapsible } from "greyui"
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react"
+import { Button, Collapsible } from "greyui"
 
 // Inline disclosures keep recent posts in keyboard tab order and avoid a
 // floating-positioning dependency for the narrow-screen navigation surface.
@@ -7,12 +7,34 @@ export function WindowDisclosure({
   label,
   icon,
   children,
+  open: controlledOpen,
+  onOpenChange,
+  compactMenu = false,
 }: {
   label: string
   icon?: ReactNode
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  compactMenu?: boolean
   children: (close: () => void) => ReactNode
 }) {
-  const [open, setOpen] = useState(false)
+  const [internalOpen, setInternalOpen] = useState(false)
+  const open = controlledOpen ?? internalOpen
+  const setOpen = (next: boolean) => {
+    setInternalOpen(next)
+    onOpenChange?.(next)
+  }
+  const returnFocus = useRef(false)
+  const closeToTrigger = () => {
+    returnFocus.current = true
+    setOpen(false)
+  }
+  useLayoutEffect(() => {
+    if (!open && returnFocus.current) {
+      root.current?.querySelector<HTMLButtonElement>("button")?.focus()
+      returnFocus.current = false
+    }
+  }, [open])
   const keyboardOpen = useRef(false)
   const root = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -36,8 +58,7 @@ export function WindowDisclosure({
         if ((event.key === "Escape" || event.key === "ArrowLeft") && open) {
           event.preventDefault()
           event.stopPropagation()
-          setOpen(false)
-          root.current?.querySelector<HTMLButtonElement>("button")?.focus()
+          closeToTrigger()
           return
         }
         if (!["ArrowDown", "ArrowUp", "ArrowRight", "Home", "End"].includes(event.key)) return
@@ -48,7 +69,7 @@ export function WindowDisclosure({
           setOpen(true)
           return
         }
-        const items = [...(root.current?.querySelectorAll<HTMLButtonElement>(".recents-list button") ?? [])]
+        const items = [...(root.current?.querySelectorAll<HTMLButtonElement>(".recents-list nav button") ?? [])]
         const index = items.indexOf(event.target as HTMLButtonElement)
         const next =
           event.key === "Home"
@@ -64,7 +85,16 @@ export function WindowDisclosure({
         <span>{label}</span>
       </Collapsible.Trigger>
       <Collapsible.Panel className="recents-list">
-        <div className="menu-heading">{label}</div>
+        <div className="menu-heading">
+          {compactMenu && (
+            <Button className="palette-back" aria-label="Back to Blog" onClick={closeToTrigger}>
+              <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                <path d="M8 2 4 6l4 4" fill="none" stroke="currentColor" strokeWidth="1.5" />
+              </svg>
+            </Button>
+          )}
+          <span>{label}</span>
+        </div>
         <nav
           aria-label={label}
           ref={(node) => {

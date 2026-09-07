@@ -2,6 +2,34 @@
 
 Reviewed 2026-09-07 against [the design system](design-system.md), written before implementation, and [all 36 original reference images](README.md). This is a source, CSS-cascade and automated behavior review. The historical corpus was visually inspected; the implemented site has **not** passed a rendered-browser review.
 
+## Color-reference correction: current review
+
+The user-supplied screenshot IMG_0609.png demonstrated that the previous implementation was not visually faithful. NS37–NS40, now preserved with exact attachment provenance, correct the research target. The corpus is now 40 images: 36 manual illustrations plus four distinct color desktop references. The smaller duplicate File Viewer screenshot and the failing blog screenshot are not counted as additional NeXTSTEP references.
+
+### Corrections tied to evidence
+
+| Finding | Reference | Correction and verification |
+| --- | --- | --- |
+| Wrong neutral desktop and pale controls | NS37–NS39 | Set workspace to #555577, face to #AAAAAA and dark edges to #555555. Palette tokens also cover the compact body background. Darkened secondary text to #333333 so dates remain at least 4.5:1 on the darker gray field. Checked against dominant pixels in the supplied files and final CSS. |
+| Expanded Blog header turns white | IMG_0609 / NS26, NS38 | Replace competing hard-coded button/header states with component material variables. A before/after cascade check reproduces the old #FFF result and the corrected #000 result. Final-sheet tests cover rest, hover, pressed, expanded and keyboard focus, including white outline contrast. |
+| Full-width navigation looks attached to the article | IMG_0609 / NS38 | A 132px command palette shares its heading width. Mobile Recents uses a separate 288px page with a black heading and real Back action instead of an oversized nested command stack. Width/visibility and Back focus are checked at 320/390/768px. |
+| Document identity scrolls away | IMG_0609 / NS14, NS40 | Put Blog, document title and Close in one 44px mobile row. Window title is sticky, menu is fixed, and a purple gutter covers passing page content. Window height remains natural. Source/cascade checks pass; physical sticky behavior remains an explicit browser gate. |
+| Generic title glyph and heavy chrome | NS13–NS15, NS38 | Use a dedicated 14-unit SVG Close widget, small nested-square miniature glyph, 22px desktop title and 7px divided resize strip. Retain 44px compact hit targets while keeping the visible glyph small. |
+| One bevel applied to every surface | NS19, NS32–NS33, NS38 | Separate shallow menu seams, raised action controls, recessed inputs/file well, square title glyphs and stronger two-stage dock edges. Keep hard perimeter shadows without blur. |
+| Haiku/flat icon mixture | NS38–NS40 | Replace active icon references with a single original paper, leather-case and CRT SVG family; reuse the paper icon for Archive files and miniwindows. Inspect artwork at 48px and enlarged nearest-neighbor scale. These are original interpretations, not historic NeXT artwork. |
+| White Archive resembles a generic web grid | NS19, NS38 | Use a recessed medium-gray file field and gray surrounding controls; selected file labels use white, retaining the full descending-date grid and fuzzy search. |
+| Legacy CSS can alter the skin | IMG_0609 / consistency contract | Include Poole, blog, syntax and bundled desktop CSS in cascade checks. This caught inherited rounded image corners; reset them for icons. Check inactive paper stays white/opaque and title controls retain contrasting focus and stable pressed padding. |
+
+![Original icon artwork, native size and enlarged for inspection](icon-review.png)
+
+This image is an **artwork inspection sheet**, not a screenshot of the implemented site. It is not counted in the reference corpus.
+
+### Validation boundaries
+
+The targeted cascade helper uses PostCSS and the `specificity` package to evaluate matching declarations, importance, source order and variable resolution for the tested properties. It models pointer/focus pseudo-states explicitly and includes every stylesheet in document order. It is deliberately limited: it does not perform layout, rasterization, scrolling, media-query evaluation, pseudo-element rendering or pointer hit testing. We do not claim it is a browser emulator.
+
+The supplied Chrome connection failed again, including discovery/reselection recovery, with `CDP operation refresh tabs timed out after 20000ms`. Actual rendered comparison, real Safari/Chrome scrolling, sticky containment, browser-bar transitions, pointer dragging and 200% zoom **remain unverified**. This PR is not ready for visual sign-off. The earlier claims below describe previous source review and must not be read as proof that those pixels matched the references.
+
 ## Research-to-implementation checks and corrections
 
 | Reference / rule | Finding | Correction and evidence |
@@ -24,10 +52,10 @@ Reviewed 2026-09-07 against [the design system](design-system.md), written befor
 ## Completed verification
 
 - `npm run build` passes: esbuild desktop bundle, real Jekyll output and both TypeScript targets. The existing Liquid warnings in two unchanged Go posts remain.
-- `npm test`: **21 passed**. Includes 26-post catalog/canonical completeness; date order and abbreviated search; geometry bounds; opening, deduplication, close/minimize/restore and focus; history and anchors; failure/retry/static fallback; output exclusions; 320/390/540/768/960 compact modes and 1024px coarse-pointer mode; retained page positions; mode transitions; complete Recents titles; closed desktop launchers; compact frame sizing; all 36 NeXTSTEP image checksums/dimensions; inactive title-control behavior; older miniwindow restoration; keyboard palette navigation; keyboard resizing. The retained historical 20-image corpus is also verified.
+- `npm test`: **25 passed** after the color-reference corrections. Includes 26-post catalog/canonical completeness; date order and abbreviated search; geometry bounds; opening, deduplication, close/minimize/restore and focus; history and anchors; failure/retry/static fallback; output exclusions; 320/390/540/768/960 compact modes and 1024px coarse-pointer mode; retained page positions; mode transitions; complete Recents titles; closed desktop launchers; compact frame sizing; all 36 manual-image checksums/dimensions plus the four color-reference checksums; inactive title-control behavior; older miniwindow restoration; keyboard palette navigation; keyboard resizing. The retained historical 20-image corpus is also verified.
 - `git diff --check` passes.
 - Reviewed CSS inheritance against installed greyUI's actual styles, specifically widget order, inactive-body selectors, focus outlines, pressed padding, gradients, bevels and shadow pseudo-elements.
-- Research files remain excluded from the generated public site. Only the MIT-licensed Haiku app icons are served as product artwork.
+- Research files remain excluded from the generated public site. Only original project-owned icons are loaded by the current interface; historical Haiku files retain their attribution but are unused.
 
 ## Remaining required browser review
 
@@ -45,4 +73,4 @@ Keep PR #60 in draft until the following actual-render loop completes. Capture e
 | Keyboard | Focus visible on gray/white/black surfaces; pressed labels stable; no hidden focus; submenu Home/End/Escape; inactive Close retains reader; miniwindow restores. | NS14, NS26, NS32, NS36 |
 | Print | Only active article, no menu/dock/chrome, full prose and wrapping code. | Reading contract |
 
-Intentional historical departures remain documented: fixed main menu, attached-only submenu, native right-side browser scrollbars, one-tap opening, mobile layout, keyboard accessibility, Zoom convenience, flat fuzzy Archive and Haiku artwork. These are explicit product decisions; remaining visual/scroll verification is an unfinished validation gate.
+Intentional historical departures remain documented: fixed main menu, attached desktop submenu/mobile Back page, native right-side browser scrollbars, one-tap opening, mobile layout, keyboard accessibility, Zoom convenience, flat fuzzy Archive and original interpreted artwork. These are explicit product decisions; remaining visual/scroll verification is an unfinished validation gate.

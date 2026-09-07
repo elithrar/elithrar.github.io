@@ -44,6 +44,8 @@
     "@types/react-dom": "^19.2.7",
     "esbuild": "^0.28.2",
     "jsdom": "^26.1.0",
+    "postcss": "^8.5.28",
+    "specificity": "^1.0.0",
     "typescript": "^6.0.3",
     "vite": "^7.3.6",
     "wrangler": "^4.127.1"

@@ -35,7 +35,7 @@
   position: absolute;
   top: 12px;
   left: 12px;
-  width: 156px;
+  width: 132px;
   z-index: 100;
 }
 .desktop-bar nav {
@@ -52,7 +52,7 @@
   position: absolute;
   top: 0;
   bottom: 84px;
-  left: 178px;
+  left: 152px;
   right: 82px;
   overflow: hidden;
 }
@@ -73,13 +73,15 @@
   flex-direction: column;
   padding: 4px 0;
   width: 64px;
-  min-height: 78px;
+  height: 64px;
+  min-height: 64px;
 }
 .desktop-app-icon {
+  border-radius: 0;
   display: block;
   flex-shrink: 0;
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   margin: 0;
 }
 .desktop-recents-trigger > span:last-child {
@@ -96,6 +98,8 @@
   line-height: 18px;
 }
 .file-icon {
+  margin: 0;
+  border-radius: 0;
   display: block;
   flex-shrink: 0;
   width: 36px;
@@ -105,7 +109,7 @@
 .miniwindow-tray {
   position: absolute;
   bottom: 8px;
-  left: 186px;
+  left: 160px;
   right: 82px;
   display: flex;
   gap: 4px;
@@ -116,7 +120,7 @@
   display: flex;
   flex: 0 0 64px;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
   width: 64px;
   height: 64px;
   padding: 0 2px 4px;
@@ -148,7 +152,7 @@
   width: 100%;
   max-width: none;
   flex-shrink: 0;
-  height: 26px;
+  height: 22px;
   cursor: grab;
   touch-action: none;
 }
@@ -171,10 +175,10 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  min-width: 24px;
-  height: 24px;
-  min-height: 24px;
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  min-height: 20px;
   padding: 0;
   margin: 0;
 }
@@ -193,7 +197,7 @@
 .window-resize-bar {
   display: grid;
   grid-template-columns: 28px 1fr 28px;
-  height: 9px;
+  height: 7px;
   flex-shrink: 0;
 }
 .window-resize-bar > div {
@@ -292,6 +296,7 @@
   overflow-wrap: normal;
 }
 .reader .highlight {
+  border-radius: 0;
   min-width: 0;
   max-width: 100%;
 }
@@ -362,6 +367,7 @@
   padding: 0;
 }
 .file-grid a {
+  cursor: default;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -424,10 +430,10 @@
 }
 .window-disclosure .recents-list {
   position: absolute;
-  top: -26px;
+  top: -22px;
   left: 100%;
   z-index: 10;
-  width: min(360px, calc(100vw - 190px));
+  width: min(360px, calc(100vw - 164px));
   max-height: calc(100dvh - 60px);
   overflow-y: auto;
 }
@@ -464,7 +470,7 @@
 /* Compact is a native scrolling reading page, with a content-fitting frame. */
 .desktop-ready[data-desktop-layout="compact"] {
   overflow: auto;
-  background: #808080;
+  background: var(--ns-workspace);
 }
 .blog-desktop[data-layout="compact"] {
   position: relative;
@@ -475,23 +481,24 @@
   min-height: 100svh;
 }
 .blog-desktop[data-layout="compact"] .desktop-bar {
-  position: sticky;
-  top: 0;
-  left: auto;
-  width: 100%;
-  padding: 6px 6px 0;
+  position: fixed;
+  top: 9px;
+  left: 9px;
+  width: 132px;
+  padding: 0;
 }
 .blog-desktop[data-layout="compact"] .desktop-bar > .menu-heading {
-  width: 112px;
+  width: 100%;
   min-height: 44px;
   justify-content: space-between;
 }
 .blog-desktop[data-layout="compact"] .desktop-bar > nav {
   position: absolute;
   top: 100%;
-  left: 6px;
-  right: 6px;
-  max-height: calc(100dvh - 60px);
+  left: 0;
+  right: auto;
+  width: 100%;
+  max-height: calc(100dvh - 62px);
   overflow-y: auto;
 }
 .blog-desktop[data-layout="compact"] .desktop-bar nav > button,
@@ -503,7 +510,7 @@
   position: relative;
   inset: auto;
   overflow: visible;
-  padding: 6px 6px 24px;
+  padding: 8px 8px 24px;
 }
 .blog-desktop[data-layout="compact"] .desktop-window,
 .blog-desktop[data-layout="compact"] .desktop-window.is-maximized {
@@ -518,7 +525,11 @@
   min-height: 0;
 }
 .blog-desktop[data-layout="compact"] .greyui-window-tab {
-  height: 46px;
+  position: sticky;
+  top: 8px;
+  height: 44px;
+  min-height: 44px;
+  z-index: 10;
   cursor: default;
   touch-action: auto;
 }
@@ -528,7 +539,7 @@
   height: 44px;
 }
 .blog-desktop[data-layout="compact"] .greyui-window-title {
-  padding-left: 44px;
+  padding-left: 132px;
 }
 .blog-desktop[data-layout="compact"] .document-scroll,
 .blog-desktop[data-layout="compact"] .file-scroll {
@@ -556,13 +567,14 @@
   padding: 16px 8px;
 }
 .blog-desktop[data-layout="compact"] .file-grid a {
+  cursor: default;
   min-height: 148px;
 }
 .blog-desktop[data-layout="compact"] .sort-label {
   display: none;
 }
 .blog-desktop[data-layout="compact"] .file-scroll {
-  width: 100%;
+  width: auto;
 }
 .blog-desktop[data-layout="compact"] .window-disclosure .recents-list {
   position: relative;
@@ -572,7 +584,7 @@
   max-height: calc(100dvh - 160px);
 }
 .blog-desktop[data-layout="compact"] .recents-list .greyui-button {
-  --ns-button-padding: 10px 12px;
+  --ns-control-padding: 10px 12px;
   min-height: 44px;
   padding: 10px 12px;
 }
@@ -583,7 +595,7 @@
   display: flex;
   justify-content: center;
   gap: 16px;
-  padding: 24px 8px;
+  padding: 76px 8px 24px;
   z-index: 90;
 }
 .blog-desktop[data-layout="compact"] .desktop-disclosure {
@@ -596,6 +608,57 @@
   right: 6px;
   width: auto;
   max-height: calc(100dvh - 210px);
+}
+/* One persistent title row; mask the gutter above it during native page scrolling. */
+.blog-desktop[data-layout="compact"] {
+  --greyui-font-size: 14px;
+}
+.blog-desktop[data-layout="compact"]::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: 9px;
+  background: var(--ns-workspace);
+  z-index: 95;
+}
+.blog-desktop[data-layout="compact"] .desktop-bar[data-recents-open="true"] {
+  width: min(288px, calc(100vw - 18px));
+}
+.blog-desktop[data-layout="compact"] .desktop-bar[data-recents-open="true"] > .menu-heading,
+.blog-desktop[data-layout="compact"] .desktop-bar[data-recents-open="true"] > nav > :not(.window-disclosure),
+.blog-desktop[data-layout="compact"]
+  .desktop-bar[data-recents-open="true"]
+  > nav
+  > .window-disclosure
+  > .recents-trigger {
+  display: none;
+}
+.blog-desktop[data-layout="compact"] .desktop-bar[data-recents-open="true"] > nav {
+  position: static;
+}
+.blog-desktop[data-layout="compact"] .desktop-bar .recents-list {
+  box-shadow: none;
+  max-height: none;
+}
+.blog-desktop[data-layout="compact"] .desktop-bar .recents-list > .menu-heading {
+  min-height: 44px;
+  padding: 0;
+}
+.blog-desktop[data-layout="compact"] .desktop-bar .recents-list > .menu-heading > span {
+  flex: 1;
+  text-align: center;
+  padding-right: 44px;
+}
+.blog-desktop[data-layout="compact"] .palette-back {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
+}
+.blog-desktop[data-layout="compact"] .reader [id] {
+  scroll-margin-top: 66px;
 }
 @media (prefers-reduced-motion: reduce) {
   [data-greyui-theme="nextstep"] *,
@@ -618,6 +681,7 @@
     min-height: 0;
     background: #fff;
   }
+  .blog-desktop[data-layout="compact"]::before,
   .desktop-bar,
   .desktop-icons,
   .miniwindow-tray,
