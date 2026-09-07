@@ -3,7 +3,8 @@ import { calculate, compare } from "specificity"
 
 // Focused cascade inspection, not a layout/paint emulator. Uses actual selector
 // specificity (including :is/:not) because JSDOM alone misses these conflicts.
-export function inspectCascade(css) {
+export function inspectCascade(css, { pseudo = "" } = {}) {
+  const originatingValue = pseudo ? inspectCascade(css) : null
   const rules = []
   postcss.parse(css).walkRules((rule) => {
     for (let p = rule.parent; p; p = p.parent) {
@@ -14,7 +15,7 @@ export function inspectCascade(css) {
         return
     }
     for (const selector of rule.selectors) {
-      if (selector.includes("::")) continue
+      if (pseudo ? !selector.endsWith(pseudo) : selector.includes("::")) continue
       rules.push({
         specificity: (() => {
           try {
@@ -23,7 +24,10 @@ export function inspectCascade(css) {
             throw new Error(`Cannot parse ${selector}: ${error.message}`)
           }
         })(),
-        selector: selector.replace(/:(focus-visible|focus-within|focus|active|hover)\b/g, "[data-test-$1]"),
+        selector: (pseudo ? selector.slice(0, -pseudo.length) : selector).replace(
+          /:(focus-visible|focus-within|focus|active|hover)\b/g,
+          "[data-test-$1]"
+        ),
         declarations: rule.nodes.filter((node) => node.type === "decl"),
       })
     }
@@ -60,7 +64,8 @@ export function inspectCascade(css) {
     for (let i = 0; i < 30 && resolved.includes("var("); i++) {
       const next = resolved.replace(
         /var\((--[\w-]+)(?:,\s*([^()]*))?\)/g,
-        (_, key, fallback = "") => value(element, key, depth + 1) || fallback
+        (_, key, fallback = "") =>
+          (originatingValue ? originatingValue(element, key) : value(element, key, depth + 1)) || fallback
       )
       if (next === resolved) break
       resolved = next

@@ -15,6 +15,16 @@
   --ns-shadow: 1px 1px 0 var(--ns-ink);
 }
 [data-greyui-theme="nextstep"] {
+  --ns-font-ui: Helvetica, Arial, sans-serif;
+  --ns-font-reading: var(--ns-font-ui);
+  --ns-font-code: Courier, "Courier New", monospace;
+  --ns-weight-regular: 400;
+  --ns-weight-bold: 700;
+  /* Contain typography inherited from the static blog and greyUI. */
+  --font-body: var(--ns-font-reading);
+  --font-heading: var(--ns-font-ui);
+  --font-editorial: var(--ns-font-ui);
+  --font-code: var(--ns-font-code);
   --desktop-title: var(--ns-ink);
   --desktop-muted: var(--ns-muted);
   --greyui-panel: var(--ns-face);
@@ -23,7 +33,7 @@
   --greyui-document: var(--ns-paper);
   --greyui-text: var(--ns-ink);
   --greyui-text-muted: var(--ns-muted);
-  --greyui-font-ui: Helvetica, Arial, sans-serif;
+  --greyui-font-ui: var(--ns-font-ui);
   --greyui-font-size: 13px;
   --greyui-font-size-small: 12px;
   --greyui-bevel-outset: var(--ns-raised);
@@ -34,7 +44,7 @@
   --greyui-selection: var(--ns-paper);
   --greyui-keyboard-navigation: var(--ns-ink);
   --greyui-popup-shadow: var(--ns-shadow);
-  --greyui-font-mono: Menlo, Monaco, Consolas, monospace;
+  --greyui-font-mono: var(--ns-font-code);
 }
 /* Component materials resolve inside every state. A header is never a white
    pressed button, regardless of selector specificity or source order. */
@@ -46,7 +56,7 @@
   background: var(--ns-control-face, var(--ns-face));
   color: var(--ns-control-ink, var(--ns-ink));
   box-shadow: var(--ns-control-bevel, var(--ns-raised));
-  font: var(--greyui-font-size)/1.3 var(--greyui-font-ui);
+  font: var(--ns-weight-regular) var(--greyui-font-size)/1.3 var(--greyui-font-ui);
   text-shadow: none;
   transform: none;
   cursor: default;
@@ -103,7 +113,7 @@
   box-shadow: inset 0 1px var(--ns-paper);
 }
 .blog-desktop .greyui-window-title {
-  font: bold 13px/1.2 var(--greyui-font-ui);
+  font: var(--ns-weight-bold) 13px/1.2 var(--greyui-font-ui);
 }
 .blog-desktop .title-control {
   --ns-control-padding: 0;
@@ -180,7 +190,7 @@
   background: var(--ns-control-face);
   color: var(--ns-control-ink);
   box-shadow: var(--ns-control-bevel);
-  font: bold 13px/1.3 var(--greyui-font-ui);
+  font: var(--ns-weight-bold) 13px/1.3 var(--greyui-font-ui);
 }
 .blog-desktop .desktop-bar > nav,
 .blog-desktop .recents-list {
@@ -201,7 +211,7 @@
   background: var(--ns-face);
   color: var(--ns-ink);
   justify-content: flex-start;
-  font: var(--greyui-font-size)/1.3 var(--greyui-font-ui);
+  font: var(--ns-weight-regular) var(--greyui-font-size)/1.3 var(--greyui-font-ui);
 }
 .blog-desktop .recents-trigger::after {
   content: "";
@@ -262,11 +272,25 @@
   background: var(--ns-face);
 }
 .blog-desktop .greyui-input {
+  font-family: var(--ns-font-ui);
+  font-weight: var(--ns-weight-regular);
+  font-style: normal;
+  line-height: 1.3;
+  letter-spacing: normal;
   border: 1px solid var(--ns-edge);
   border-radius: 0;
   box-shadow: var(--ns-inset);
   background: var(--ns-paper);
   color: var(--ns-ink);
+}
+.blog-desktop .greyui-input::placeholder {
+  font: inherit;
+  letter-spacing: inherit;
+  color: var(--ns-muted);
+  opacity: 1;
+}
+.blog-desktop :is(strong, b, th) {
+  font-weight: var(--ns-weight-bold);
 }
 .blog-desktop .reader a,
 .blog-desktop .about-content a {

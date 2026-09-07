@@ -2,6 +2,25 @@
 
 Reviewed 2026-09-07 against [the design system](design-system.md), written before implementation, and [all 36 original reference images](README.md). This is a source, CSS-cascade and automated behavior review. The historical corpus was visually inspected; the implemented site has **not** passed a rendered-browser review.
 
+## Typography refinement: current review
+
+IMG_0615.png shows a material inconsistency: Archive’s search placeholder is monospaced while Find, file names and window titles are proportional. Source inspection confirms greyUI’s `.greyui-input` explicitly selects `--greyui-font-mono`; this was not a browser glitch. The previous design system also permitted unrelated editorial headings. The revised [typography contract](design-system.md#typography-and-scale) was documented before this correction.
+
+| Finding | Evidence and correction |
+| --- | --- |
+| Monospace search value/placeholder | Override the input family with the Helvetica system token, regular weight, normal tracking and style. Placeholder inherits font and tracking. Preserve the 16px input size and 44px compact control height. |
+| Pale placeholder differs by browser defaults | Set secondary #333 at opacity 1 on white; retain a distinct placeholder without reducing readability. |
+| Multiple unrelated heading families and weights | Remove Newsreader italic 500 and Georgia 600 from enhanced article/About headings. Use upright Helvetica bold 700 with normal tracking. Keep the reading size/line-height and responsive h1 scale. |
+| Modern code stack leaks into the historic theme | Use Courier/Courier New for source text; reserve monospace for code. This is an explicit substitute, not an Ohlfs recreation. |
+| Legacy styles can silently restore old choices | Scope body/heading/editorial/code aliases to the desktop’s family tokens. Set strong/b/th to the shared bold weight. Static fallback retains its original stylesheet. |
+| Typeface versus exact reproduction | Primary Font API documents regular/bold system roles; CERN documents Helvetica and historic fixed-pitch faces. Installed Helvetica with Arial fallback is the selected web mapping. Font availability and rasterization still vary; no bitmap-exact claim. |
+
+Review also checked existing menu/header focus, title control contrast, inactive document readability, flat Archive chronology, and compact window behavior through the existing regression suite. The material/color/icon specification remains unchanged. A final diff review caught and corrected an accidentally broadened compact heading selector before publication.
+
+Validation: full build and TypeScript checks; 26 automated tests, including typography checks in 320/390/768/1440 configurations against the real greyUI + legacy + desktop stylesheet stack. The typography test checks search rest/focus/active declarations, placeholder inheritance/contrast, actual fetched article headings/code, title and About roles. These are DOM/cascade assertions, not physical viewport measurements. The cascade helper now permits explicit pseudo-element inspection; it does not emulate font rasterization or general shorthand expansion.
+
+**Remaining gate:** the browser tab connection again timed out after 20 seconds. No new rendered site screenshots were obtained. Actual Helvetica/fallback glyphs, post-change line wrapping, mobile scrolling and zoom still require browser sign-off. The screenshot and historical references support the findings; passing source checks do not close this visual gate.
+
 ## Color-reference correction: current review
 
 The user-supplied screenshot IMG_0609.png demonstrated that the previous implementation was not visually faithful. NS37–NS40, now preserved with exact attachment provenance, correct the research target. The corpus is now 40 images: 36 manual illustrations plus four distinct color desktop references. The smaller duplicate File Viewer screenshot and the failing blog screenshot are not counted as additional NeXTSTEP references.

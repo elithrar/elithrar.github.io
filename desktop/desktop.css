@@ -14,7 +14,7 @@
   height: 100dvh;
   color: var(--ns-ink);
   background: var(--ns-workspace);
-  font: 14px/1.4 var(--greyui-font-ui);
+  font: var(--ns-weight-regular) 14px/1.4 var(--greyui-font-ui);
   text-align: left;
 }
 .blog-desktop *,
@@ -231,29 +231,32 @@
   margin: 0 auto;
   padding: 24px 28px 48px;
   color: #171717;
-  font: 17px/1.65 var(--font-body);
+  font: var(--ns-weight-regular) 17px/1.65 var(--ns-font-reading);
   text-align: left;
   overflow-wrap: anywhere;
 }
+.reader :is(h1, h2, h3, h4, h5, h6) {
+  letter-spacing: normal;
+}
 .reader h1 {
   margin: 14px 0 24px;
-  font: italic 500 32px/1.1 var(--font-editorial);
-  letter-spacing: -0.025em;
+  font: var(--ns-weight-bold) 32px/1.2 var(--ns-font-ui);
+  letter-spacing: normal;
   text-wrap: pretty;
 }
 .reader h2 {
   margin: 32px 0 16px;
-  font: 600 24px/1.2 var(--font-heading);
+  font: var(--ns-weight-bold) 24px/1.2 var(--ns-font-ui);
   text-wrap: pretty;
 }
 .reader h3 {
   margin: 24px 0 12px;
-  font: 600 20px/1.3 var(--font-heading);
+  font: var(--ns-weight-bold) 20px/1.3 var(--ns-font-ui);
 }
 .reader h4,
 .reader h5,
 .reader h6 {
-  font-size: 17px;
+  font: var(--ns-weight-bold) 17px/1.3 var(--ns-font-ui);
 }
 .reader p {
   margin: 0 0 18px;
@@ -327,7 +330,7 @@
   scroll-margin-top: 110px;
 }
 .explorer-toolbar label {
-  font-weight: bold;
+  font-weight: var(--ns-weight-bold);
 }
 .explorer-toolbar .greyui-input {
   flex: 1;
@@ -410,7 +413,8 @@
 }
 .about-content h1 {
   margin: 0 0 16px;
-  font: italic 500 30px/1.1 var(--font-editorial);
+  font: var(--ns-weight-bold) 30px/1.2 var(--ns-font-ui);
+  letter-spacing: normal;
 }
 .about-content p {
   font-size: 16px;

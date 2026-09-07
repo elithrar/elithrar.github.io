@@ -760,3 +760,46 @@ test("window, file-viewer and dock materials agree with the color references acr
     close()
   }
 })
+
+test("NeXTSTEP typography overrides library and editorial defaults for search, chrome and documents", async () => {
+  const { inspectCascade } = await import("./css-cascade.mjs")
+  const cascade = inspectCascade(pageCSS)
+  const value = (element, property) => cascade(element, property).replace(/\s+/g, " ")
+  const placeholder = inspectCascade(pageCSS, { pseudo: "::placeholder" })
+  for (const width of [320, 390, 768, 1440]) {
+    const { dom, document, close } = await launch({ width })
+    try {
+      await until(() => region(document, first.url)?.querySelector(".article-content"))
+      const field = document.getElementById("archive-search")
+      for (const state of ["", "data-test-focus-visible", "data-test-active"]) {
+        if (state) field.setAttribute(state, "")
+        assert.equal(value(field, "font-family"), "Helvetica, Arial, sans-serif")
+        assert.equal(value(field, "font-weight"), "400")
+        assert.equal(value(field, "font-size"), "16px")
+        assert.equal(value(field, "letter-spacing"), "normal")
+        assert.equal(placeholder(field, "font"), "inherit")
+        assert.equal(placeholder(field, "color"), "#333")
+        assert.equal(placeholder(field, "opacity"), "1")
+        if (state) field.removeAttribute(state)
+      }
+      const win = region(document, first.url)
+      assert.match(value(win.querySelector(".greyui-window-title"), "font"), /^700 .*Helvetica, Arial, sans-serif$/)
+      assert.match(value(win.querySelector(".reader"), "font"), /^400 17px\/1.65 Helvetica, Arial, sans-serif$/)
+      for (const heading of win.querySelectorAll(".reader :is(h1,h2,h3,h4,h5,h6)")) {
+        assert.match(value(heading, "font"), /^700 .*Helvetica, Arial, sans-serif$/)
+        assert.equal(value(heading, "letter-spacing"), "normal")
+      }
+      const code = win.querySelector("code")
+      assert.ok(code, "real fetched article includes source code")
+      assert.equal(value(code, "font-family"), 'Courier, "Courier New", monospace')
+      click(dom, button(document, "About"))
+      await until(() => region(document, "about")?.querySelector("h1"))
+      assert.equal(
+        value(region(document, "about").querySelector("h1"), "font"),
+        "700 30px/1.2 Helvetica, Arial, sans-serif"
+      )
+    } finally {
+      close()
+    }
+  }
+})

@@ -28,9 +28,26 @@ Floating edges are hard, one-pixel boundaries, with at most a one-pixel black of
 
 ## Typography and scale
 
-System labels: Helvetica, Arial, sans-serif; 13px desktop commands and 14px compact commands, title bars bold. NeXT's compact labels are the reference, but do not use tiny bitmap text on modern phones. Desktop title height is 22px, widget hit area 20px, and menu rows are 24px. The desktop palette is 132px wide with an equally wide heading. Touch rows and Close are at least 44px. Dock tiles are 64px squares with 40px shaded artwork and a 12px caption inside the lower edge. Window perimeter stays thin even when controls enlarge.
+The typography contract uses **two families and two weights**. Define roles once in `nextstep-theme.css`; components consume tokens rather than choosing fonts. This supersedes the earlier permission to retain the blog’s editorial headings.
 
-Document content is a different material: white page, existing editorial headings, 17px text and 1.65 line height, maximum 74ch, responsive margins. NS34 supports the distinction between system typography and readable serif documents. Links are underlined black; article code can retain syntax colors. Never dim an inactive article’s body or reduce text to fit a window.
+Historical evidence: NeXT’s [Font class reference](https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/GeneralRef/02_ApplicationKit/Classes/Font.htmld/index.html) assigns regular system text to menus and bold system text to window titles, while distinguishing document and fixed-pitch preferences. [CERN’s WorldWideWeb typography research](https://worldwideweb.cern.ch/typography/) identifies Helvetica, Courier and Ohlfs and the browser’s use of Helvetica/Ohlfs. NS03 shows the font panel; NS38–NS40 show compact sans-serif chrome and varied document typography. These support Helvetica UI, not monospace search or arbitrary editorial faces.
+
+| Role / token | Family | Weight | Size / line height |
+| --- | --- | --- | --- |
+| System / `--ns-font-ui` | `Helvetica, Arial, sans-serif` | `--ns-weight-regular`: 400 | Commands 13px desktop, 14px compact; line height 1.3 |
+| Window/menu headings | Same system family | `--ns-weight-bold`: 700 | 13px desktop; existing compact title scale retained |
+| Search value and placeholder | Same system family | 400 | 16px / 1.3 on all widths; placeholder inherits every font property |
+| File names / metadata | Same system family | 400 | 14px / 1.35 names; 12px dates/status/dock captions |
+| Prose / `--ns-font-reading` | Alias of system family | 400; 700 for strong emphasis | 17px / 1.65; maximum 74ch |
+| Article headings | Same system family, upright, normal tracking | 700 | h1 32px / 1.2 (compact 28–36px); h2 24px / 1.2; h3 20px / 1.3; h4–h6 17px / 1.3 |
+| About heading | Same system family, upright, normal tracking | 700 | 30px / 1.2 |
+| Source / `--ns-font-code` | `Courier, "Courier New", monospace` | 400; 700 where source syntax emphasizes | Blocks 13px / 1.55; inline code keeps its surrounding size relationship |
+
+Helvetica is preferred over Helvetica Neue. Arial and Courier New are explicit installed-font fallbacks, not claims of identical historic outlines; generic fallbacks vary by platform. Courier is a deliberate available fixed-pitch substitute, not a reproduction of Ohlfs. No additional font downloads or new license dependencies. Newsreader, Georgia, Menlo, Monaco and Consolas must not enter the desktop theme through inherited blog styles. Italic is reserved for semantic document emphasis, not navigation or headings. Normal tracking and 400/700 avoid the previous mixture of 500/600 weights and tightened editorial titles.
+
+Do not equate modern CSS pixels with NeXT point sizes or promise bitmap-exact rendering. NeXT’s [font preparation documentation](https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/Concepts/Fonts.htmld/index.html) describes PostScript outlines with size-specific screen bitmaps; modern browser rasterization differs. Keep mobile reading and touch sizes instead of shrinking everything to screenshot pixels. The 16px search field avoids small-input Safari zoom; its placeholder uses the secondary text token at full opacity (contrast 12.63:1 on white).
+
+Desktop title height remains 22px, widget hit area 20px, menu rows 24px. Touch rows and Close remain at least 44px. Dock tiles remain 64px squares. White paper, responsive margins, underlined black links and semantic code colors remain content conventions. Never dim inactive document text. Static no-JavaScript pages retain their existing editorial styles; these tokens scope the desktop application and its fetched article content.
 
 ## Windows, focus and layers
 
