@@ -36,19 +36,19 @@ The 20 original 640×480 PNGs are in [references/windows311](references/windows3
 | Role | Screenshot evidence | Blog decision |
 | --- | --- | --- |
 | Palette | Pixel analysis across the collection: white, `#c0c7c8`, `#0000a8`, black, then shadow gray `#87888f` | Use these five shared tokens for the skin. Preserve maroon article links as an intentional blog identity exception. |
-| Title bars | Centered bold text; left system box; down/up triangles; white inactive titles | Use a shared greyUI Collapsible disclosure for system actions at the left. Put minimize/maximize at the right on desktop. No Windows 95 close-X row. |
+| Title bars | Centered bold text; left system box; down/up triangles; white inactive titles | Keep the left control-box shape; make it Close directly per mobile feedback (an intentional interaction adaptation). Put minimize/maximize at the right on desktop. No Windows 95 close-X row. |
 | Edges | Thin dark rules, white highlights, compact bevels | Replace warm panel colors, gradients, transparency, and diffuse shadows with a consistent two-tone edge. |
 | Documents | White fields dominate Notepad and Program Manager | Use white article and archive panes. Keep the existing serif article headings, 17px body, and a readable line measure. |
 | Archive | Row-major icon fields with labels below icons | Render all posts in one continuous newest-first icon grid. Dates are metadata, not folders. No year filter or sidebar. |
-| Window switching | Program Manager organizes windows without a Windows 95 taskbar | Put a full-title Windows menu in the main menu bar; retain all independent document windows in desktop mode. |
-| Mobile | Historical screenshots provide no phone interaction model; maximized Notepad does provide a useful spatial principle | Use ordinary page scrolling, one active document, a compact header and a vertical window menu. Remove absolute window coordinates, fixed reader heights, nested vertical scrolling, and the horizontal taskbar. |
+| Window switching | Program Manager organizes windows without a Windows 95 taskbar | Use Recents for the three newest published posts, with full titles; use Archive for older posts. Retain independent document windows in desktop mode. |
+| Mobile | Historical screenshots provide no phone interaction model; maximized Notepad does provide a useful spatial principle | Use ordinary page scrolling, one active document, a compact header and a vertical Recents list. Remove absolute window coordinates, fixed reader heights, nested vertical scrolling, and the horizontal taskbar. |
 | Input | Historic controls are mouse-sized | Use 44px touch targets in compact mode and visible keyboard focus. Preserve native links and modifier-click. |
 
 ## Responsive acceptance criteria
 
 - At 320, 390, 540, 768, and 960px, and on coarse-pointer tablets, render one active window in normal document flow. Read the article by scrolling the page; scroll only code/tables horizontally.
 - The archive has all 26 icons without year segmentation. Its grid adapts to available width; long titles wrap and remain visible.
-- The Windows menu shows complete titles in a vertical list, with an accessible route to every retained document. It must not require horizontal scrolling.
+- Recents shows complete titles for the three newest published posts in a vertical list; Archive opens or restores any other document. It must not require horizontal scrolling.
 - On a desktop pointer above 960px, retain three recent windows in left-to-right order and the archive window. Resize transitions must preserve desktop geometry and document identity.
 - Reopening a retained compact reader restores its page position. Browser Back/Forward must select the correct document and restore its position.
 - Run actual viewport, touch scrolling, menu, and zoom checks when the review browser is available. DOM tests alone do not certify visual behavior.

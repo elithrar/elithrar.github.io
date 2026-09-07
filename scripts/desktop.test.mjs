@@ -93,19 +93,22 @@ function button(document, name) {
 }
 
 async function switchWindow(dom, document, name) {
-  click(dom, document.querySelector(".windows-trigger"))
+  click(dom, document.querySelector(".recents-trigger"))
   await until(() =>
-    [...document.querySelectorAll(".windows-list button")].some((node) => node.textContent.includes(name))
+    [...document.querySelectorAll(".recents-list button")].some((node) => node.textContent.includes(name))
   )
   click(
     dom,
-    [...document.querySelectorAll(".windows-list button")].find((node) => node.textContent.includes(name))
+    [...document.querySelectorAll(".recents-list button")].find((node) => node.textContent.includes(name))
   )
 }
 async function closeWindow(dom, document, name) {
-  click(dom, button(document, `Window menu for ${name}`))
-  await until(() => document.querySelector(`.window-actions-menu button[aria-label="Close ${name}"]`))
-  click(dom, document.querySelector(`.window-actions-menu button[aria-label="Close ${name}"]`))
+  const control = button(document, `Close ${name}`)
+  assert.ok(control)
+  // Model the focus change before activation, rather than click alone.
+  control.dispatchEvent(new dom.window.MouseEvent("pointerdown", { bubbles: true, cancelable: true }))
+  control.focus()
+  click(dom, control)
 }
 
 test("generated catalog includes every published article, sorted newest-first with valid canonical output", async () => {
@@ -313,21 +316,22 @@ test("compact switching and browser history restore page positions; mode changes
   }
 })
 
-test("window disclosures retain full titles, close on Escape, and recover after closing every compact document", async () => {
+test("Recents retains full titles, close on Escape, and recover after closing every compact document", async () => {
   const { dom, document, close } = await launch({ width: 320 })
   try {
-    const trigger = document.querySelector(".windows-trigger")
+    const trigger = document.querySelector(".recents-trigger")
     click(dom, trigger)
     await until(() => trigger.getAttribute("aria-expanded") === "true")
     for (const post of catalog.slice(0, 3))
-      assert.ok(document.querySelector(".windows-list").textContent.includes(post.title))
-    const item = document.querySelector(".windows-list button")
+      assert.ok(document.querySelector(".recents-list").textContent.includes(post.title))
+    const item = document.querySelector(".recents-list button")
     item.focus()
     item.dispatchEvent(new dom.window.KeyboardEvent("keydown", { key: "Escape", bubbles: true }))
     await until(() => trigger.getAttribute("aria-expanded") === "false")
     assert.equal(document.activeElement, trigger)
     for (const name of [first.title, catalog[2].title, second.title, "Archive"]) {
-      await switchWindow(dom, document, name)
+      if (name === "Archive") click(dom, document.getElementById("archive-launcher"))
+      else await switchWindow(dom, document, name)
       await until(() =>
         [...document.querySelectorAll("[data-window-id]:not([hidden])")].some(
           (node) => node.getAttribute("aria-label") === name
@@ -359,5 +363,81 @@ test("reference study contains 20 distinct original PNGs with verifiable provena
     assert.equal(bytes.readUInt32BE(16), 640)
     assert.equal(bytes.readUInt32BE(20), 480)
     assert.ok(item.source.startsWith("https://www.zx.net.nz/"))
+  }
+})
+
+test("Recents contains only the three newest posts, independent of open or closed windows", async () => {
+  for (const width of [390, 1440]) {
+    const { dom, document, close } = await launch({ width })
+    try {
+      click(dom, button(document, "About"))
+      await until(() => region(document, "about"))
+      click(dom, document.getElementById("archive-launcher"))
+      await until(() => !region(document, "archive").hidden)
+      click(dom, region(document, "archive").querySelector(`a[href="${oldest.url}"]`))
+      await until(() => region(document, oldest.url)?.querySelector(".article-content"))
+      await switchWindow(dom, document, first.title)
+      await until(() => !region(document, first.url).hidden)
+      await closeWindow(dom, document, first.title)
+      await until(() => !region(document, first.url))
+      click(dom, button(document, "Recents"))
+      await until(() => document.querySelector(".recents-list"))
+      assert.deepEqual(
+        [...document.querySelectorAll(".recents-list button")].map((node) => node.textContent),
+        catalog.slice(0, 3).map((post) => post.title)
+      )
+      click(dom, document.querySelector(".recents-list button"))
+      await until(() => region(document, first.url) && !region(document, first.url).hidden)
+      assert.equal(document.querySelectorAll(`[data-window-id="${first.url}"]`).length, 1)
+      assert.equal(document.querySelector(".recents-trigger").getAttribute("aria-label"), "Recents")
+    } finally {
+      close()
+    }
+  }
+})
+
+test("direct Close removes mobile About and readers; reopening a closed reader starts at the top", async () => {
+  const { dom, document, close } = await launch({ width: 390 })
+  try {
+    await until(() => region(document, first.url)?.querySelector(".article-content"))
+    dom.window.scrollTo({ top: 640 })
+    await closeWindow(dom, document, first.title)
+    await until(() => !region(document, first.url))
+    await switchWindow(dom, document, first.title)
+    await until(() => region(document, first.url)?.querySelector(".article-content"))
+    assert.equal(dom.window.scrollY, 0)
+    click(dom, button(document, "About"))
+    await until(() => region(document, "about") && !region(document, "about").hidden)
+    await closeWindow(dom, document, "About")
+    await until(() => !region(document, "about"))
+    assert.equal(document.querySelector(".window-actions-menu"), null)
+    assert.equal(document.querySelector(".arrange-button"), null)
+  } finally {
+    close()
+  }
+})
+
+test("compact frame styles fit About content while the desktop background fills the viewport", async () => {
+  const css = await readFile("desktop/desktop.css", "utf8")
+  for (const width of [320, 390, 768, 960]) {
+    const { dom, document, close } = await launch({ width })
+    try {
+      const style = document.createElement("style")
+      style.textContent = css
+      document.head.append(style)
+      click(dom, button(document, "About"))
+      await until(() => region(document, "about"))
+      const frame = dom.window.getComputedStyle(region(document, "about").querySelector(".greyui-window-frame"))
+      assert.equal(frame.height, "auto")
+      assert.ok(["0", "0px"].includes(frame.minHeight), `Unexpected frame minimum: ${frame.minHeight}`)
+      assert.equal(dom.window.getComputedStyle(document.querySelector(".blog-desktop")).minHeight, "100svh")
+      assert.equal(
+        dom.window.getComputedStyle(region(document, "about").querySelector(".document-scroll")).overflow,
+        "visible"
+      )
+      assert.equal(document.querySelector(".arrange-button"), null)
+    } finally {
+      close()
+    }
   }
 })

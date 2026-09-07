@@ -1,17 +1,9 @@
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import { Collapsible } from "greyui"
 
-// Inline disclosures keep the window list in keyboard tab order and avoid a
+// Inline disclosures keep recent posts in keyboard tab order and avoid a
 // floating-positioning dependency for the narrow-screen navigation surface.
-export function WindowDisclosure({
-  label,
-  system = false,
-  children,
-}: {
-  label: string
-  system?: boolean
-  children: (close: () => void) => ReactNode
-}) {
+export function WindowDisclosure({ label, children }: { label: string; children: (close: () => void) => ReactNode }) {
   const [open, setOpen] = useState(false)
   const root = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -27,7 +19,7 @@ export function WindowDisclosure({
       ref={root}
       open={open}
       onOpenChange={setOpen}
-      className={`window-disclosure ${system ? "system-disclosure" : ""}`}
+      className="window-disclosure"
       onBlur={(event) => {
         if (event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) setOpen(false)
       }}
@@ -40,10 +32,10 @@ export function WindowDisclosure({
         }
       }}
     >
-      <Collapsible.Trigger className={system ? "window-system-menu" : "windows-trigger"} aria-label={label}>
-        {system ? <span aria-hidden="true" /> : label}
+      <Collapsible.Trigger className="recents-trigger" aria-label={label}>
+        {label}
       </Collapsible.Trigger>
-      <Collapsible.Panel className={system ? "window-actions-menu" : "windows-list"}>
+      <Collapsible.Panel className="recents-list">
         <nav aria-label={label}>{children(() => setOpen(false))}</nav>
       </Collapsible.Panel>
     </Collapsible.Root>

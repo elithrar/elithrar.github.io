@@ -16,7 +16,7 @@ WorkbenchOS supplies the independent-window interaction model; PostHog supplies 
 | Documents / inactive titles | White `#fff` |
 | Active titles / selected labels | Blue `#0000a8`, white text |
 | Edges | Black 1px outline, white highlight, `#87888f` bevel; square corners |
-| Title bars | Centered bold label, left system-menu dash, desktop down/up triangles |
+| Title bars | Centered bold label, left direct Close control, desktop down/up triangles |
 | Typography | Arial UI; existing serif article headings; 17px body / 1.65; maximum 74ch reader |
 | Links | Existing maroon `#8b3a49`, underlined article links |
 | Icons | Shared original document/folder/info vocabulary; labels below icons |
@@ -28,10 +28,10 @@ The reference study explains which decisions are historically observed and which
 ## Interaction and responsive plan
 
 - **Desktop pointer, above 960px:** three recent posts open left to right, newest at the left, with Archive below. Readers scroll independently. Drag, maximize, minimize, restore, arrange, and close remain available.
-- **960px and below, or coarse pointer:** one active document in normal page flow. The page owns vertical scrolling. A compact sticky header exposes Archive, Windows, About, and RSS. Desktop positioning and min/max controls are removed from this mode.
+- **960px and below, or coarse pointer:** one active document in normal page flow. The page owns vertical scrolling. A compact sticky header exposes Archive, Recents, About, and RSS. Desktop positioning, Arrange, and min/max controls are removed from this mode. Frames fit their content; only the desktop background fills the viewport.
 - **Archive:** one continuous row-major collection of all 26 posts, newest-first. Search filters titles; dates remain metadata. Icons and full titles wrap into as many columns as the available width supports. No year folders or sidebar.
-- **Window switching:** the Windows disclosure lists complete titles vertically, including minimized windows. Opening an existing document selects it. Compact reader page positions are restored when switching or using browser history.
-- **Controls:** shared greyUI Collapsible disclosures provide the Windows list and left system actions, with expanded state, ordinary keyboard tab order, Escape/focus return, and outside-pointer dismissal. These are navigation disclosures, not ARIA menus requiring arrow-key behavior.
+- **Navigation:** Recents lists the three newest published posts, whether open or closed. Archive remains the route to every older post. Opening an existing document selects it. Compact reader page positions are restored when switching or using browser history.
+- **Controls:** the title-bar Close button removes the window directly on desktop and mobile. The greyUI Collapsible used for Recents has expanded state, ordinary keyboard tab order, Escape/focus return, and outside-pointer dismissal. This is a navigation disclosure, not an ARIA menu requiring arrow-key behavior.
 - **Reading:** code and tables scroll horizontally within the article. Heading anchors target the correct reader. Modifier-click and canonical links retain native browser behavior. The article content dominates; the compact title bar says “Article” and the full title appears in the reading surface.
 - **Recovery:** closing everything leaves an Open Archive action. Fetch errors offer retry and a canonical page link. Enhancement failure leaves the original static blog usable.
 
@@ -50,11 +50,24 @@ Fixed catalog generation, cold-permalink content isolation, duplicate article ID
 5. Found a potential narrow-screen overflow in the Windows list: anchoring a wide popup to its small trigger could extend beyond the left viewport edge. The compact list now anchors to both sides of the header, wraps full titles, and allows vertical scrolling when needed.
 6. Replaced floating-positioned menu primitives after their geometry-dependent behavior stalled the DOM harness. Shared inline greyUI Collapsible disclosures avoid that positioning dependency and explicitly support dismissal and focus return.
 
+### Mobile feedback revision
+
+Reviewed the three supplied phone screenshots (`IMG_0605.png` through `IMG_0607.png`) and WorkbenchOS's current source before changing the blog:
+
+- [App.tsx](https://github.com/elithrar/workbenchOS/blob/main/apps/workbench/src/App.tsx) selects a dedicated mobile presentation. [MobileStack.tsx](https://github.com/elithrar/workbenchOS/blob/main/apps/workbench/src/desktop/MobileStack.tsx) renders ordinary panels and invokes Close directly; [desktop-store.ts](https://github.com/elithrar/workbenchOS/blob/main/apps/workbench/src/store/desktop-store.ts) removes the window and selects a remaining one.
+- [styles.css](https://github.com/elithrar/workbenchOS/blob/main/apps/workbench/src/styles.css) packs the mobile stack with `grid-auto-rows: max-content` and `align-content: start`. It also reserves minimum height for tool applets. Adopt the separation of desktop surface and panel bounds, but omit those applet minimums for blog prose and About.
+- The About screenshot exposes the blog frame's own `min-height: calc(100svh - 94px)`. Remove it; retain the viewport minimum on the background only. Long readers still use page scrolling, while short About/search results end at their content.
+- Replace the left system-actions popup with a direct, labeled Close button in both modes. Remove closed windows from stacking state and clear their page position after focus transfer so reopening starts at the top.
+- Replace the open-window list with exactly the three newest published posts under Recents. Open/close actions and older archive posts do not change this list.
+- The screenshots also show Arrange on mobile: the generic compact button rule outweighed its CSS hiding rule. Render Arrange only in desktop mode.
+
+The Workbench comparison is a source inspection, not a live rendered comparison; browser tab discovery still times out.
+
 ### Validation
 
 - `npm run build`: passed, including Jekyll and both TypeScript targets. Pre-existing Liquid warnings remain in two unchanged historical Go posts.
-- `npm test`: **12 passed**. Covers all published posts and canonical output, chronological filtering, desktop order and bounds, deduplication, minimize/restore, focus return, history, cold permalinks, fetch failure/retry, anchors, maximize/restore, feed/assets, output exclusions, compact mode at 320/390/540/768/960px and a 1024px touch tablet, all-post archive availability, scroll restoration, mode changes, complete window titles, Escape, close-all recovery, and the 20 screenshot hashes/dimensions.
-- These responsive tests simulate media-query transitions and DOM state. They do not measure browser layout or certify physical scrolling.
+- `npm test`: **15 passed**. Covers all published posts and canonical output, chronological filtering, desktop order and bounds, deduplication, minimize/restore, focus return, history, cold permalinks, fetch failure/retry, anchors, maximize/restore, feed/assets, output exclusions, compact mode at 320/390/540/768/960px and a 1024px touch tablet, all-post archive availability, scroll restoration, mode changes, complete window titles, Escape, close-all recovery, the 20 screenshot hashes/dimensions, Recents membership independent of open windows, direct mobile Close, fresh scroll after reopening a closed reader, and computed compact frame/background styles.
+- These responsive tests simulate media-query transitions and DOM state. Computed-style checks verify the frame sizing rules, but do not measure rendered geometry or certify physical scrolling.
 - `git diff --check`: passed.
 
 ### Open gate: actual rendered review
@@ -66,7 +79,7 @@ Fixed catalog generation, cold-permalink content isolation, duplicate article ID
 | 1440×900 and 1280×800, mouse | Recent windows left to right; useful visible content; independent scrolling; drag and arrange controls reachable |
 | 1024×768, mouse and touch | Correct mode per input; mode transitions preserve open documents |
 | 960×720, 768×1024, 540×720 | One active document; native page scrolling; adaptive icon columns; no clipped controls |
-| 390×844 and 320×720, touch | Read long posts to the end; switch and restore position; full-title window list fits; all archive icons reachable |
+| 390×844 and 320×720, touch | Read long posts to the end; switch and restore position; full-title Recents list fits; all archive icons reachable |
 | Landscape and 200% zoom | No page-width overflow; header and controls fit; article remains readable |
 | Keyboard and print | Open/switch/close, Escape and focus; anchor/backlink; active article prints cleanly |
 

@@ -105,7 +105,7 @@
   gap: 2px;
 }
 .desktop-bar .greyui-button,
-.desktop-bar .windows-trigger {
+.desktop-bar .recents-trigger {
   padding: 6px 10px;
   min-height: 36px;
   border: 0;
@@ -116,8 +116,8 @@
   color: #000;
 }
 .desktop-bar .greyui-button:hover,
-.desktop-bar .windows-trigger:hover,
-.desktop-bar .windows-trigger[data-panel-open] {
+.desktop-bar .recents-trigger:hover,
+.desktop-bar .recents-trigger[data-panel-open] {
   color: #fff;
   background: var(--desktop-title);
 }
@@ -229,7 +229,7 @@
   gap: 0;
   padding: 0;
 }
-.blog-desktop .window-system-menu,
+.blog-desktop .window-close,
 .blog-desktop .greyui-window-widget {
   display: flex;
   flex-shrink: 0;
@@ -254,7 +254,7 @@
   border-right: 0;
   border-left: 1px solid #000;
 }
-.blog-desktop .window-system-menu > span {
+.blog-desktop .window-close > span {
   width: 13px;
   height: 4px;
   border: 1px solid #000;
@@ -514,8 +514,7 @@
   gap: 16px;
   margin-top: 24px;
 }
-.windows-list,
-.window-actions-menu {
+.recents-list {
   max-width: min(420px, calc(100vw - 16px));
   padding: 3px;
   border: 1px solid #000;
@@ -528,7 +527,7 @@
     Helvetica,
     sans-serif;
 }
-.windows-list .greyui-button {
+.recents-list .greyui-button {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -537,21 +536,17 @@
   padding: 8px;
   white-space: normal;
 }
-.windows-list .greyui-button > span {
+.recents-list .greyui-button > span {
   overflow-wrap: anywhere;
 }
-.windows-list .file-icon {
+.recents-list .file-icon {
   width: 22px;
   height: 22px;
 }
-.windows-list .greyui-button[data-current="true"],
-.windows-list .greyui-button:hover {
+.recents-list .greyui-button[data-current="true"],
+.recents-list .greyui-button:hover {
   color: #fff;
   background: var(--desktop-title);
-}
-.window-actions-menu .greyui-button {
-  min-height: 32px;
-  padding: 6px 20px;
 }
 .sr-only {
   position: absolute;
@@ -603,7 +598,6 @@
   min-height: 44px;
   padding: 8px;
 }
-.blog-desktop[data-layout="compact"] .arrange-button,
 .blog-desktop[data-layout="compact"] .desktop-icons,
 .blog-desktop[data-layout="compact"] .desktop-caption {
   display: none;
@@ -622,7 +616,7 @@
 .blog-desktop[data-layout="compact"] .desktop-window .greyui-window-frame {
   display: block;
   height: auto;
-  min-height: calc(100svh - 94px);
+  min-height: 0;
   padding: 2px;
 }
 .blog-desktop[data-layout="compact"] .greyui-window-tab {
@@ -630,7 +624,7 @@
   cursor: default;
   touch-action: auto;
 }
-.blog-desktop[data-layout="compact"] .window-system-menu {
+.blog-desktop[data-layout="compact"] .window-close {
   width: 44px;
   min-width: 44px;
   height: 44px;
@@ -675,8 +669,7 @@
 .blog-desktop[data-layout="compact"] .sort-label {
   display: none;
 }
-body[data-desktop-layout="compact"] .windows-list,
-body[data-desktop-layout="compact"] .window-actions-menu {
+body[data-desktop-layout="compact"] .recents-list {
   max-width: calc(100vw - 16px);
 }
 body[data-desktop-layout="compact"] .window-disclosure .greyui-button {
@@ -750,8 +743,7 @@ body[data-desktop-layout="compact"] .window-disclosure .greyui-button {
 .window-disclosure .greyui-collapsible-arrow {
   display: none;
 }
-.window-disclosure .windows-list,
-.window-disclosure .window-actions-menu {
+.window-disclosure .recents-list {
   position: absolute;
   top: 100%;
   right: 0;
@@ -759,11 +751,6 @@ body[data-desktop-layout="compact"] .window-disclosure .greyui-button {
   width: min(420px, calc(100vw - 20px));
   max-height: calc(100dvh - 120px);
   overflow-y: auto;
-}
-.system-disclosure .window-actions-menu {
-  left: 0;
-  right: auto;
-  width: 160px;
 }
 .window-disclosure nav {
   display: flex;
@@ -791,11 +778,11 @@ body[data-desktop-layout="compact"] .window-disclosure .greyui-button {
 .window-disclosure nav .greyui-button > span {
   overflow-wrap: anywhere;
 }
-/* Anchor the compact window list to the header, not its narrow trigger. */
+/* Give compact Recents the available header width for complete titles. */
 .blog-desktop[data-layout="compact"] .desktop-bar .window-disclosure {
   position: static;
 }
-.blog-desktop[data-layout="compact"] .desktop-bar .windows-list {
+.blog-desktop[data-layout="compact"] .desktop-bar .recents-list {
   left: 8px;
   right: 8px;
   width: auto;

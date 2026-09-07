@@ -139,7 +139,6 @@ function Desktop({ posts }: { posts: Post[] }) {
     document.title = activeTitle
   }, [activeTitle])
   const dismiss = (id: string, minimize: boolean) => {
-    if (!minimize) pagePositions.current.delete(id)
     const remaining = windows.filter((win) => win.id !== id && !win.minimized)
     setWindows((old) =>
       minimize
@@ -154,6 +153,10 @@ function Desktop({ posts }: { posts: Post[] }) {
       setActive("")
       history.replaceState(null, "", "/")
       document.getElementById("archive-launcher")?.focus()
+    }
+    if (!minimize) {
+      pagePositions.current.delete(id)
+      setOrder((old) => old.filter((item) => item !== id))
     }
   }
   const reset = () => {
@@ -210,42 +213,29 @@ function Desktop({ posts }: { posts: Post[] }) {
             <Button id="archive-launcher" onClick={() => open(ARCHIVE)}>
               Archive
             </Button>
-            <WindowDisclosure label="Windows">
-              {(close) => (
-                <>
-                  {windows.map((win) => (
-                    <Button
-                      key={win.id}
-                      data-current={win.id === active && !win.minimized}
-                      onClick={() => {
-                        close()
-                        open(win.id)
-                      }}
-                    >
-                      <Icon kind={win.id === ARCHIVE ? "folder" : win.id === ABOUT ? "about" : "document"} />
-                      <span>
-                        {title(win.id)}
-                        {win.minimized ? " (minimized)" : ""}
-                      </span>
-                    </Button>
-                  ))}
-                  {!windows.length && (
-                    <Button
-                      onClick={() => {
-                        close()
-                        open(ARCHIVE)
-                      }}
-                    >
-                      Open Archive
-                    </Button>
-                  )}
-                </>
-              )}
+            <WindowDisclosure label="Recents">
+              {(close) =>
+                posts.slice(0, 3).map((post) => (
+                  <Button
+                    key={post.url}
+                    data-current={post.url === active}
+                    onClick={() => {
+                      close()
+                      open(post.url)
+                    }}
+                  >
+                    <Icon />
+                    <span>{post.title}</span>
+                  </Button>
+                ))
+              }
             </WindowDisclosure>
             <Button onClick={() => open(ABOUT)}>About</Button>
-            <Button className="arrange-button" onClick={reset}>
-              Arrange
-            </Button>
+            {!compact && (
+              <Button className="arrange-button" onClick={reset}>
+                Arrange
+              </Button>
+            )}
             <a href="/atom.xml">RSS</a>
           </nav>
         </header>
@@ -309,43 +299,17 @@ function Desktop({ posts }: { posts: Post[] }) {
                       )
                   }}
                 >
-                  <WindowDisclosure label={`Window menu for ${title(win.id)}`} system>
-                    {(close) => (
-                      <>
-                        {!compact && (
-                          <Button
-                            onClick={() => {
-                              close()
-                              setWindows((old) =>
-                                old.map((item) => (item.id === win.id ? { ...item, maximized: !item.maximized } : item))
-                              )
-                            }}
-                          >
-                            {win.maximized ? "Restore" : "Maximize"}
-                          </Button>
-                        )}
-                        {!compact && (
-                          <Button
-                            onClick={() => {
-                              close()
-                              dismiss(win.id, true)
-                            }}
-                          >
-                            Minimize
-                          </Button>
-                        )}
-                        <Button
-                          aria-label={`Close ${title(win.id)}`}
-                          onClick={() => {
-                            close()
-                            dismiss(win.id, false)
-                          }}
-                        >
-                          Close
-                        </Button>
-                      </>
-                    )}
-                  </WindowDisclosure>
+                  <Button
+                    className="window-close"
+                    aria-label={`Close ${title(win.id)}`}
+                    title={`Close ${title(win.id)}`}
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      dismiss(win.id, false)
+                    }}
+                  >
+                    <span aria-hidden="true" />
+                  </Button>
                   <Window.Title>
                     <span>{compact && post ? "Article" : title(win.id)}</span>
                   </Window.Title>
