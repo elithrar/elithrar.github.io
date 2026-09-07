@@ -1,78 +1,75 @@
 # A desktop for Questionable Services
 
-The blog has a deep technical archive, but its homepage asks readers to scroll through five full articles. Make recent writing immediately visible and make the archive feel browsable, without sacrificing reading, canonical URLs, or the existing Jekyll publishing workflow.
+The homepage presents recent writing as independent documents and the complete archive as a browsable file collection. Jekyll remains the content source; canonical article URLs, metadata, RSS, and the static fallback remain available.
 
-## Direction and references
+## Revised direction
 
-- [greyUI](https://github.com/elithrar/greyUI): actual Window, Button, Input, and Layer primitives; retain its neutral panels and beveled control geometry.
-- [WorkbenchOS](https://workbench.questionable.services/): independent document windows, a recoverable workspace, and compact useful chrome.
-- [PostHog](https://posthog.com/): the desktop as the site itself, with recognizable document/app affordances. Avoid unrelated games, fake system diagnostics, or novelty that obstructs reading.
-- Windows 3.11: full-width navy active title bars, gray inactive title bars, rectangular controls and inset document surfaces. This is a coherent consumer skin, not a modification of greyUI.
+The initial draft divided a small archive into unnecessary year folders and kept too much fixed desktop geometry on mobile. This revision removes the folders and treats compact reading as a separate layout. Its visual system follows [20 individually inspected Windows for Workgroups 3.11 screenshots](windows311-study.md), collected and analyzed before the skin was applied.
+
+WorkbenchOS supplies the independent-window interaction model; PostHog supplies the idea of a website as a playful desktop. The installed greyUI package supplies Window, Button, Input, Collapsible, and Layer primitives. The blog owns the Windows 3.11 skin in `desktop/desktop.css`.
 
 ## Design system
 
 | Role | Decision |
 | --- | --- |
-| Desktop | Muted teal `#557575`; a quiet field behind documents |
-| Chrome | Warm gray `#d4d1c8`, white highlight, dark gray shadow, 1px outline |
-| Active window | Navy `#253d65`, white title; no faded article text in inactive windows |
-| Document | Existing warm paper `#fbf7ef`, dark ink `#282623` |
-| Links | Existing maroon `#8b3a49`; underlined in article text |
-| Typography | Arial UI, existing Newsreader italic titles, Georgia section heads, Helvetica body, monospace code |
-| Reading | 17px body / 1.65, maximum 68ch measure, left aligned, local horizontal code/table scroll |
-| Spacing | 4/8/12/16/24/32px rhythm; compact chrome controls, 44px window buttons on phone layouts |
-| Icons | One original geometric document/folder/info icon vocabulary; decorative icons have no redundant accessible names |
-| Focus | Visible 2px outline; native links and buttons; window activation on keyboard focus |
+| Desktop / controls | Cool gray `#c0c7c8` |
+| Documents / inactive titles | White `#fff` |
+| Active titles / selected labels | Blue `#0000a8`, white text |
+| Edges | Black 1px outline, white highlight, `#87888f` bevel; square corners |
+| Title bars | Centered bold label, left system-menu dash, desktop down/up triangles |
+| Typography | Arial UI; existing serif article headings; 17px body / 1.65; maximum 74ch reader |
+| Links | Existing maroon `#8b3a49`, underlined article links |
+| Icons | Shared original document/folder/info vocabulary; labels below icons |
+| Controls | Visible keyboard focus; at least 44px compact touch controls |
+| Spacing | 4/8/12/16/24/32px rhythm; reader padding adapts to available width |
 
-All chrome tokens and skin selectors live in `desktop/desktop.css`. Article typography retains the existing fonts and links, with explicit reading measures for window interiors. No per-post styles.
+The reference study explains which decisions are historically observed and which deliberately adapt the design for web reading. The archive and reader share the same chrome and tokens; individual posts do not introduce styles.
 
-## Interaction plan
+## Interaction and responsive plan
 
-- On wide screens, open the latest three posts left to right in a staggered row, newest at the left. Open the archive below them. Recent titles and opening paragraphs are visible immediately.
-- Provide Archive and About desktop launchers. Show all open/minimized windows in a bottom switcher. Bring existing windows forward instead of duplicating them.
-- Use single-click/Enter document links. Preserve modifier-click, open-in-new-tab, copy-link, and canonical article URLs.
-- Archive: document icons in row-major newest-first order, visible dates, year folders and title search. Scrolling stays inside the explorer. Empty search results offer a clear reset.
-- Each article has its own scroll position and close/minimize/maximize controls. Drag title bars; keyboard users can read maximized or reset window positions without dragging. Resizing the browser must never strand a window offscreen.
-- Narrow/touch layouts show one active window at a time, with the same document and archive controls and the open-window switcher. No tiny desktop scaled down onto a phone.
-- Preserve Jekyll article HTML, permalink metadata, RSS, pagination, and a functional no-JavaScript fallback. Fetch only opened articles; reject errors with a retry and ordinary article link.
-- Support browser Back/Forward, anchored headings/footnotes, local image paths, and print of the active article.
-
-## Implementation gates
-
-1. Integrate greyUI as a bundled React enhancement with a separate browser TypeScript target. Keep Worker security behavior unchanged. Exclude tooling and dependencies from Jekyll's public output.
-2. Generate the archive catalog from Jekyll, not a hand-maintained list. Keep content in its canonical static HTML; load it on demand into article windows.
-3. Review actual renders at wide desktop, laptop, tablet, 390px and 320px, plus enlarged text. Check title wrapping, viewport bounds, contrast, control consistency, independent scroll, and long code.
-4. Exercise opening/reopening, minimize/restore, maximize, close/focus return, archive search/year filtering, URL history and anchors. Test fallback and build output; fix findings before opening the draft PR.
+- **Desktop pointer, above 960px:** three recent posts open left to right, newest at the left, with Archive below. Readers scroll independently. Drag, maximize, minimize, restore, arrange, and close remain available.
+- **960px and below, or coarse pointer:** one active document in normal page flow. The page owns vertical scrolling. A compact sticky header exposes Archive, Windows, About, and RSS. Desktop positioning and min/max controls are removed from this mode.
+- **Archive:** one continuous row-major collection of all 26 posts, newest-first. Search filters titles; dates remain metadata. Icons and full titles wrap into as many columns as the available width supports. No year folders or sidebar.
+- **Window switching:** the Windows disclosure lists complete titles vertically, including minimized windows. Opening an existing document selects it. Compact reader page positions are restored when switching or using browser history.
+- **Controls:** shared greyUI Collapsible disclosures provide the Windows list and left system actions, with expanded state, ordinary keyboard tab order, Escape/focus return, and outside-pointer dismissal. These are navigation disclosures, not ARIA menus requiring arrow-key behavior.
+- **Reading:** code and tables scroll horizontally within the article. Heading anchors target the correct reader. Modifier-click and canonical links retain native browser behavior. The article content dominates; the compact title bar says “Article” and the full title appears in the reading surface.
+- **Recovery:** closing everything leaves an Open Archive action. Fetch errors offer retry and a canonical page link. Enhancement failure leaves the original static blog usable.
 
 ## Review record
 
-Record observed findings, fixes, and remaining limitations here before handoff. Do not describe unavailable checks as passed.
+### Initial implementation review
 
-### Review pass 1 — implementation and generated output
+Fixed catalog generation, cold-permalink content isolation, duplicate article IDs, relative links, iframe sizing, local code/table scrolling, retained reader nodes, focus return, and public-output exclusions. Tests exercise the real generated Jekyll pages and catalog.
 
-- Fixed a missing archive catalog: Jekyll's `desktop` exclusion also matched a source named `desktop-catalog.json`. The template now lives at `post-catalog.json` and explicitly emits `/desktop-catalog.json`.
-- Fixed incorrect content reuse on cold permalinks: a static article body now carries its own `data-post-url`, and the reader only reuses it for that exact article.
-- Namespaced article IDs so headings and footnotes in simultaneous documents cannot collide. Resolved relative content links against the canonical article, and retained iframe heights.
-- Kept code blocks and tables in keyboard-focusable local scroll containers. Retained reader nodes and their scroll state when minimizing or maximizing.
-- Added focus return on close/minimize and window activation on keyboard focus. Made the browser URL follow a window selected by pointer or keyboard.
-- Centralized the skin, removed opacity from inactive documents, kept full article titles in the document, and enlarged phone window controls to 44px.
-- Split the reader, explorer, icons, formatting, and geometry from desktop state management. History listeners use React's effect-event API so dragging does not continually resubscribe them.
+### Screenshot and responsive revision
 
-### Review pass 2 — validation
+1. Collected 20 original 640×480 PNGs, inspected each, recorded per-image observations and source URLs, measured palette frequencies, and wrote the design study before applying the revised skin.
+2. Replaced warm panels, teal desktop, Windows 95-style controls, and the bottom taskbar with the studied palette, centered title bars, system control, triangles, and Windows navigation.
+3. Removed year metadata and folders. All 26 documents appear in one chronological icon grid.
+4. Replaced the fixed compact workspace and nested reader scrolling with ordinary document flow. Hidden retained windows use the DOM `hidden` attribute. Desktop coordinates survive mode changes; page positions are retained per compact reader.
+5. Found a potential narrow-screen overflow in the Windows list: anchoring a wide popup to its small trigger could extend beyond the left viewport edge. The compact list now anchors to both sides of the header, wraps full titles, and allows vertical scrolling when needed.
+6. Replaced floating-positioned menu primitives after their geometry-dependent behavior stalled the DOM harness. Shared inline greyUI Collapsible disclosures avoid that positioning dependency and explicitly support dismissal and focus return.
 
-- `npm run build`: passed, including the actual Jekyll build and both TypeScript targets. Existing Liquid warnings remain in two unchanged historical posts containing Go template syntax.
-- `npm test`: 8 tests passed against the generated HTML and real post catalog. Covers all 26 published articles and canonical links; date/year/title filtering; geometry bounds from 320 to 1440px; initial ordering; window deduplication; minimize/restore; focus return; history; cold permalink content isolation; fetch failure/retry; in-article anchors; maximize/restore; feed/assets; and exclusion of source/tooling from public output.
+### Validation
+
+- `npm run build`: passed, including Jekyll and both TypeScript targets. Pre-existing Liquid warnings remain in two unchanged historical Go posts.
+- `npm test`: **12 passed**. Covers all published posts and canonical output, chronological filtering, desktop order and bounds, deduplication, minimize/restore, focus return, history, cold permalinks, fetch failure/retry, anchors, maximize/restore, feed/assets, output exclusions, compact mode at 320/390/540/768/960px and a 1024px touch tablet, all-post archive availability, scroll restoration, mode changes, complete window titles, Escape, close-all recovery, and the 20 screenshot hashes/dimensions.
+- These responsive tests simulate media-query transitions and DOM state. They do not measure browser layout or certify physical scrolling.
 - `git diff --check`: passed.
-- Production desktop bundle: approximately 73 KB JavaScript and 13 KB CSS, gzipped. Article bodies are loaded only for opened documents, and reopening an existing window does not refetch its content.
 
-### Open gate — rendered design and browser interaction review
+### Open gate: actual rendered review
 
-**Not passed.** The available browser connection repeatedly timed out while refreshing tabs, before a page could be inspected. No screenshots, real viewport renders, physical scroll/drag checks, 200% zoom review, or visual comparison to PostHog were possible. The source review and DOM tests above do not substitute for those checks. Keep this PR in draft until the following review loop is completed:
+**Still blocked.** The supplied browser connection repeatedly times out while refreshing tabs, before a page can open. There are no claimed passing viewport screenshots, physical touch-scroll tests, or zoom results. Keep this PR in draft until this loop is completed:
 
-- Inspect at 1440×900, 1280×800, 1024×768, 768×1024, 390×844, and 320×720. Confirm recent windows read left to right, opening paragraphs remain useful, and archive navigation is discoverable.
-- Read the latest logging article and an older code-heavy article to the end. Scroll code horizontally, follow an anchor and its backlink, and switch between readers to confirm independent scroll positions.
-- Drag and arrange windows, maximize/restore, minimize/restore from the switcher, close everything, and reopen Archive/About. Test keyboard-only opening, focus visibility, and focus return.
-- Inspect phone portrait/landscape and desktop at 200% zoom for clipping, touch targets, usable text, and reachability of the horizontal open-window switcher.
-- Check print of the active article and a no-JavaScript load. Fix findings and repeat the affected viewport/interaction before moving the PR out of draft.
+| Viewport / input | Required observation |
+| --- | --- |
+| 1440×900 and 1280×800, mouse | Recent windows left to right; useful visible content; independent scrolling; drag and arrange controls reachable |
+| 1024×768, mouse and touch | Correct mode per input; mode transitions preserve open documents |
+| 960×720, 768×1024, 540×720 | One active document; native page scrolling; adaptive icon columns; no clipped controls |
+| 390×844 and 320×720, touch | Read long posts to the end; switch and restore position; full-title window list fits; all archive icons reachable |
+| Landscape and 200% zoom | No page-width overflow; header and controls fit; article remains readable |
+| Keyboard and print | Open/switch/close, Escape and focus; anchor/backlink; active article prints cleanly |
 
-Run `npm ci`, `bundle install`, `npm run build`, `npm test`, then `npm run dev` to review the generated site locally. The existing main-branch deployment remains unchanged; this draft does not publish the redesign.
+For each viewport, open an older code-heavy post, horizontally scroll code, follow a heading anchor, return through browser history, close everything, and reopen Archive. Capture the render, record findings, fix them, and repeat the affected check.
+
+Run `npm ci`, `bundle install`, `npm run build`, `npm test`, and `npm run dev` to review the generated site locally. This draft does not publish the redesign.

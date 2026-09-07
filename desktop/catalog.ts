@@ -2,7 +2,6 @@ export interface Post {
   title: string
   url: string
   date: string
-  year: string
   words: number
 }
 export interface Rect {
@@ -11,9 +10,9 @@ export interface Rect {
   width: number
   height: number
 }
-export function filterPosts(posts: Post[], year: string, query: string): Post[] {
+export function filterPosts(posts: Post[], query: string): Post[] {
   const term = query.trim().toLocaleLowerCase()
-  return posts.filter((post) => (!year || post.year === year) && post.title.toLocaleLowerCase().includes(term))
+  return posts.filter((post) => post.title.toLocaleLowerCase().includes(term))
 }
 export function clampRect(rect: Rect, width: number, height: number): Rect {
   const w = Math.min(rect.width, Math.max(280, width - 16))

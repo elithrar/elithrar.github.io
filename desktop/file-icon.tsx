@@ -9,13 +9,13 @@ export function Icon({ kind = "document" }: { kind?: "document" | "folder" | "ab
         </>
       ) : kind === "about" ? (
         <>
-          <rect x="4" y="4" width="24" height="24" fill="#d4d1c8" stroke="currentColor" />
-          <path d="M5 5h22v5H5z" fill="#253d65" />
+          <rect x="4" y="4" width="24" height="24" fill="#c0c7c8" stroke="currentColor" />
+          <path d="M5 5h22v5H5z" fill="#0000a8" />
           <path d="M16 15v8m-2 0h5M16 12v1" stroke="currentColor" strokeWidth="2" />
         </>
       ) : (
         <>
-          <path d="M7 3h13l6 6v20H7z" fill="#fbf7ef" stroke="currentColor" />
+          <path d="M7 3h13l6 6v20H7z" fill="#ffffff" stroke="currentColor" />
           <path d="M20 3v7h6M11 15h11m-11 4h11m-11 4h8" stroke="currentColor" />
           <path d="M9 4v23" stroke="white" />
         </>

@@ -12,9 +12,7 @@ export function Explorer({
   onNavigate: (event: MouseEvent, url: string) => void
 }) {
   const [query, setQuery] = useState("")
-  const [year, setYear] = useState("")
-  const results = filterPosts(posts, year, query)
-  const years = [...new Set(posts.map((post) => post.year))]
+  const results = filterPosts(posts, query)
   return (
     <>
       <div className="explorer-toolbar">
@@ -29,18 +27,6 @@ export function Explorer({
         <span className="sort-label">Newest first</span>
       </div>
       <div className="explorer-content">
-        <nav className="year-folders" aria-label="Archive years">
-          <Button aria-pressed={!year} onClick={() => setYear("")}>
-            <Icon kind="folder" />
-            All posts
-          </Button>
-          {years.map((value) => (
-            <Button key={value} aria-pressed={year === value} onClick={() => setYear(value)}>
-              <Icon kind="folder" />
-              {value}
-            </Button>
-          ))}
-        </nav>
         <div className="file-scroll" tabIndex={0} aria-label="Blog post files">
           <ul className="file-grid">
             {results.map((post) => (
@@ -59,7 +45,6 @@ export function Explorer({
               <Button
                 onClick={() => {
                   setQuery("")
-                  setYear("")
                 }}
               >
                 Show all posts
@@ -70,7 +55,7 @@ export function Explorer({
       </div>
       <Window.StatusBar>
         <Window.StatusBar.Item grow role="status" aria-live="polite">
-          {results.length} documents{year ? ` · ${year}` : ""}
+          {results.length} documents
         </Window.StatusBar.Item>
         <Window.StatusBar.Item>Newest → oldest</Window.StatusBar.Item>
       </Window.StatusBar>
