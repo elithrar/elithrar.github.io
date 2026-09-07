@@ -3,6 +3,8 @@
   {% include head.html %}
 
   <body>
+    <div id="desktop-root"></div>
+    <div id="static-blog">
     <div class="container">
       <div class="header">
         <img
@@ -33,5 +35,9 @@
 
     <hr />
     {% include footer.html %}
+    </div>
+    {% if page.layout == "post" or page.url == "/" or page.url == "/archive/" %}
+    <script type="module" src="/public/desktop/app.js"></script>
+    {% endif %}
   </body>
 </html>

@@ -7,9 +7,12 @@
   "license": "MIT",
   "main": "src/index.ts",
   "scripts": {
-    "build": "bundle exec jekyll build && tsc --noEmit",
-    "typecheck": "tsc --noEmit",
-    "deploy": "wrangler deploy"
+    "build": "npm run build:desktop && bundle exec jekyll build && npm run typecheck",
+    "typecheck": "tsc --noEmit && tsc -p desktop/tsconfig.json",
+    "deploy": "wrangler deploy",
+    "build:desktop": "node scripts/build-desktop.mjs",
+    "dev": "vite --host 0.0.0.0 --port 4173 --strictPort",
+    "test": "node --test scripts/desktop.test.mjs"
   },
   "repository": {
     "type": "git",
@@ -37,7 +40,17 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260829.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "esbuild": "^0.28.2",
+    "jsdom": "^26.1.0",
     "typescript": "^6.0.3",
+    "vite": "^7.3.6",
     "wrangler": "^4.127.1"
+  },
+  "dependencies": {
+    "greyui": "^0.6.2",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   }
 }

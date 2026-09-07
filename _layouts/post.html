@@ -13,7 +13,7 @@ layout: default
     >{{ page.date | date: "%B, %Y" }}</time
   >
   <span class="post-bullets" aria-hidden="true">&#8226;&#8226;&#8226;</span>
-  <div class="post-content">
+  <div class="post-content" data-post-url="{{ page.url }}">
     {{ content }}
   </div>
 </article>
