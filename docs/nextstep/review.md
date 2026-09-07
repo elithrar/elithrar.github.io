@@ -24,6 +24,12 @@ The user-supplied screenshot IMG_0609.png demonstrated that the previous impleme
 
 This image is an **artwork inspection sheet**, not a screenshot of the implemented site. It is not counted in the reference corpus.
 
+The final SVG inspection also found a Close-glyph fill defect: open highlight paths inherited SVG's default black fill and obscured the X. Set the SVG root to `fill="none"`, keeping the gray square's explicit fill. The actual component SVG was rasterized before and after at 14px and enlarged without smoothing:
+
+![Close glyph before and after the fill correction](close-glyph-review.png)
+
+This is a component-artwork inspection, not a browser screenshot. The correction changes no hit target or Close behavior.
+
 ### Validation boundaries
 
 The targeted cascade helper uses PostCSS and the `specificity` package to evaluate matching declarations, importance, source order and variable resolution for the tested properties. It models pointer/focus pseudo-states explicitly and includes every stylesheet in document order. It is deliberately limited: it does not perform layout, rasterization, scrolling, media-query evaluation, pseudo-element rendering or pointer hit testing. We do not claim it is a browser emulator.

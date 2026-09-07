@@ -421,7 +421,7 @@ function Desktop({ posts }: { posts: Post[] }) {
                       dismiss(win.id, false)
                     }}
                   >
-                    <svg className="close-glyph" viewBox="0 0 14 14" width="14" height="14" aria-hidden="true">
+                    <svg className="close-glyph" fill="none" viewBox="0 0 14 14" width="14" height="14" aria-hidden="true">
                       <path fill="#aaa" stroke="#000" d="M.5.5h13v13H.5z" />
                       <path stroke="#fff" d="M1 12V1h11" />
                       <path stroke="#555" d="M2 12h10V2" />
