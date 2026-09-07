@@ -1,5 +1,7 @@
 # Windows 3.11 reference study
 
+Historical exploration, superseded by the [NeXTSTEP design system](nextstep/design-system.md). Retained as the record of the earlier requested direction; do not use it to skin current components.
+
 The first draft mixed a warm editorial palette with Windows 95-style window controls and a fixed mobile desktop. This revision starts from 20 inspected screenshots of Windows for Workgroups 3.11, then distinguishes historical appearance from deliberate adaptations for reading on the web.
 
 ## Collection and method

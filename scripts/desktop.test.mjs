@@ -125,6 +125,7 @@ test("archive filtering retains descending chronology and handles no matches", (
   assert.deepEqual(filterPosts(catalog, ""), catalog)
   assert.equal(filterPosts(catalog, "  " + first.title.toUpperCase() + "  ")[0].url, first.url)
   assert.equal(filterPosts(catalog, "no-such-blog-title-92879").length, 0)
+  assert.equal(filterPosts([{ ...first, title: "Logging Middleware" }], "lg mdw").length, 1)
 })
 test("window geometry preserves newest left-to-right order and keeps controls reachable after shrinking", () => {
   const rects = [0, 1, 2].map((i) => initialRect(i, 1440, 800))
@@ -214,11 +215,11 @@ test("article anchors target their own window; maximize keeps the same reader an
     await until(() => region(document, first.url)?.querySelector(".article-content"))
     const reader = region(document, first.url).querySelector(".document-scroll")
     reader.scrollTop = 200
-    click(dom, button(document, `Maximize ${first.title}`))
+    click(dom, button(document, "Zoom"))
     await until(() => region(document, first.url).classList.contains("is-maximized"))
     assert.equal(region(document, first.url).querySelector(".document-scroll"), reader)
     assert.equal(reader.scrollTop, 200)
-    click(dom, button(document, `Restore ${first.title}`))
+    click(dom, button(document, "Unzoom"))
     await until(() => !region(document, first.url).classList.contains("is-maximized"))
     const anchor = [...reader.querySelectorAll(".article-content a")].find(
       (node) => new URL(node.href).pathname === first.url && new URL(node.href).hash
@@ -343,8 +344,13 @@ test("Recents retains full titles, close on Escape, and recover after closing ev
           ![...document.querySelectorAll("[data-window-id]")].some((node) => node.getAttribute("aria-label") === name)
       )
     }
-    assert.ok(document.querySelector(".closed-workspace"))
-    click(dom, button(document, "Open Archive"))
+    const desktop = document.querySelector(".desktop-icons")
+    assert.equal(desktop.hidden, false)
+    assert.equal(document.querySelector(".closed-workspace"), null)
+    click(
+      dom,
+      [...desktop.querySelectorAll("button")].find((node) => node.textContent === "Archive")
+    )
     await until(() => region(document, "archive") && !region(document, "archive").hidden)
     assert.equal(region(document, "archive").querySelectorAll(".file-grid a").length, catalog.length)
   } finally {
@@ -439,5 +445,181 @@ test("compact frame styles fit About content while the desktop background fills 
     } finally {
       close()
     }
+  }
+})
+
+test("empty mobile desktop exposes Haiku Recents, Archive, and About launchers", async () => {
+  for (const width of [320, 390, 768]) {
+    const { dom, document, close } = await launch({ width, path: first.url })
+    try {
+      const desktop = document.querySelector(".desktop-icons")
+      assert.equal(desktop.hidden, true)
+      await closeWindow(dom, document, first.title)
+      await until(() => !region(document, first.url))
+      assert.equal(desktop.hidden, false)
+      assert.deepEqual(
+        [...desktop.querySelectorAll("button")].map((node) => node.textContent),
+        ["Recents", "Archive", "About"]
+      )
+      for (const icon of desktop.querySelectorAll("img")) {
+        assert.equal(icon.alt, "")
+        assert.ok((await readFile(`_site${icon.getAttribute("src")}`)).length > 0)
+      }
+      const launchIcon = (name) =>
+        click(
+          dom,
+          [...desktop.querySelectorAll("button")].find((node) => node.textContent === name)
+        )
+      launchIcon("Recents")
+      await until(() => desktop.querySelector(".recents-list"))
+      assert.deepEqual(
+        [...desktop.querySelectorAll(".recents-list button")].map((node) => node.textContent),
+        catalog.slice(0, 3).map((post) => post.title)
+      )
+      click(dom, desktop.querySelector(".recents-list button"))
+      await until(() => region(document, first.url))
+      assert.equal(desktop.hidden, true)
+      await closeWindow(dom, document, first.title)
+      await until(() => !region(document, first.url))
+      launchIcon("About")
+      await until(() => region(document, "about"))
+      await closeWindow(dom, document, "About")
+      await until(() => !region(document, "about"))
+      launchIcon("Archive")
+      await until(() => region(document, "archive"))
+      assert.equal(region(document, "archive").querySelectorAll(".file-grid a").length, catalog.length)
+      assert.ok((await readFile("_site/public/icons/haiku/LICENSE.txt", "utf8")).includes("Haiku, Inc."))
+    } finally {
+      close()
+    }
+  }
+})
+
+test("NeXTSTEP corpus has 36 unique original illustrations with verified checksums and sources", async () => {
+  const { createHash } = await import("node:crypto")
+  const refs = JSON.parse(await readFile("docs/nextstep/manifest.json", "utf8"))
+  assert.equal(refs.length, 36)
+  assert.equal(new Set(refs.map((r) => r.sha256)).size, 36)
+  for (const r of refs) {
+    const data = await readFile(`docs/nextstep/corpus/${r.file}`)
+    assert.equal(createHash("sha256").update(data).digest("hex"), r.sha256)
+    assert.equal(data.readUInt16LE(6), r.width)
+    assert.equal(data.readUInt16LE(8), r.height)
+    assert.ok(r.source.startsWith("https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/"))
+  }
+})
+
+test("closing or miniaturizing an inactive NeXTSTEP window preserves the active reader", async () => {
+  const { dom, document, close } = await launch()
+  try {
+    await until(() => region(document, first.url)?.querySelector(".article-content"))
+    const reader = region(document, first.url).querySelector(".document-scroll")
+    reader.scrollTop = 410
+    await closeWindow(dom, document, second.title)
+    await until(() => !region(document, second.url))
+    assert.equal(region(document, first.url).dataset.active, "true")
+    assert.equal(document.activeElement, region(document, first.url))
+    assert.equal(reader.scrollTop, 410)
+    const mini = button(document, `Minimize ${catalog[2].title}`)
+    mini.dispatchEvent(new dom.window.MouseEvent("pointerdown", { bubbles: true }))
+    mini.focus()
+    click(dom, mini)
+    await until(() => region(document, catalog[2].url).hidden)
+    assert.equal(region(document, first.url).dataset.active, "true")
+    assert.equal(reader.scrollTop, 410)
+  } finally {
+    close()
+  }
+})
+
+test("miniwindows restore a non-recent document without fetching again or polluting Recents", async () => {
+  const { dom, document, calls, close } = await launch()
+  try {
+    click(dom, region(document, "archive").querySelector(`a[href="${oldest.url}"]`))
+    await until(() => region(document, oldest.url)?.querySelector(".article-content"))
+    const reader = region(document, oldest.url).querySelector(".document-scroll")
+    reader.scrollTop = 280
+    click(dom, button(document, `Minimize ${oldest.title}`))
+    await until(() => region(document, oldest.url).hidden)
+    assert.equal(document.querySelector(".miniwindow-tray").hidden, false)
+    click(dom, button(document, `Restore ${oldest.title}`))
+    await until(() => region(document, oldest.url).dataset.active === "true")
+    assert.equal(reader.scrollTop, 280)
+    assert.equal(calls.filter((url) => url === oldest.url).length, 1)
+    click(dom, document.querySelector(".desktop-bar .recents-trigger"))
+    await until(() => document.querySelector(".desktop-bar .recents-list"))
+    assert.deepEqual(
+      [...document.querySelectorAll(".desktop-bar .recents-list button")].map((b) => b.textContent),
+      catalog.slice(0, 3).map((p) => p.title)
+    )
+  } finally {
+    close()
+  }
+})
+
+test("compact palette supports actual keyboard opening, item navigation, selection and Escape", async () => {
+  const { dom, document, close } = await launch({ width: 320 })
+  const key = (node, key) =>
+    node.dispatchEvent(new dom.window.KeyboardEvent("keydown", { key, bubbles: true, cancelable: true }))
+  try {
+    const toggle = document.getElementById("menu-toggle")
+    assert.equal(document.getElementById("desktop-commands").hidden, true)
+    toggle.focus()
+    key(toggle, "ArrowDown")
+    await until(() => document.activeElement === document.querySelector(".desktop-bar .recents-trigger"))
+    assert.equal(document.getElementById("desktop-commands").hidden, false)
+    const trigger = document.activeElement
+    key(trigger, "ArrowRight")
+    await until(() => document.activeElement === document.querySelector(".desktop-bar .recents-list button"))
+    key(document.activeElement, "End")
+    assert.equal(document.activeElement.textContent, catalog[2].title)
+    key(document.activeElement, "Home")
+    assert.equal(document.activeElement.textContent, first.title)
+    key(document.activeElement, "Escape")
+    await until(() => trigger.getAttribute("aria-expanded") === "false")
+    assert.equal(document.activeElement, trigger)
+    // Tab to Archive is native browser behavior; focus it explicitly in JSDOM.
+    document.getElementById("archive-launcher").focus()
+    click(dom, document.activeElement)
+    await until(() => region(document, "archive").dataset.active === "true")
+    assert.equal(document.getElementById("desktop-commands").hidden, true)
+    assert.equal(document.activeElement, region(document, "archive"))
+    click(dom, toggle)
+    key(toggle, "Escape")
+    await until(() => document.getElementById("desktop-commands").hidden)
+    assert.equal(document.activeElement, toggle)
+  } finally {
+    close()
+  }
+})
+
+test("bottom resize zones change document geometry with keyboard controls and preserve reading content", async () => {
+  const { dom, document, close } = await launch()
+  const key = (node, key, shiftKey = false) =>
+    node.dispatchEvent(new dom.window.KeyboardEvent("keydown", { key, shiftKey, bubbles: true, cancelable: true }))
+  try {
+    await until(() => region(document, first.url)?.querySelector(".article-content"))
+    const win = region(document, first.url),
+      reader = win.querySelector(".document-scroll")
+    reader.scrollTop = 120
+    const zones = win.querySelectorAll('[role="separator"]')
+    assert.equal(zones.length, 3)
+    const width = parseFloat(win.style.width),
+      height = parseFloat(win.style.height)
+    key(zones[2], "ArrowRight")
+    await until(() => parseFloat(win.style.width) === width + 8)
+    key(zones[1], "ArrowDown")
+    await until(() => parseFloat(win.style.height) === height + 8)
+    for (let i = 0; i < 30; i++) {
+      key(zones[2], "ArrowLeft", true)
+      await new Promise((r) => setTimeout(r, 0))
+    }
+    assert.equal(parseFloat(win.style.width), 280)
+    assert.equal(win.querySelector(".document-scroll"), reader)
+    assert.equal(reader.scrollTop, 120)
+    assert.equal(document.querySelector(".document-toolbar"), null)
+    assert.equal(document.querySelector(".desktop-brand"), null)
+  } finally {
+    close()
   }
 })

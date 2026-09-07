@@ -5,18 +5,30 @@ import { clampRect, initialRect, type Post, type Rect } from "./catalog"
 import { Article } from "./article-viewer"
 import { Explorer } from "./archive-explorer"
 import { Icon } from "./file-icon"
+import { AppIcon } from "./app-icon"
 import { useCompactLayout } from "./responsive"
 import { WindowDisclosure } from "./window-disclosure"
 import "greyui/styles.css"
 import "./desktop.css"
+import "./nextstep-theme.css"
 
 type AppWindow = { id: string; minimized: boolean; maximized: boolean; rect: Rect }
 const ARCHIVE = "archive"
 const ABOUT = "about"
 function Desktop({ posts }: { posts: Post[] }) {
   const compact = useCompactLayout()
+  const [menuOpen, setMenuOpen] = useState(false)
+  const menuRef = useRef<HTMLElement>(null)
+  useEffect(() => {
+    if (!menuOpen) return
+    const outside = (event: globalThis.PointerEvent) => {
+      if (event.target instanceof Node && !menuRef.current?.contains(event.target)) setMenuOpen(false)
+    }
+    document.addEventListener("pointerdown", outside)
+    return () => document.removeEventListener("pointerdown", outside)
+  }, [menuOpen])
   const pagePositions = useRef(new Map<string, number>())
-  const [viewport, setViewport] = useState({ width: innerWidth, height: innerHeight - 100 })
+  const [viewport, setViewport] = useState({ width: innerWidth - 260, height: innerHeight - 100 })
   const make = (id: string, index: number): AppWindow => ({
     id,
     minimized: false,
@@ -51,6 +63,7 @@ function Desktop({ posts }: { posts: Post[] }) {
     startX: number
     startY: number
     rect: Rect
+    edge?: "left" | "middle" | "right"
   } | null>(null)
   const title = (id: string) =>
     id === ARCHIVE ? "Archive" : id === ABOUT ? "About" : (posts.find((post) => post.url === id)?.title ?? "Article")
@@ -66,6 +79,7 @@ function Desktop({ posts }: { posts: Post[] }) {
     history.replaceState(null, "", id.startsWith("/") ? id : id === ARCHIVE ? "/archive/" : "/")
   }
   const open = (id: string, navigate = true) => {
+    setMenuOpen(false)
     setWindows((old) =>
       old.some((win) => win.id === id)
         ? old.map((win) => (win.id === id ? { ...win, minimized: false } : win))
@@ -146,13 +160,15 @@ function Desktop({ posts }: { posts: Post[] }) {
         : old.filter((win) => win.id !== id)
     )
     const next = [...order].reverse().find((item) => remaining.some((win) => win.id === item))
-    if (next) {
+    if (id !== active) {
+      pendingFocus.current = active
+    } else if (next) {
       activate(next, true)
       history.replaceState(null, "", next.startsWith("/") ? next : next === ARCHIVE ? "/archive/" : "/")
     } else {
       setActive("")
       history.replaceState(null, "", "/")
-      document.getElementById("archive-launcher")?.focus()
+      requestAnimationFrame(() => document.getElementById("archive-desktop-launcher")?.focus())
     }
     if (!minimize) {
       pagePositions.current.delete(id)
@@ -177,12 +193,20 @@ function Desktop({ posts }: { posts: Post[] }) {
   const pointerMove = (event: PointerEvent) => {
     const moving = drag.current
     if (!moving || moving.pointer !== event.pointerId) return
+    const dx = event.clientX - moving.startX
+    const dy = event.clientY - moving.startY
     const rect = clampRect(
-      {
-        ...moving.rect,
-        x: moving.rect.x + event.clientX - moving.startX,
-        y: moving.rect.y + event.clientY - moving.startY,
-      },
+      moving.edge
+        ? {
+            ...moving.rect,
+            x: moving.edge === "left" ? moving.rect.x + Math.min(dx, moving.rect.width - 280) : moving.rect.x,
+            width:
+              moving.edge === "middle"
+                ? moving.rect.width
+                : Math.max(280, moving.rect.width + (moving.edge === "left" ? -dx : dx)),
+            height: Math.max(200, moving.rect.height + dy),
+          }
+        : { ...moving.rect, x: moving.rect.x + dx, y: moving.rect.y + dy },
       viewport.width,
       viewport.height
     )
@@ -191,76 +215,137 @@ function Desktop({ posts }: { posts: Post[] }) {
   const pointerEnd = () => {
     drag.current = null
   }
+  const recentItems = (close: () => void) =>
+    posts.slice(0, 3).map((post) => (
+      <Button
+        key={post.url}
+        data-current={post.url === active}
+        onClick={() => {
+          close()
+          open(post.url)
+        }}
+      >
+        <span>{post.title}</span>
+      </Button>
+    ))
   return (
     <Layer.Provider>
-      <div className="blog-desktop" data-greyui-theme="win311" data-layout={compact ? "compact" : "desktop"}>
-        <header className="desktop-bar">
-          <a
-            className="desktop-brand"
-            href="/"
-            onClick={(event) => {
-              if (event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return
+      <div className="blog-desktop" data-greyui-theme="nextstep" data-layout={compact ? "compact" : "desktop"}>
+        <header
+          ref={menuRef}
+          className="desktop-bar"
+          onBlur={(event) => {
+            if (event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) setMenuOpen(false)
+          }}
+          onKeyDown={(event) => {
+            const keys = ["ArrowDown", "ArrowUp", "Home", "End"]
+            if (event.key === "Escape") {
+              setMenuOpen(false)
+              document.getElementById("menu-toggle")?.focus()
+              return
+            }
+            if (!keys.includes(event.key)) return
+            if (compact && !menuOpen) {
               event.preventDefault()
-              reset()
-              if (posts[0]) open(posts[0].url, false)
-              history.pushState(null, "", "/")
-            }}
-          >
-            <img src="/public/favicon.svg" width="28" height="28" alt="" />
-            <span>Questionable Services</span>
-          </a>
-          <nav aria-label="Desktop">
+              setMenuOpen(true)
+              requestAnimationFrame(() =>
+                menuRef.current?.querySelector<HTMLButtonElement>(".recents-trigger")?.focus()
+              )
+              return
+            }
+            const items = [
+              ...event.currentTarget.querySelectorAll<HTMLElement>(
+                ":scope > nav > button:not(:disabled), :scope > nav > a, :scope > nav > .window-disclosure > button"
+              ),
+            ]
+            const index = items.indexOf(event.target as HTMLElement)
+            const next =
+              event.key === "Home"
+                ? 0
+                : event.key === "End"
+                  ? items.length - 1
+                  : (index + (event.key === "ArrowUp" ? -1 : 1) + items.length) % items.length
+            event.preventDefault()
+            items[next]?.focus()
+          }}
+        >
+          {compact ? (
+            <Button
+              id="menu-toggle"
+              className="menu-heading"
+              aria-expanded={menuOpen}
+              aria-controls="desktop-commands"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              Blog <span aria-hidden="true">▾</span>
+            </Button>
+          ) : (
+            <div className="menu-heading">Blog</div>
+          )}
+          <nav id="desktop-commands" aria-label="Desktop" hidden={compact && !menuOpen}>
+            <WindowDisclosure label="Recents">{recentItems}</WindowDisclosure>
             <Button id="archive-launcher" onClick={() => open(ARCHIVE)}>
               Archive
             </Button>
-            <WindowDisclosure label="Recents">
-              {(close) =>
-                posts.slice(0, 3).map((post) => (
-                  <Button
-                    key={post.url}
-                    data-current={post.url === active}
-                    onClick={() => {
-                      close()
-                      open(post.url)
-                    }}
-                  >
-                    <Icon />
-                    <span>{post.title}</span>
-                  </Button>
-                ))
-              }
-            </WindowDisclosure>
             <Button onClick={() => open(ABOUT)}>About</Button>
             {!compact && (
-              <Button className="arrange-button" onClick={reset}>
-                Arrange
-              </Button>
+              <>
+                <Button
+                  disabled={!active}
+                  onClick={() =>
+                    setWindows((old) =>
+                      old.map((win) => (win.id === active ? { ...win, maximized: !win.maximized } : win))
+                    )
+                  }
+                >
+                  {windows.find((win) => win.id === active)?.maximized ? "Unzoom" : "Zoom"}
+                </Button>
+                <Button className="arrange-button" disabled={!windows.some((win) => !win.minimized)} onClick={reset}>
+                  Arrange
+                </Button>
+              </>
             )}
             <a href="/atom.xml">RSS</a>
           </nav>
         </header>
+        <nav
+          className="desktop-icons"
+          aria-label="Desktop apps"
+          hidden={compact && windows.some((win) => !win.minimized)}
+        >
+          <WindowDisclosure label="Recents" icon={<AppIcon app="recents" />}>
+            {recentItems}
+          </WindowDisclosure>
+          <Button id="archive-desktop-launcher" onClick={() => open(ARCHIVE)}>
+            <AppIcon app="archive" />
+            <span>Archive</span>
+          </Button>
+          <Button onClick={() => open(ABOUT)}>
+            <AppIcon app="about" />
+            <span>About</span>
+          </Button>
+        </nav>
+        <nav
+          className="miniwindow-tray"
+          aria-label="Minimized documents"
+          hidden={compact || !windows.some((win) => win.minimized)}
+        >
+          {windows
+            .filter((win) => win.minimized)
+            .map((win) => (
+              <Button
+                key={win.id}
+                className="miniwindow"
+                aria-label={`Restore ${title(win.id)}`}
+                title={title(win.id)}
+                onClick={() => open(win.id)}
+              >
+                <span className="miniwindow-title">{title(win.id)}</span>
+                <Icon />
+              </Button>
+            ))}
+        </nav>
         <main className="desktop-workspace" ref={desktopRef} aria-label="Blog desktop">
-          {compact && !windows.some((win) => !win.minimized) && (
-            <div className="closed-workspace">
-              <p>No documents open.</p>
-              <Button onClick={() => open(ARCHIVE)}>Open Archive</Button>
-            </div>
-          )}
-          <nav className="desktop-icons" aria-label="Desktop apps">
-            <Button onClick={() => open(ARCHIVE)}>
-              <Icon kind="folder" />
-              <span>Archive</span>
-            </Button>
-            <Button onClick={() => open(ABOUT)}>
-              <Icon kind="about" />
-              <span>About</span>
-            </Button>
-          </nav>
-          <div className="desktop-caption" aria-hidden="true">
-            Writings about computing,
-            <br />
-            agents, and the Internet.
-          </div>
           {windows.map((win) => {
             const post = posts.find((post) => post.url === win.id)
             const isActive = active === win.id && !win.minimized
@@ -283,8 +368,12 @@ function Desktop({ posts }: { posts: Post[] }) {
                   height: win.rect.height,
                   zIndex: order.indexOf(win.id) + 1,
                 }}
-                onPointerDownCapture={() => focusWindow(win.id)}
-                onFocusCapture={() => focusWindow(win.id)}
+                onPointerDownCapture={(event) => {
+                  if (!(event.target as Element).closest(".title-control")) focusWindow(win.id)
+                }}
+                onFocusCapture={(event) => {
+                  if (!(event.target as Element).closest(".title-control")) focusWindow(win.id)
+                }}
               >
                 <Window.TitleBar
                   onPointerDown={(event) => pointerDown(event, win)}
@@ -299,8 +388,19 @@ function Desktop({ posts }: { posts: Post[] }) {
                       )
                   }}
                 >
+                  {!compact && (
+                    <Window.Widget
+                      className="title-control"
+                      kind="minimize"
+                      label={`Minimize ${title(win.id)}`}
+                      onClick={() => dismiss(win.id, true)}
+                    />
+                  )}
+                  <Window.Title>
+                    <span>{compact && post ? "Article" : title(win.id)}</span>
+                  </Window.Title>
                   <Button
-                    className="window-close"
+                    className="window-close title-control"
                     aria-label={`Close ${title(win.id)}`}
                     title={`Close ${title(win.id)}`}
                     onClick={(event) => {
@@ -308,42 +408,12 @@ function Desktop({ posts }: { posts: Post[] }) {
                       dismiss(win.id, false)
                     }}
                   >
-                    <span aria-hidden="true" />
+                    <span aria-hidden="true">×</span>
                   </Button>
-                  <Window.Title>
-                    <span>{compact && post ? "Article" : title(win.id)}</span>
-                  </Window.Title>
-                  {!compact && (
-                    <Window.Controls>
-                      <Window.Widget
-                        kind="minimize"
-                        label={`Minimize ${title(win.id)}`}
-                        onClick={() => dismiss(win.id, true)}
-                      />
-                      <Window.Widget
-                        className="maximize-button"
-                        kind={win.maximized ? "restore" : "zoom"}
-                        label={`${win.maximized ? "Restore" : "Maximize"} ${title(win.id)}`}
-                        onClick={() =>
-                          setWindows((old) =>
-                            old.map((item) => (item.id === win.id ? { ...item, maximized: !item.maximized } : item))
-                          )
-                        }
-                      />
-                    </Window.Controls>
-                  )}
                 </Window.TitleBar>
                 <Window.Body>
                   {post ? (
-                    <>
-                      <div className="document-toolbar">
-                        <span>Article</span>
-                        <a href={post.url} target="_blank" rel="noopener">
-                          Open page ↗
-                        </a>
-                      </div>
-                      <Article post={post} onNavigate={onNavigate} />
-                    </>
+                    <Article post={post} onNavigate={onNavigate} />
                   ) : win.id === ARCHIVE ? (
                     <Explorer posts={posts} onNavigate={onNavigate} />
                   ) : (
@@ -361,6 +431,59 @@ function Desktop({ posts }: { posts: Post[] }) {
                     </div>
                   )}
                 </Window.Body>
+                {!compact && !win.maximized && (
+                  <div className="window-resize-bar">
+                    {(["left", "middle", "right"] as const).map((edge) => (
+                      <div
+                        key={edge}
+                        role="separator"
+                        tabIndex={0}
+                        aria-label={`Resize ${title(win.id)} ${edge}`}
+                        aria-orientation={edge === "middle" ? "horizontal" : "vertical"}
+                        aria-valuenow={Math.round(edge === "middle" ? win.rect.height : win.rect.width)}
+                        aria-valuemin={edge === "middle" ? 200 : 280}
+                        aria-valuemax={Math.round(edge === "middle" ? viewport.height : viewport.width)}
+                        onPointerDown={(event) => {
+                          if (event.button !== 0) return
+                          event.preventDefault()
+                          event.currentTarget.setPointerCapture(event.pointerId)
+                          drag.current = {
+                            id: win.id,
+                            pointer: event.pointerId,
+                            startX: event.clientX,
+                            startY: event.clientY,
+                            rect: win.rect,
+                            edge,
+                          }
+                        }}
+                        onPointerMove={pointerMove}
+                        onPointerUp={pointerEnd}
+                        onPointerCancel={pointerEnd}
+                        onLostPointerCapture={pointerEnd}
+                        onKeyDown={(event) => {
+                          if (!event.key.startsWith("Arrow")) return
+                          event.preventDefault()
+                          const delta = event.shiftKey ? 32 : 8
+                          const r = { ...win.rect }
+                          if (event.key === "ArrowDown") r.height += delta
+                          if (event.key === "ArrowUp") r.height = Math.max(200, r.height - delta)
+                          if (edge !== "middle" && (event.key === "ArrowLeft" || event.key === "ArrowRight")) {
+                            const dx = event.key === "ArrowRight" ? delta : -delta
+                            r.width = Math.max(280, r.width + (edge === "left" ? -dx : dx))
+                            if (edge === "left") r.x += win.rect.width - r.width
+                          }
+                          setWindows((old) =>
+                            old.map((item) =>
+                              item.id === win.id
+                                ? { ...item, rect: clampRect(r, viewport.width, viewport.height) }
+                                : item
+                            )
+                          )
+                        }}
+                      />
+                    ))}
+                  </div>
+                )}
               </Window.Root>
             )
           })}

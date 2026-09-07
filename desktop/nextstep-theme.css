@@ -1,0 +1,260 @@
+/* NeXTSTEP 3.3 skin over greyUI. Every material maps to
+   docs/nextstep/design-system.md and its 36-image research corpus. */
+[data-greyui-theme="nextstep"] {
+  --ns-workspace: #808080;
+  --ns-face: #c6c6c6;
+  --ns-paper: #fff;
+  --ns-ink: #000;
+  --ns-muted: #505050;
+  --ns-edge: #808080;
+  --ns-raised: inset 1px 1px var(--ns-paper), inset -1px -1px var(--ns-ink);
+  --ns-inset: inset 1px 1px var(--ns-edge), inset -1px -1px var(--ns-paper);
+  --ns-shadow: 1px 1px 0 var(--ns-ink);
+  --desktop-field: var(--ns-face);
+  --desktop-paper: var(--ns-paper);
+  --desktop-ink: var(--ns-ink);
+  --desktop-muted: var(--ns-muted);
+  --desktop-title: var(--ns-ink);
+  --greyui-bevel-outset: var(--ns-raised);
+  --greyui-bevel-inset: var(--ns-inset);
+  --greyui-panel: var(--ns-face);
+  --greyui-panel-light: var(--ns-paper);
+  --greyui-control: var(--ns-face);
+  --greyui-control-border: var(--ns-ink);
+  --greyui-document: var(--ns-paper);
+  --greyui-text: var(--ns-ink);
+  --greyui-font-ui: Helvetica, Arial, sans-serif;
+  --greyui-font-size: 14px;
+  --greyui-font-size-small: 12px;
+  --greyui-tab-active: var(--ns-ink);
+  --greyui-tab-active-dark: var(--ns-ink);
+  --greyui-tab-gradient-active: none;
+  --greyui-tab-gradient-inactive: none;
+  --greyui-tab-text: var(--ns-paper);
+  --greyui-tab-text-inactive: var(--ns-ink);
+  --greyui-selection: var(--ns-paper);
+  --greyui-keyboard-navigation: var(--ns-ink);
+  --greyui-border-light: var(--ns-paper);
+  --greyui-border-dark: var(--ns-edge);
+  --greyui-border-darker: var(--ns-ink);
+  --greyui-popup-shadow: var(--ns-shadow);
+  --greyui-font-mono: Menlo, Monaco, Consolas, monospace;
+}
+/* One control recipe, including greyUI disclosure triggers and window widgets. */
+.blog-desktop :is(.greyui-button, .recents-trigger, .greyui-window-widget) {
+  min-height: 32px;
+  padding: var(--ns-button-padding, 6px 10px);
+  border: 1px solid var(--ns-ink);
+  border-radius: 0;
+  background: var(--ns-face);
+  background-image: none;
+  color: var(--ns-ink);
+  box-shadow: var(--ns-raised);
+  font: 14px/1.4 var(--greyui-font-ui);
+  text-shadow: none;
+  transform: none;
+  filter: none;
+  cursor: default;
+}
+.blog-desktop
+  :is(.greyui-button, .recents-trigger, .greyui-window-widget):is(:active, [aria-expanded="true"]):not(:disabled) {
+  background: var(--ns-paper);
+  color: var(--ns-ink);
+  box-shadow: var(--ns-inset);
+  transform: none;
+  padding: var(--ns-button-padding, 6px 10px);
+}
+.blog-desktop :is(button, a):focus-visible,
+.blog-desktop [tabindex]:focus-visible,
+.blog-desktop input:focus-visible {
+  outline: 1px dotted var(--ns-ink);
+  outline-offset: -4px;
+}
+.blog-desktop .desktop-window:focus-visible {
+  outline: 1px dotted var(--ns-paper);
+  outline-offset: 2px;
+}
+.blog-desktop :is(.greyui-button, .recents-trigger):disabled {
+  color: var(--ns-muted);
+  opacity: 1;
+  cursor: default;
+}
+.blog-desktop .desktop-window .greyui-window-frame {
+  padding: 0;
+  border: 1px solid var(--ns-ink);
+  border-radius: 0;
+  background: var(--ns-face);
+  box-shadow: var(--ns-shadow);
+  opacity: 1;
+}
+.blog-desktop .greyui-window-frame::before {
+  display: none;
+}
+.blog-desktop .greyui-window-tab {
+  min-height: 26px;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid var(--ns-ink);
+  background: var(--ns-ink);
+  color: var(--ns-paper);
+  box-shadow: inset 0 1px var(--ns-edge);
+}
+.blog-desktop .desktop-window[data-active="false"] .greyui-window-tab {
+  background: var(--ns-face);
+  color: var(--ns-ink);
+  box-shadow: inset 0 1px var(--ns-paper);
+}
+.blog-desktop .greyui-window-title {
+  font: bold 14px/1.2 var(--greyui-font-ui);
+}
+.blog-desktop .window-close,
+.blog-desktop .greyui-window-widget {
+  --ns-button-padding: 0;
+  min-height: 24px;
+}
+.blog-desktop .window-close > span {
+  display: block;
+  font:
+    25px/20px Arial,
+    sans-serif;
+}
+.blog-desktop .greyui-window-widget {
+  order: -1;
+}
+.blog-desktop .greyui-window-widget > span {
+  display: block;
+  position: static;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 1px solid var(--ns-ink);
+  background: var(--ns-face);
+  box-shadow:
+    inset 1px 1px var(--ns-paper),
+    inset -2px -2px var(--ns-edge);
+}
+.blog-desktop .greyui-window-widget > span::before,
+.blog-desktop .greyui-window-widget > span::after {
+  display: none;
+}
+.blog-desktop .desktop-window .greyui-window-body {
+  background: var(--ns-paper);
+  color: var(--ns-ink);
+}
+.blog-desktop .window-resize-bar {
+  border-top: 1px solid var(--ns-ink);
+  background: var(--ns-face);
+}
+.blog-desktop .window-resize-bar > div {
+  box-shadow: var(--ns-raised);
+}
+.blog-desktop .menu-heading {
+  --ns-button-padding: 3px 7px;
+  display: flex;
+  align-items: center;
+  padding: 3px 7px;
+  min-height: 26px;
+  border: 1px solid var(--ns-ink);
+  border-radius: 0;
+  background: var(--ns-ink);
+  color: var(--ns-paper);
+  box-shadow: inset 0 1px var(--ns-edge);
+  font: bold 14px/1.4 var(--greyui-font-ui);
+}
+.blog-desktop .menu-heading:is(:active, [aria-expanded="true"]) {
+  background: var(--ns-ink);
+  color: var(--ns-paper);
+  box-shadow: inset 0 1px var(--ns-edge);
+}
+.blog-desktop .menu-heading:focus-visible {
+  outline-color: var(--ns-paper);
+}
+.blog-desktop .desktop-bar > nav,
+.blog-desktop .recents-list {
+  background: var(--ns-face);
+  box-shadow: var(--ns-shadow);
+}
+.blog-desktop .desktop-bar nav > :is(button, a),
+.blog-desktop .recents-trigger,
+.blog-desktop .recents-list .greyui-button {
+  width: 100%;
+  min-height: 32px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: var(--ns-raised);
+  background: var(--ns-face);
+  color: var(--ns-ink);
+  justify-content: flex-start;
+  font: 14px/1.4 var(--greyui-font-ui);
+}
+.blog-desktop .recents-trigger::after {
+  content: "";
+  margin-left: auto;
+  border: 4px solid transparent;
+  border-right: 0;
+  border-left: 5px solid var(--ns-ink);
+}
+.blog-desktop .desktop-bar nav > :is(button, a):hover:not(:disabled),
+.blog-desktop .recents-trigger:is(:hover, [aria-expanded="true"]),
+.blog-desktop .recents-list .greyui-button:is(:hover, :focus-visible) {
+  background: var(--ns-paper);
+  color: var(--ns-ink);
+}
+.blog-desktop .desktop-bar nav > :is(button, a):active:not(:disabled),
+.blog-desktop .recents-list .greyui-button:active {
+  box-shadow: var(--ns-inset);
+}
+.blog-desktop .desktop-bar nav > button:disabled {
+  color: var(--ns-muted);
+}
+.blog-desktop .desktop-icons > .greyui-button,
+.blog-desktop .desktop-icons .desktop-recents-trigger {
+  --ns-button-padding: 4px 0;
+  padding: var(--ns-button-padding);
+}
+.blog-desktop .desktop-icons :is(button:hover, button:focus-visible) {
+  background: var(--ns-paper);
+}
+.blog-desktop .explorer-toolbar,
+.blog-desktop .greyui-statusbar,
+.blog-desktop .about-content {
+  background: var(--ns-face);
+}
+.blog-desktop .explorer-toolbar {
+  border-bottom: 1px solid var(--ns-edge);
+}
+.blog-desktop .greyui-input {
+  border: 1px solid var(--ns-edge);
+  border-radius: 0;
+  box-shadow: var(--ns-inset);
+  background: var(--ns-paper);
+  color: var(--ns-ink);
+}
+.blog-desktop .file-grid a:is(:hover, :focus-visible) .file-title {
+  background: var(--ns-ink);
+  color: var(--ns-paper);
+}
+.blog-desktop .reader a,
+.blog-desktop .about-content a {
+  color: var(--ns-ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.blog-desktop :is(.document-scroll, .file-scroll, .recents-list, pre, .table-scroll) {
+  scrollbar-color: var(--ns-face) var(--ns-edge);
+  scrollbar-width: auto;
+}
+@media print {
+  .blog-desktop .desktop-window .greyui-window-frame {
+    box-shadow: none;
+    border: 0;
+  }
+}
+
+.blog-desktop .miniwindow {
+  --ns-button-padding: 0 2px 4px;
+}
+.blog-desktop .greyui-button:hover:not(:disabled) {
+  filter: none;
+}

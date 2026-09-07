@@ -1,36 +1,5 @@
-/* Measured from the 20 references in docs/windows311-study.md.
-   Window geometry and reading layout are separate from the shared skin. */
-[data-greyui-theme="win311"] {
-  --desktop-field: #c0c7c8;
-  --desktop-paper: #fff;
-  --desktop-ink: #000;
-  --desktop-muted: #505056;
-  --desktop-link: #8b3a49;
-  --desktop-title: #0000a8;
-  --desktop-shadow: #87888f;
-  --greyui-panel: var(--desktop-field);
-  --greyui-panel-light: #fff;
-  --greyui-control: var(--desktop-field);
-  --greyui-control-border: #000;
-  --greyui-document: #fff;
-  --greyui-text: #000;
-  --greyui-font-ui: Arial, Helvetica, sans-serif;
-  --greyui-font-size: 14px;
-  --greyui-font-size-small: 12px;
-  --greyui-tab-active: var(--desktop-title);
-  --greyui-tab-active-dark: var(--desktop-title);
-  --greyui-tab-gradient-active: none;
-  --greyui-tab-gradient-inactive: none;
-  --greyui-tab-text: #fff;
-  --greyui-tab-text-inactive: #000;
-  --greyui-selection: var(--desktop-title);
-  --greyui-keyboard-navigation: #000;
-  --greyui-border-light: #fff;
-  --greyui-border-dark: var(--desktop-shadow);
-  --greyui-border-darker: #000;
-  --greyui-popup-shadow: 1px 1px 0 #000;
-  --greyui-font-mono: Menlo, Monaco, Consolas, monospace;
-}
+/* Geometry and document typography. Chrome is specified in nextstep-theme.css.
+   Source of truth: docs/nextstep/design-system.md. */
 .desktop-ready {
   margin: 0;
   padding: 0;
@@ -43,10 +12,8 @@
   position: fixed;
   inset: 0;
   height: 100dvh;
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-  color: var(--desktop-ink);
-  background: var(--desktop-field);
+  color: var(--ns-ink);
+  background: var(--ns-workspace);
   font: 14px/1.4 var(--greyui-font-ui);
   text-align: left;
 }
@@ -56,159 +23,134 @@
   box-sizing: border-box;
 }
 .blog-desktop a {
-  color: var(--desktop-link);
+  color: var(--ns-ink);
 }
 .blog-desktop button {
   font-family: var(--greyui-font-ui);
 }
-[data-greyui-theme="win311"] :focus-visible {
-  outline: 2px solid var(--desktop-title);
-  outline-offset: -3px;
-}
-[data-greyui-theme="win311"] .greyui-button {
-  min-height: 32px;
-  border: 1px solid #000;
-  border-radius: 0;
-  background: var(--desktop-field);
-  box-shadow:
-    inset 1px 1px #fff,
-    inset -1px -1px var(--desktop-shadow);
-  font-size: 14px;
+.blog-desktop [hidden] {
+  display: none !important;
 }
 .desktop-bar {
-  display: flex;
-  position: relative;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 156px;
   z-index: 100;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 4px 10px;
-  background: #fff;
-  border: 1px solid #000;
-}
-.desktop-brand {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 8px;
-  color: #000 !important;
-  font-weight: bold;
-  text-decoration: none;
-}
-.desktop-brand img {
-  flex-shrink: 0;
-  margin: 0;
 }
 .desktop-bar nav {
   display: flex;
-  align-items: center;
-  gap: 2px;
-}
-.desktop-bar .greyui-button,
-.desktop-bar .recents-trigger {
-  padding: 6px 10px;
-  min-height: 36px;
-  border: 0;
-  box-shadow: none;
-  border-radius: 0;
-  background: #fff;
-  font: inherit;
-  color: #000;
-}
-.desktop-bar .greyui-button:hover,
-.desktop-bar .recents-trigger:hover,
-.desktop-bar .recents-trigger[data-panel-open] {
-  color: #fff;
-  background: var(--desktop-title);
+  flex-direction: column;
+  align-items: stretch;
 }
 .desktop-bar nav > a {
-  padding: 6px 10px;
-  color: #000;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
 }
 .desktop-workspace {
-  position: relative;
-  min-height: 0;
+  position: absolute;
+  top: 0;
+  bottom: 84px;
+  left: 178px;
+  right: 82px;
   overflow: hidden;
 }
 .desktop-icons {
   position: absolute;
-  top: 22px;
-  left: 10px;
+  top: 12px;
+  right: 10px;
   display: grid;
-  width: 80px;
-  gap: 20px;
+  width: 64px;
+  gap: 0;
+  z-index: 100;
 }
-.desktop-icons .greyui-button {
+.desktop-icons > .greyui-button,
+.desktop-icons .desktop-recents-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 4px 0;
+  width: 64px;
+  min-height: 78px;
+}
+.desktop-app-icon {
+  display: block;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  margin: 0;
+}
+.desktop-recents-trigger > span:last-child {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 8px 4px;
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-  color: #000;
+  align-items: center;
+}
+.desktop-icons .desktop-recents-trigger::after {
+  display: none;
+}
+.desktop-icons .greyui-button > span,
+.desktop-recents-trigger > span:last-child > span {
+  font-size: 12px;
+  line-height: 18px;
 }
 .file-icon {
   display: block;
   flex-shrink: 0;
   width: 36px;
   height: 36px;
-  color: #000;
+  color: var(--ns-ink);
 }
-.desktop-icons .file-icon {
-  width: 40px;
-  height: 40px;
-}
-.desktop-caption {
+.miniwindow-tray {
   position: absolute;
-  right: 24px;
-  bottom: 24px;
-  max-width: 240px;
-  color: #505056;
-  font: italic 24px/1.2 var(--font-editorial);
+  bottom: 8px;
+  left: 186px;
+  right: 82px;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  z-index: 90;
+}
+.miniwindow-tray .miniwindow {
+  display: flex;
+  flex: 0 0 64px;
+  flex-direction: column;
+  gap: 4px;
+  width: 64px;
+  height: 64px;
+  padding: 0 2px 4px;
+}
+.miniwindow-title {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: var(--ns-ink);
+  color: var(--ns-paper);
+  font-size: 10px;
+  line-height: 15px;
 }
 .blog-desktop .desktop-window {
   position: absolute;
   min-width: 0;
-  outline: 0;
-}
-.blog-desktop .desktop-window[hidden] {
-  display: none;
 }
 .blog-desktop .desktop-window .greyui-window-frame {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  grid-template-rows: 30px minmax(0, 1fr);
-  padding: 3px;
-  border: 1px solid #000;
-  background: var(--desktop-field);
-  box-shadow:
-    inset 1px 1px #fff,
-    inset -1px -1px var(--desktop-shadow);
-  opacity: 1;
-}
-.blog-desktop .greyui-window-frame::before {
-  display: none;
+  min-width: 0;
 }
 .blog-desktop .greyui-window-tab {
   position: static;
   display: flex;
+  align-items: center;
   width: 100%;
   max-width: none;
-  min-height: 30px;
-  border: 1px solid #000;
-  border-radius: 0;
-  box-shadow: none;
-  background: var(--desktop-title);
-  color: #fff;
+  flex-shrink: 0;
+  height: 26px;
   cursor: grab;
   touch-action: none;
-}
-.blog-desktop .desktop-window[data-active="false"] .greyui-window-tab {
-  background: #fff;
-  color: #000;
-  box-shadow: none;
-  border-color: #000;
 }
 .blog-desktop .greyui-window-title {
   display: flex;
@@ -216,18 +158,12 @@
   justify-content: center;
   min-width: 0;
   max-width: none;
-  padding: 0 8px;
-  font: bold 14px/1.2 var(--greyui-font-ui);
+  padding: 0 6px;
 }
 .blog-desktop .greyui-window-title > span {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-.blog-desktop .greyui-window-controls {
-  display: flex;
-  gap: 0;
-  padding: 0;
 }
 .blog-desktop .window-close,
 .blog-desktop .greyui-window-widget {
@@ -235,82 +171,40 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  min-width: 28px;
-  height: 28px;
-  min-height: 0;
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  min-height: 24px;
   padding: 0;
   margin: 0;
-  border: 0;
-  border-radius: 0;
-  border-right: 1px solid #000;
-  box-shadow:
-    inset 1px 1px #fff,
-    inset -1px -1px var(--desktop-shadow);
-  background: var(--desktop-field);
-  color: #000;
-}
-.blog-desktop .greyui-window-widget {
-  border-right: 0;
-  border-left: 1px solid #000;
-}
-.blog-desktop .window-close > span {
-  width: 13px;
-  height: 4px;
-  border: 1px solid #000;
-  background: #fff;
-}
-.blog-desktop .greyui-window-widget > span {
-  display: block;
-  position: static;
-  width: 0;
-  height: 0;
-  padding: 0;
-  background: none;
-  box-shadow: none;
-  border: 5px solid transparent;
-  border-top: 0;
-  border-bottom: 6px solid #000;
-}
-.blog-desktop .greyui-window-widget[data-kind="minimize"] > span {
-  border-bottom: 0;
-  border-top: 6px solid #000;
-}
-.blog-desktop .greyui-window-widget[data-kind="restore"] > span {
-  width: 10px;
-  height: 10px;
-  border: 0;
-  background: #000;
-  clip-path: polygon(50% 0, 100% 40%, 60% 40%, 60% 60%, 100% 60%, 50% 100%, 0 60%, 40% 60%, 40% 40%, 0 40%);
 }
 .blog-desktop .greyui-window-body {
   display: flex;
+  flex: 1;
   flex-direction: column;
   min-height: 0;
-  background: #fff;
-  color: #000;
+  min-width: 0;
 }
 .blog-desktop .desktop-window.is-maximized {
-  inset: 4px !important;
+  inset: 8px !important;
   width: auto !important;
   height: auto !important;
 }
-.document-toolbar,
-.explorer-toolbar {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 6px 12px;
-  border-bottom: 1px solid #000;
-  background: #fff;
-  font-size: 13px;
+.window-resize-bar {
+  display: grid;
+  grid-template-columns: 28px 1fr 28px;
+  height: 9px;
+  flex-shrink: 0;
 }
-.document-toolbar {
-  justify-content: space-between;
+.window-resize-bar > div {
+  touch-action: none;
+  cursor: ns-resize;
 }
-.document-toolbar a {
-  color: #000;
+.window-resize-bar > div:first-child {
+  cursor: nesw-resize;
+}
+.window-resize-bar > div:last-child {
+  cursor: nwse-resize;
 }
 .document-scroll {
   flex: 1;
@@ -318,6 +212,14 @@
   overflow: auto;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
+}
+.explorer-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
 }
 .reader {
   width: 100%;
@@ -371,14 +273,14 @@
 .reader blockquote {
   margin: 20px 0;
   padding: 8px 16px;
-  border-left: 2px solid #87888f;
-  color: #505056;
+  border-left: 2px solid var(--ns-edge);
+  color: var(--desktop-muted);
 }
 .reader pre {
   max-width: 100%;
   margin: 20px 0;
   padding: 16px;
-  border: 1px solid #c0c7c8;
+  border: 1px solid var(--ns-face);
   border-radius: 0;
   overflow: auto;
   white-space: pre;
@@ -414,7 +316,7 @@
 .reader td,
 .reader th {
   padding: 8px;
-  border: 1px solid #87888f;
+  border: 1px solid var(--ns-edge);
 }
 .reader [id] {
   scroll-margin-top: 110px;
@@ -484,15 +386,14 @@
   color: var(--desktop-muted);
   font-size: 12px;
 }
-.empty-results,
-.closed-workspace {
+.empty-results {
   padding: 24px;
 }
 .blog-desktop .greyui-statusbar {
   flex-shrink: 0;
   min-height: 26px;
   border-color: #000;
-  background: #fff;
+  background: var(--ns-face);
   font-size: 12px;
 }
 .about-content {
@@ -514,39 +415,42 @@
   gap: 16px;
   margin-top: 24px;
 }
-.recents-list {
-  max-width: min(420px, calc(100vw - 16px));
-  padding: 3px;
-  border: 1px solid #000;
-  border-radius: 0;
-  background: #fff;
-  color: #000;
-  box-shadow: 1px 1px #000;
-  font:
-    14px/1.4 Arial,
-    Helvetica,
-    sans-serif;
+
+.window-disclosure {
+  position: relative;
+}
+.window-disclosure .greyui-collapsible-arrow {
+  display: none;
+}
+.window-disclosure .recents-list {
+  position: absolute;
+  top: -26px;
+  left: 100%;
+  z-index: 10;
+  width: min(360px, calc(100vw - 190px));
+  max-height: calc(100dvh - 60px);
+  overflow-y: auto;
+}
+.window-disclosure nav {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
 }
 .recents-list .greyui-button {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  justify-content: flex-start;
   min-width: 0;
-  min-height: 38px;
-  padding: 8px;
+  text-align: left;
   white-space: normal;
 }
 .recents-list .greyui-button > span {
   overflow-wrap: anywhere;
 }
-.recents-list .file-icon {
-  width: 22px;
-  height: 22px;
-}
-.recents-list .greyui-button[data-current="true"],
-.recents-list .greyui-button:hover {
-  color: #fff;
-  background: var(--desktop-title);
+.desktop-disclosure .recents-list {
+  left: auto;
+  right: 100%;
+  top: 0;
 }
 .sr-only {
   position: absolute;
@@ -557,11 +461,10 @@
   clip-path: inset(50%);
   white-space: nowrap;
 }
-/* Compact mode is an explicit interaction mode, not a scaled desktop.
-   Normal page scrolling works with mobile browser bars, keyboards and zoom. */
+/* Compact is a native scrolling reading page, with a content-fitting frame. */
 .desktop-ready[data-desktop-layout="compact"] {
   overflow: auto;
-  background: #c0c7c8;
+  background: #808080;
 }
 .blog-desktop[data-layout="compact"] {
   position: relative;
@@ -574,37 +477,33 @@
 .blog-desktop[data-layout="compact"] .desktop-bar {
   position: sticky;
   top: 0;
-  flex-wrap: wrap;
-  gap: 0;
-  padding: 2px 8px;
-}
-.blog-desktop[data-layout="compact"] .desktop-brand {
+  left: auto;
   width: 100%;
-  min-height: 34px;
-  font-size: 15px;
+  padding: 6px 6px 0;
 }
-.blog-desktop[data-layout="compact"] .desktop-brand img {
-  width: 24px;
-  height: 24px;
-}
-.blog-desktop[data-layout="compact"] .desktop-bar nav {
-  width: 100%;
+.blog-desktop[data-layout="compact"] .desktop-bar > .menu-heading {
+  width: 112px;
+  min-height: 44px;
   justify-content: space-between;
 }
-.blog-desktop[data-layout="compact"] .desktop-bar nav > a,
-.blog-desktop[data-layout="compact"] .desktop-bar button {
-  display: flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 8px;
+.blog-desktop[data-layout="compact"] .desktop-bar > nav {
+  position: absolute;
+  top: 100%;
+  left: 6px;
+  right: 6px;
+  max-height: calc(100dvh - 60px);
+  overflow-y: auto;
 }
-.blog-desktop[data-layout="compact"] .desktop-icons,
-.blog-desktop[data-layout="compact"] .desktop-caption {
-  display: none;
+.blog-desktop[data-layout="compact"] .desktop-bar nav > button,
+.blog-desktop[data-layout="compact"] .desktop-bar nav > a,
+.blog-desktop[data-layout="compact"] .recents-trigger {
+  min-height: 44px;
 }
 .blog-desktop[data-layout="compact"] .desktop-workspace {
+  position: relative;
+  inset: auto;
   overflow: visible;
-  padding: 6px;
+  padding: 6px 6px 24px;
 }
 .blog-desktop[data-layout="compact"] .desktop-window,
 .blog-desktop[data-layout="compact"] .desktop-window.is-maximized {
@@ -617,10 +516,9 @@
   display: block;
   height: auto;
   min-height: 0;
-  padding: 2px;
 }
 .blog-desktop[data-layout="compact"] .greyui-window-tab {
-  min-height: 44px;
+  height: 46px;
   cursor: default;
   touch-action: auto;
 }
@@ -630,10 +528,7 @@
   height: 44px;
 }
 .blog-desktop[data-layout="compact"] .greyui-window-title {
-  padding-right: 44px;
-}
-.blog-desktop[data-layout="compact"] .document-toolbar {
-  display: none;
+  padding-left: 44px;
 }
 .blog-desktop[data-layout="compact"] .document-scroll,
 .blog-desktop[data-layout="compact"] .file-scroll {
@@ -652,9 +547,6 @@
 .blog-desktop[data-layout="compact"] .explorer-content {
   display: block;
 }
-.blog-desktop[data-layout="compact"] .explorer-toolbar {
-  padding: 10px 12px;
-}
 .blog-desktop[data-layout="compact"] .greyui-input {
   min-height: 44px;
 }
@@ -669,17 +561,46 @@
 .blog-desktop[data-layout="compact"] .sort-label {
   display: none;
 }
-body[data-desktop-layout="compact"] .recents-list {
-  max-width: calc(100vw - 16px);
+.blog-desktop[data-layout="compact"] .file-scroll {
+  width: 100%;
 }
-body[data-desktop-layout="compact"] .window-disclosure .greyui-button {
+.blog-desktop[data-layout="compact"] .window-disclosure .recents-list {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  max-width: none;
+  max-height: calc(100dvh - 160px);
+}
+.blog-desktop[data-layout="compact"] .recents-list .greyui-button {
+  --ns-button-padding: 10px 12px;
   min-height: 44px;
   padding: 10px 12px;
 }
+.blog-desktop[data-layout="compact"] .desktop-icons {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px 8px;
+  z-index: 90;
+}
+.blog-desktop[data-layout="compact"] .desktop-disclosure {
+  position: static;
+}
+.blog-desktop[data-layout="compact"] .desktop-disclosure .recents-list {
+  position: absolute;
+  top: 100%;
+  left: 6px;
+  right: 6px;
+  width: auto;
+  max-height: calc(100dvh - 210px);
+}
 @media (prefers-reduced-motion: reduce) {
-  [data-greyui-theme="win311"] *,
-  [data-greyui-theme="win311"] *::before,
-  [data-greyui-theme="win311"] *::after {
+  [data-greyui-theme="nextstep"] *,
+  [data-greyui-theme="nextstep"] *::before,
+  [data-greyui-theme="nextstep"] *::after {
     animation: none !important;
     transition: none !important;
     scroll-behavior: auto !important;
@@ -699,12 +620,13 @@ body[data-desktop-layout="compact"] .window-disclosure .greyui-button {
   }
   .desktop-bar,
   .desktop-icons,
-  .desktop-caption,
-  .blog-desktop .greyui-window-tab,
-  .document-toolbar {
+  .miniwindow-tray,
+  .window-resize-bar,
+  .blog-desktop .greyui-window-tab {
     display: none !important;
   }
   .desktop-workspace {
+    position: static;
     overflow: visible;
   }
   .blog-desktop .desktop-window {
@@ -735,63 +657,4 @@ body[data-desktop-layout="compact"] .window-disclosure .greyui-button {
     white-space: pre-wrap;
     overflow-wrap: anywhere;
   }
-}
-
-.window-disclosure {
-  position: relative;
-}
-.window-disclosure .greyui-collapsible-arrow {
-  display: none;
-}
-.window-disclosure .recents-list {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  z-index: 10;
-  width: min(420px, calc(100vw - 20px));
-  max-height: calc(100dvh - 120px);
-  overflow-y: auto;
-}
-.window-disclosure nav {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 0;
-  width: 100%;
-}
-.window-disclosure nav .greyui-button {
-  justify-content: flex-start;
-  text-align: left;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  background: #fff;
-  color: #000;
-  padding: 8px 12px;
-  white-space: normal;
-}
-.window-disclosure nav .greyui-button:hover,
-.window-disclosure nav .greyui-button[data-current="true"] {
-  background: var(--desktop-title);
-  color: #fff;
-}
-.window-disclosure nav .greyui-button > span {
-  overflow-wrap: anywhere;
-}
-/* Give compact Recents the available header width for complete titles. */
-.blog-desktop[data-layout="compact"] .desktop-bar .window-disclosure {
-  position: static;
-}
-.blog-desktop[data-layout="compact"] .desktop-bar .recents-list {
-  left: 8px;
-  right: 8px;
-  width: auto;
-  max-width: none;
-}
-.blog-desktop .window-disclosure nav {
-  align-items: stretch;
-  justify-content: flex-start;
-}
-.blog-desktop[data-layout="compact"] .file-scroll {
-  width: 100%;
 }
