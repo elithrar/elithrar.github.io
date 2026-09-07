@@ -1,0 +1,362 @@
+[
+  {
+    "file": "01_VisualGuide-F1.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/F1.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/index.html",
+    "width": 401,
+    "height": 292,
+    "sha256": "974668c15ed26ea510f4e9de7a99cfde11d548e1e2cf7d19de829ca87270a472",
+    "bytes": 7699,
+    "id": "NS01"
+  },
+  {
+    "file": "01_VisualGuide-F16.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/F16.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/index.html",
+    "width": 407,
+    "height": 250,
+    "sha256": "8343d0abdd17fc80c2db36ae941e241383458cb05aa91d4c1fbe6c98b26268a9",
+    "bytes": 4897,
+    "id": "NS02"
+  },
+  {
+    "file": "01_VisualGuide-F15.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/F15.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/index.html",
+    "width": 298,
+    "height": 333,
+    "sha256": "3fd9c876d7dfb319c6f077345cb6f9738d396b4225997dd0b987183babb3a2ab",
+    "bytes": 5572,
+    "id": "NS03"
+  },
+  {
+    "file": "01_VisualGuide-F6.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/F6.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/index.html",
+    "width": 308,
+    "height": 130,
+    "sha256": "1c9e98043fc27c195c60559ca9871fda1a7de73478bec04997cad20d0d2ce5b2",
+    "bytes": 1654,
+    "id": "NS04"
+  },
+  {
+    "file": "01_VisualGuide-F0.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/F0.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/index.html",
+    "width": 333,
+    "height": 140,
+    "sha256": "a3c8424fcac580fe43f1a544137a5d8344636f53003291a989d11dc21d382bbc",
+    "bytes": 2391,
+    "id": "NS05"
+  },
+  {
+    "file": "01_VisualGuide-F10.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/F10.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/index.html",
+    "width": 356,
+    "height": 134,
+    "sha256": "2c67b644ae32d90548d32e63d8d842984d965139d28a0ef62572e79e0c87e614",
+    "bytes": 2513,
+    "id": "NS06"
+  },
+  {
+    "file": "01_VisualGuide-F13.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/F13.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/index.html",
+    "width": 245,
+    "height": 163,
+    "sha256": "bd6c31d85e3fa3e4dccc71f1c17ad4729d91fca3a931115f027248bf32ead5f8",
+    "bytes": 2505,
+    "id": "NS07"
+  },
+  {
+    "file": "01_VisualGuide-F5.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/F5.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/index.html",
+    "width": 320,
+    "height": 217,
+    "sha256": "53eb554d864c17efef84c4ef978ed935ecbbc22f72d2b8528f76dc902172f537",
+    "bytes": 3714,
+    "id": "NS08"
+  },
+  {
+    "file": "01_VisualGuide-F2.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/F2.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/index.html",
+    "width": 381,
+    "height": 87,
+    "sha256": "c7cb452737c9f5973beba4011969f75974d7fe722b4e742e8a60feba4c5ea507",
+    "bytes": 2195,
+    "id": "NS09"
+  },
+  {
+    "file": "01_VisualGuide-F14.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/F14.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/01_VisualGuide/VisualGuide.htmld/index.html",
+    "width": 373,
+    "height": 288,
+    "sha256": "f9f3bff25ae23cced277323d2ae1dfa44c205d13a230beaed87c40a0e6a72ec9",
+    "bytes": 6713,
+    "id": "NS10"
+  },
+  {
+    "file": "04_Window-F1.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/04_Window/Window.htmld/F1.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/04_Window/Window.htmld/index.html",
+    "width": 428,
+    "height": 292,
+    "sha256": "ed2731f533afe36d6c9d9f6e7f1e62839efcb507e5d1484ce8a61563ada9b3d7",
+    "bytes": 8216,
+    "id": "NS11"
+  },
+  {
+    "file": "04_Window-F2.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/04_Window/Window.htmld/F2.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/04_Window/Window.htmld/index.html",
+    "width": 557,
+    "height": 508,
+    "sha256": "962e3d101de614e2bf6a980ed8286ec0409cb67b3643028ccd9ab09954548a50",
+    "bytes": 12879,
+    "id": "NS12"
+  },
+  {
+    "file": "04_Window-F3.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/04_Window/Window.htmld/F3.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/04_Window/Window.htmld/index.html",
+    "width": 417,
+    "height": 99,
+    "sha256": "ed447aad0006985dd5c25e81724f5c5621a9a98e274a293f1d7f121825262e5b",
+    "bytes": 1834,
+    "id": "NS13"
+  },
+  {
+    "file": "04_Window-F4.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/04_Window/Window.htmld/F4.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/04_Window/Window.htmld/index.html",
+    "width": 230,
+    "height": 180,
+    "sha256": "b8d237505aa476a4892602f0258436db318ac0f8fe1483a79f209b9eb95d88ec",
+    "bytes": 1432,
+    "id": "NS14"
+  },
+  {
+    "file": "04_Window-F5.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/04_Window/Window.htmld/F5.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/04_Window/Window.htmld/index.html",
+    "width": 275,
+    "height": 168,
+    "sha256": "27811b86449fd0cc2f8f1622bb7a20c198917b4107e656d206d6aa0faae79320",
+    "bytes": 1547,
+    "id": "NS15"
+  },
+  {
+    "file": "04_Window-F8.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/04_Window/Window.htmld/F8.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/04_Window/Window.htmld/index.html",
+    "width": 325,
+    "height": 468,
+    "sha256": "08aaf262b465a73052c1dc602cc89d63e3d8e336d2cc087c49a60e1a2ceb5689",
+    "bytes": 3737,
+    "id": "NS16"
+  },
+  {
+    "file": "05_Panel-F0.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/05_Panel/Panel.htmld/F0.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/05_Panel/Panel.htmld/index.html",
+    "width": 395,
+    "height": 660,
+    "sha256": "fc66d48f8253bd97c6c0ccfebd446f50793800ee3869e6a6cf2c888c1bf12912",
+    "bytes": 9517,
+    "id": "NS17"
+  },
+  {
+    "file": "05_Panel-F2.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/05_Panel/Panel.htmld/F2.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/05_Panel/Panel.htmld/index.html",
+    "width": 378,
+    "height": 500,
+    "sha256": "4e54ada391ce8dae4afd9678ab9d85a86b7205207c0804bfee6e21f481133fdb",
+    "bytes": 5178,
+    "id": "NS18"
+  },
+  {
+    "file": "05_Panel-F3.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/05_Panel/Panel.htmld/F3.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/05_Panel/Panel.htmld/index.html",
+    "width": 620,
+    "height": 366,
+    "sha256": "f915d9574367e8ae802264479ddd7b239498af3b4555328b880cfbc15bb7851a",
+    "bytes": 11011,
+    "id": "NS19"
+  },
+  {
+    "file": "05_Panel-F5.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/05_Panel/Panel.htmld/F5.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/05_Panel/Panel.htmld/index.html",
+    "width": 322,
+    "height": 92,
+    "sha256": "471d16262ed3cbcf882686007b7a54e0e4f6f7f575555baeb3819b1ecba156f8",
+    "bytes": 1249,
+    "id": "NS20"
+  },
+  {
+    "file": "05_Panel-F6.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/05_Panel/Panel.htmld/F6.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/05_Panel/Panel.htmld/index.html",
+    "width": 362,
+    "height": 185,
+    "sha256": "e937e179707c4c7e0c7e3cea95b03bf4154041d15301ac6f575d2f5015bc9035",
+    "bytes": 2181,
+    "id": "NS21"
+  },
+  {
+    "file": "05_Panel-F9.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/05_Panel/Panel.htmld/F9.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/05_Panel/Panel.htmld/index.html",
+    "width": 141,
+    "height": 93,
+    "sha256": "2640e182187be2579457a0b312a23fea3aafe576ddad2335d7bdc5a3acc9498e",
+    "bytes": 1377,
+    "id": "NS22"
+  },
+  {
+    "file": "05_Panel-F10.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/05_Panel/Panel.htmld/F10.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/05_Panel/Panel.htmld/index.html",
+    "width": 274,
+    "height": 442,
+    "sha256": "14ee69e89b4e90d5ba2de172e64a297c4f6cf52b6672db30143fada8013a3247",
+    "bytes": 3977,
+    "id": "NS23"
+  },
+  {
+    "file": "05_Panel-F16.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/05_Panel/Panel.htmld/F16.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/05_Panel/Panel.htmld/index.html",
+    "width": 370,
+    "height": 150,
+    "sha256": "075efe7317e95d7c286d5bfd81dc49c26063f6edf862e44d6a42186b13d088c8",
+    "bytes": 3025,
+    "id": "NS24"
+  },
+  {
+    "file": "06_Menu-F0.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/06_Menu/Menu.htmld/F0.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/06_Menu/Menu.htmld/index.html",
+    "width": 334,
+    "height": 99,
+    "sha256": "504e55fcfc3cc29e8858bd21e1a6de037157f35f5f2b0a57aaad55c8ff173bf5",
+    "bytes": 1632,
+    "id": "NS25"
+  },
+  {
+    "file": "06_Menu-F1.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/06_Menu/Menu.htmld/F1.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/06_Menu/Menu.htmld/index.html",
+    "width": 319,
+    "height": 143,
+    "sha256": "2c877ea107935d2b827ea31fba3b345b023ffa21b1044c0887f95c1958844662",
+    "bytes": 2447,
+    "id": "NS26"
+  },
+  {
+    "file": "06_Menu-F2.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/06_Menu/Menu.htmld/F2.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/06_Menu/Menu.htmld/index.html",
+    "width": 120,
+    "height": 143,
+    "sha256": "b57a52795bcba2bfe674702a63df69ff683d009f1d15327699f3a52d8defb281",
+    "bytes": 1146,
+    "id": "NS27"
+  },
+  {
+    "file": "06_Menu-F4.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/06_Menu/Menu.htmld/F4.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/06_Menu/Menu.htmld/index.html",
+    "width": 361,
+    "height": 107,
+    "sha256": "70dfadf4791f3226943c01d90de168f07208e10ca767d761a3c05be1341a79cf",
+    "bytes": 2139,
+    "id": "NS28"
+  },
+  {
+    "file": "06_Menu-F15.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/06_Menu/Menu.htmld/F15.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/06_Menu/Menu.htmld/index.html",
+    "width": 121,
+    "height": 203,
+    "sha256": "6e9171e82b402b98f102c784c4280adf5a8e4f6a9bd1a8c2543bb2efc132045b",
+    "bytes": 1472,
+    "id": "NS29"
+  },
+  {
+    "file": "06_Menu-F16.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/06_Menu/Menu.htmld/F16.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/06_Menu/Menu.htmld/index.html",
+    "width": 189,
+    "height": 143,
+    "sha256": "5eba1bc8ec7fc8fd5bbe1538bcbc1d7751bdcb31babcbbbfc03ece70d6f16bbc",
+    "bytes": 1536,
+    "id": "NS30"
+  },
+  {
+    "file": "06_Menu-F19.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/06_Menu/Menu.htmld/F19.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/06_Menu/Menu.htmld/index.html",
+    "width": 437,
+    "height": 361,
+    "sha256": "a95270288f7ca548936dfbd326ec4a3613ae7e928acd015352338f5550b1090a",
+    "bytes": 7359,
+    "id": "NS31"
+  },
+  {
+    "file": "07_Control-F3.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/07_Control/Control.htmld/F3.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/07_Control/Control.htmld/index.html",
+    "width": 187,
+    "height": 74,
+    "sha256": "a6aeb8727970b8c6559cf260207af9433e58405e06376678465793c60396e35f",
+    "bytes": 966,
+    "id": "NS32"
+  },
+  {
+    "file": "07_Control-F6.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/07_Control/Control.htmld/F6.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/07_Control/Control.htmld/index.html",
+    "width": 314,
+    "height": 133,
+    "sha256": "b246533c78e5e12abf640237706a187ba86f96f1c7eb025480af2e22a4f08370",
+    "bytes": 1167,
+    "id": "NS33"
+  },
+  {
+    "file": "07_Control-F14.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/07_Control/Control.htmld/F14.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/07_Control/Control.htmld/index.html",
+    "width": 569,
+    "height": 392,
+    "sha256": "cb71551aaada044148c5acf7ab501f2be0cefda227256412fcaa430b8638f327",
+    "bytes": 8192,
+    "id": "NS34"
+  },
+  {
+    "file": "07_Control-F23.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/07_Control/Control.htmld/F23.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/07_Control/Control.htmld/index.html",
+    "width": 337,
+    "height": 82,
+    "sha256": "e2ebe8d35fe80ff63b758517fef8dc3c0c250091d572ae08cf5e2b1477e52817",
+    "bytes": 2560,
+    "id": "NS35"
+  },
+  {
+    "file": "07_Control-F24.gif",
+    "url": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/07_Control/Control.htmld/F24.gif",
+    "source": "https://www.nextop.de/NeXTstep_3.3_Developer_Documentation/UserInterface/07_Control/Control.htmld/index.html",
+    "width": 760,
+    "height": 185,
+    "sha256": "8f5bcaa2d5aab114b07dc0c1d7c582fc2a5086ec13efa3c21c3995b392981548",
+    "bytes": 4545,
+    "id": "NS36"
+  }
+]
