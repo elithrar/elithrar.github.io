@@ -4,3 +4,6 @@ _drafts/*
 .jekyll-cache/*
 node_modules/
 .npm
+public/desktop/
+.bundle/
+vendor/

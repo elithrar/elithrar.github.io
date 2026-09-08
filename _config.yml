@@ -46,3 +46,19 @@ paginate: 5
 github:
   url: "https://blog.questionable.services"
   repo: https://github.com/elithrar/elithrar.github.io
+
+# Keep build tooling and development dependencies out of the public site.
+exclude:
+  - node_modules
+  - desktop
+  - scripts
+  - docs
+  - src
+  - package.json
+  - package-lock.json
+  - tsconfig.json
+  - vite.config.mjs
+  - wrangler.jsonc
+  - README.md
+  - Gemfile
+  - Gemfile.lock

@@ -1,0 +1,138 @@
+[
+  {
+    "id": "NS37",
+    "file": "preferences.png",
+    "source": "User attachment IMG_0610.png",
+    "width": 519,
+    "height": 385,
+    "sha256": "019aa5751410bcf483001f1393c46fb783c2a2ed2d8cb242d8a17b0c07e08072",
+    "palette": [
+      {
+        "hex": "#555577",
+        "pixels": 123782
+      },
+      {
+        "hex": "#aaaaaa",
+        "pixels": 20330
+      },
+      {
+        "hex": "#adadad",
+        "pixels": 6038
+      },
+      {
+        "hex": "#a4a4a4",
+        "pixels": 3682
+      },
+      {
+        "hex": "#a7a7a7",
+        "pixels": 3134
+      },
+      {
+        "hex": "#b0b0b0",
+        "pixels": 3079
+      }
+    ]
+  },
+  {
+    "id": "NS38",
+    "file": "workspace-files.jpeg",
+    "source": "User attachment IMG_0611.jpeg",
+    "width": 1024,
+    "height": 768,
+    "sha256": "fd13f3bd1bc60a469abe36059a5b89c902994729958ed386d1f0e21007a000e3",
+    "palette": [
+      {
+        "hex": "#555577",
+        "pixels": 441180
+      },
+      {
+        "hex": "#aaaaaa",
+        "pixels": 232509
+      },
+      {
+        "hex": "#555555",
+        "pixels": 15651
+      },
+      {
+        "hex": "#000000",
+        "pixels": 13500
+      },
+      {
+        "hex": "#ffffff",
+        "pixels": 12664
+      },
+      {
+        "hex": "#555674",
+        "pixels": 3392
+      }
+    ]
+  },
+  {
+    "id": "NS39",
+    "file": "workspace-info.png",
+    "source": "User attachment IMG_0612.png",
+    "width": 519,
+    "height": 385,
+    "sha256": "e0e7464f6b5b9e8136c7bbb8ab8fc89d91b336ff14e8eb3deeb518661c6eb5cc",
+    "palette": [
+      {
+        "hex": "#555577",
+        "pixels": 118327
+      },
+      {
+        "hex": "#aaaaaa",
+        "pixels": 49079
+      },
+      {
+        "hex": "#555555",
+        "pixels": 2335
+      },
+      {
+        "hex": "#afafaf",
+        "pixels": 2250
+      },
+      {
+        "hex": "#000000",
+        "pixels": 2079
+      },
+      {
+        "hex": "#a6a6a6",
+        "pixels": 1899
+      }
+    ]
+  },
+  {
+    "id": "NS40",
+    "file": "application-overlap.jpeg",
+    "source": "User attachment IMG_0614.jpeg",
+    "width": 519,
+    "height": 385,
+    "sha256": "3541fa33330bd6c5baa0c9aae18a319da0a11cb1d0d36fc2c6b55d1bb12ecf0c",
+    "palette": [
+      {
+        "hex": "#ffffff",
+        "pixels": 41086
+      },
+      {
+        "hex": "#565479",
+        "pixels": 22126
+      },
+      {
+        "hex": "#aaaaaa",
+        "pixels": 15473
+      },
+      {
+        "hex": "#ababab",
+        "pixels": 4444
+      },
+      {
+        "hex": "#fefefe",
+        "pixels": 3745
+      },
+      {
+        "hex": "#fdfdfd",
+        "pixels": 3246
+      }
+    ]
+  }
+]

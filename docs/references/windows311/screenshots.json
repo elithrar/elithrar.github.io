@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "file": "01-c32-32-01.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-01.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "e14b87dc1ec0c98c154683ed89146dfd9bf26fcc5d97a2b58dc6e661433c8a6f",
+    "bytes": 7273
+  },
+  {
+    "id": 2,
+    "file": "02-c32-32-02.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-02.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "e56763df922443fb6fb929b27ffc02a3c5880c0dfad2bcf9db58730485099f12",
+    "bytes": 7774
+  },
+  {
+    "id": 3,
+    "file": "03-c32-32-03.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-03.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "e22b94930c89d52c45287f97423df1976243fa538de59efb93f2399196dc46f3",
+    "bytes": 10152
+  },
+  {
+    "id": 4,
+    "file": "04-c32-32-04.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-04.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "6aa9db800dc936992a8075f6d0b21fd666877ee3c2f593d6345421ee19e0ed99",
+    "bytes": 10194
+  },
+  {
+    "id": 5,
+    "file": "05-c32-32-05.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-05.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "174b1023b581b2f656a29bb4d35b46c6892a0a598cf4e9957c8afc76af83c2fd",
+    "bytes": 9522
+  },
+  {
+    "id": 6,
+    "file": "06-c32-32-07.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-07.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "c21216c4ea27690ae1d91c0e00ea0f8183f28c81d8ce11915fcfd3db1f23ae81",
+    "bytes": 6879
+  },
+  {
+    "id": 7,
+    "file": "07-c32-32-08.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-08.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "63ab0c3c366755b013189edfcb1923d1102711694c2ec40dc2d255ab6c9ef663",
+    "bytes": 6077
+  },
+  {
+    "id": 8,
+    "file": "08-c32-32-09.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-09.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "5ec1639e94fd02a3022551ac1390d5d8eece8ef79ab5388317a8ac9dc1a85f02",
+    "bytes": 8510
+  },
+  {
+    "id": 9,
+    "file": "09-c32-32-10.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-10.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "a9e09b465469aaa3c3884576a37862e49bb76eb3fcfe75e3c3d0634210cd55cd",
+    "bytes": 7567
+  },
+  {
+    "id": 10,
+    "file": "10-c32-32-11.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-11.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "37c989f953f33ecb97ff75763ae178153f8593104a7693f305169678b9a9c2a2",
+    "bytes": 7584
+  },
+  {
+    "id": 11,
+    "file": "11-c32-32-12.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-12.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "b8a26f3a09eba4618b4ebab22f7e902e9a5e768fc8374e5e9f7350091c627049",
+    "bytes": 7500
+  },
+  {
+    "id": 12,
+    "file": "12-c32-32-15.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-15.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "f09b87b4ee207960c8c408d9b9d78a448069dcb6ec34913fca03e03e0962fcdc",
+    "bytes": 7429
+  },
+  {
+    "id": 13,
+    "file": "13-c32-32-16.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-16.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "df7ab972d0645b2a0e2971466cadcb6a845b873ccbc0affdef7b9eeb85fc64b9",
+    "bytes": 7544
+  },
+  {
+    "id": 14,
+    "file": "14-c32-32-17.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-17.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "d6b7fe7543bd7da9bfbc8d4ea9f316372c6d73a9854c518fe32c956371ea1a8c",
+    "bytes": 8523
+  },
+  {
+    "id": 15,
+    "file": "15-c32-32-18.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-18.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "197f48f793bd32dbf55147b769c4e900dc0e0860f4c0eff76af9d2ad75e0e7b8",
+    "bytes": 7187
+  },
+  {
+    "id": 16,
+    "file": "16-c32-32-20.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-20.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "16e8acae86ec3d5937fccb34ec8810bba13fa6b3aaf10eccc5810d639f4dcf31",
+    "bytes": 7223
+  },
+  {
+    "id": 17,
+    "file": "17-c32-32-21.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-21.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "5df6a02e218e0e1c90e8d2e3448f2370c7f74e6681f73ec60c24220becb95a99",
+    "bytes": 8348
+  },
+  {
+    "id": 18,
+    "file": "18-c32-32-24.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-24.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "1bc4952bfebb4f59b5ab95c3ce7f488235d575dac3470fa104d36742c7b9df10",
+    "bytes": 6855
+  },
+  {
+    "id": 19,
+    "file": "19-c32-32-26.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/c32-32-26.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "77f134251118c8ab618eb9b26fc97a907a5136d26108bdf01d2facdadcf2354a",
+    "bytes": 8609
+  },
+  {
+    "id": 20,
+    "file": "20-wfwnetlogin.png",
+    "url": "https://www.zx.net.nz/netware/client/wfwnet/wfwnetlogin.png",
+    "source": "https://www.zx.net.nz/netware/client/wfwnet/doswin32-wfw311.shtml",
+    "sha256": "f135e44eff34aaf8c1a3951a577779ac2604b6858b2050e0c7c931855812f9a8",
+    "bytes": 5125
+  }
+]

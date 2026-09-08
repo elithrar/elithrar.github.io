@@ -148,7 +148,7 @@ Current status: DONE
 
 We can now see the results that we originally wrote to Firestore, and run aggregations, analyses and/or export them to other formats as needed.
 
-![sentiment-analysis-in-data-studio](/public/files/sentiment-data-studio-20180212.png)
+![sentiment-analysis-in-data-studio](/public/files/sentiment-data-studio-20180212.png){: width="2065" height="1201"}
 
 ### The Code
 

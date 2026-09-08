@@ -1,0 +1,310 @@
+/* Appearance authority: docs/nextstep/color-references (NS37–NS40).
+   Anatomy/behavior: original manual corpus NS01–NS36. */
+:root {
+  --ns-workspace: #555577;
+  --ns-face: #aaa;
+  --ns-paper: #fff;
+  --ns-ink: #000;
+  --ns-muted: #333;
+  --ns-edge: #555;
+  --ns-menu-bevel: inset 1px 1px var(--ns-paper), inset -1px -1px var(--ns-edge);
+  --ns-raised: inset 1px 1px var(--ns-paper), inset -1px -1px var(--ns-edge);
+  --ns-inset: inset 1px 1px var(--ns-edge), inset -1px -1px var(--ns-paper);
+  --ns-dock-bevel:
+    inset 1px 1px var(--ns-paper), inset -1px -1px var(--ns-ink), inset 2px 2px #ddd, inset -2px -2px var(--ns-edge);
+  --ns-shadow: 1px 1px 0 var(--ns-ink);
+}
+[data-greyui-theme="nextstep"] {
+  --ns-font-ui: Helvetica, Arial, sans-serif;
+  --ns-font-reading: var(--ns-font-ui);
+  --ns-font-code: Courier, "Courier New", monospace;
+  --ns-weight-regular: 400;
+  --ns-weight-bold: 700;
+  /* Contain typography inherited from the static blog and greyUI. */
+  --font-body: var(--ns-font-reading);
+  --font-heading: var(--ns-font-ui);
+  --font-editorial: var(--ns-font-ui);
+  --font-code: var(--ns-font-code);
+  --desktop-title: var(--ns-ink);
+  --desktop-muted: var(--ns-muted);
+  --greyui-panel: var(--ns-face);
+  --greyui-panel-light: var(--ns-face);
+  --greyui-control: var(--ns-face);
+  --greyui-document: var(--ns-paper);
+  --greyui-text: var(--ns-ink);
+  --greyui-text-muted: var(--ns-muted);
+  --greyui-font-ui: var(--ns-font-ui);
+  --greyui-font-size: 13px;
+  --greyui-font-size-small: 12px;
+  --greyui-bevel-outset: var(--ns-raised);
+  --greyui-bevel-inset: var(--ns-inset);
+  --greyui-border-light: var(--ns-paper);
+  --greyui-border-dark: var(--ns-edge);
+  --greyui-border-darker: var(--ns-ink);
+  --greyui-selection: var(--ns-paper);
+  --greyui-keyboard-navigation: var(--ns-ink);
+  --greyui-popup-shadow: var(--ns-shadow);
+  --greyui-font-mono: var(--ns-font-code);
+}
+/* Component materials resolve inside every state. A header is never a white
+   pressed button, regardless of selector specificity or source order. */
+.blog-desktop :is(.greyui-button, .recents-trigger, .greyui-window-widget) {
+  min-height: 24px;
+  padding: var(--ns-control-padding, 4px 10px);
+  border: 1px solid var(--ns-ink);
+  border-radius: 0;
+  background: var(--ns-control-face, var(--ns-face));
+  color: var(--ns-control-ink, var(--ns-ink));
+  box-shadow: var(--ns-control-bevel, var(--ns-raised));
+  font: var(--ns-weight-regular) var(--greyui-font-size)/1.3 var(--greyui-font-ui);
+  text-shadow: none;
+  transform: none;
+  cursor: default;
+}
+.blog-desktop .greyui-button:hover:not(:disabled) {
+  filter: none;
+}
+.blog-desktop
+  :is(.greyui-button, .recents-trigger, .greyui-window-widget):is(:active, [aria-expanded="true"]):not(:disabled) {
+  padding: var(--ns-control-padding, 4px 10px);
+  background: var(--ns-pressed-face, var(--ns-paper));
+  color: var(--ns-pressed-ink, var(--ns-ink));
+  box-shadow: var(--ns-pressed-bevel, var(--ns-inset));
+  transform: none;
+}
+.blog-desktop :is(button, a, input, [tabindex]):focus-visible {
+  outline: 1px dotted var(--ns-focus-ink, var(--ns-ink));
+  outline-offset: -3px;
+}
+.blog-desktop .desktop-window:focus-visible {
+  outline: 1px dotted var(--ns-paper);
+  outline-offset: 2px;
+}
+.blog-desktop :is(.greyui-button, .recents-trigger):disabled {
+  color: var(--ns-muted);
+  opacity: 1;
+  cursor: default;
+}
+.blog-desktop .desktop-window .greyui-window-frame {
+  padding: 0;
+  border: 1px solid var(--ns-ink);
+  border-radius: 0;
+  background: var(--ns-face);
+  box-shadow: var(--ns-shadow);
+  opacity: 1;
+}
+.blog-desktop .greyui-window-frame::before {
+  display: none;
+}
+.blog-desktop .greyui-window-tab {
+  --ns-title-ink: var(--ns-paper);
+  min-height: 22px;
+  border: 0;
+  border-bottom: 1px solid var(--ns-ink);
+  border-radius: 0;
+  background: var(--ns-ink);
+  color: var(--ns-title-ink);
+  box-shadow: inset 0 1px var(--ns-edge);
+}
+.blog-desktop .desktop-window[data-active="false"] .greyui-window-tab {
+  --ns-title-ink: var(--ns-ink);
+  background: var(--ns-face);
+  color: var(--ns-title-ink);
+  box-shadow: inset 0 1px var(--ns-paper);
+}
+.blog-desktop .greyui-window-title {
+  font: var(--ns-weight-bold) 13px/1.2 var(--greyui-font-ui);
+}
+.blog-desktop .title-control {
+  --ns-control-padding: 0;
+  --ns-control-face: transparent;
+  --ns-control-ink: var(--ns-title-ink);
+  --ns-control-bevel: none;
+  --ns-pressed-face: transparent;
+  --ns-pressed-ink: var(--ns-title-ink);
+  --ns-pressed-bevel: none;
+  --ns-focus-ink: var(--ns-title-ink);
+  min-height: 20px;
+  border: 0;
+}
+.blog-desktop .greyui-window-widget {
+  order: -1;
+}
+.blog-desktop .greyui-window-widget > span {
+  display: block;
+  position: static;
+  width: 14px;
+  height: 14px;
+  padding: 2px;
+  border: 1px solid var(--ns-ink);
+  background: var(--ns-face);
+  box-shadow: var(--ns-raised);
+}
+.blog-desktop .greyui-window-widget[data-kind="minimize"] > span::before {
+  content: "";
+  display: block;
+  position: static;
+  inset: auto;
+  transform: none;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--ns-ink);
+  background: var(--ns-face);
+}
+.blog-desktop .greyui-window-widget > span::after {
+  display: none;
+}
+.blog-desktop .close-glyph {
+  display: block;
+}
+.blog-desktop .title-control:active .close-glyph,
+.blog-desktop .greyui-window-widget:active > span {
+  filter: brightness(1.25);
+}
+.blog-desktop .desktop-window .greyui-window-body {
+  background: var(--ns-paper);
+  color: var(--ns-ink);
+}
+.blog-desktop .window-resize-bar {
+  border-top: 1px solid var(--ns-edge);
+  background: var(--ns-face);
+}
+.blog-desktop .window-resize-bar > div {
+  box-shadow: var(--ns-menu-bevel);
+}
+.blog-desktop .menu-heading {
+  --ns-control-face: var(--ns-ink);
+  --ns-control-ink: var(--ns-paper);
+  --ns-pressed-face: var(--ns-ink);
+  --ns-pressed-ink: var(--ns-paper);
+  --ns-focus-ink: var(--ns-paper);
+  --ns-control-padding: 0 7px;
+  --ns-control-bevel: inset 0 1px var(--ns-edge);
+  --ns-pressed-bevel: inset 0 1px var(--ns-edge);
+  display: flex;
+  align-items: center;
+  min-height: 22px;
+  padding: var(--ns-control-padding);
+  border: 1px solid var(--ns-ink);
+  border-radius: 0;
+  background: var(--ns-control-face);
+  color: var(--ns-control-ink);
+  box-shadow: var(--ns-control-bevel);
+  font: var(--ns-weight-bold) 13px/1.3 var(--greyui-font-ui);
+}
+.blog-desktop .desktop-bar > nav,
+.blog-desktop .recents-list {
+  background: var(--ns-face);
+  box-shadow: var(--ns-shadow);
+}
+.blog-desktop .desktop-bar nav > :is(button, a),
+.blog-desktop .recents-trigger,
+.blog-desktop .recents-list nav .greyui-button {
+  --ns-control-padding: 3px 7px;
+  --ns-control-bevel: var(--ns-menu-bevel);
+  width: 100%;
+  min-height: 24px;
+  padding: var(--ns-control-padding);
+  border: 0;
+  border-radius: 0;
+  box-shadow: var(--ns-control-bevel);
+  background: var(--ns-face);
+  color: var(--ns-ink);
+  justify-content: flex-start;
+  font: var(--ns-weight-regular) var(--greyui-font-size)/1.3 var(--greyui-font-ui);
+}
+.blog-desktop .recents-trigger::after {
+  content: "";
+  margin-left: auto;
+  border: 3px solid transparent;
+  border-right: 0;
+  border-left: 4px solid var(--ns-ink);
+}
+.blog-desktop .desktop-bar nav > :is(button, a):hover:not(:disabled),
+.blog-desktop .recents-trigger:hover,
+.blog-desktop .recents-list nav .greyui-button:is(:hover, :focus-visible) {
+  background: var(--ns-paper);
+  color: var(--ns-ink);
+}
+.blog-desktop .desktop-bar nav > button:disabled {
+  color: var(--ns-muted);
+}
+.blog-desktop .desktop-icons > .greyui-button,
+.blog-desktop .desktop-icons .desktop-recents-trigger {
+  --ns-control-padding: 2px 0;
+  --ns-control-bevel: var(--ns-dock-bevel);
+  padding: var(--ns-control-padding);
+  box-shadow: var(--ns-control-bevel);
+  border: 0;
+}
+.blog-desktop .desktop-icons :is(button:hover, button:focus-visible) {
+  background: var(--ns-paper);
+}
+.blog-desktop .miniwindow {
+  --ns-control-padding: 0 2px 4px;
+}
+.blog-desktop .palette-back {
+  --ns-control-padding: 0;
+  --ns-control-bevel: none;
+  --ns-pressed-bevel: none;
+  border: 0;
+}
+.blog-desktop .explorer-toolbar,
+.blog-desktop .greyui-statusbar,
+.blog-desktop .about-content {
+  background: var(--ns-face);
+}
+.blog-desktop .explorer-content {
+  margin: 0 7px 7px;
+  border: 1px solid var(--ns-ink);
+  box-shadow: var(--ns-inset);
+  background: var(--ns-face);
+}
+.blog-desktop .file-scroll {
+  margin: 1px;
+  background: var(--ns-face);
+}
+.blog-desktop .file-grid a:is(:hover, :focus-visible) .file-title {
+  background: var(--ns-paper);
+  color: var(--ns-ink);
+}
+.blog-desktop .archive-window .greyui-window-body {
+  background: var(--ns-face);
+}
+.blog-desktop .greyui-input {
+  font-family: var(--ns-font-ui);
+  font-weight: var(--ns-weight-regular);
+  font-style: normal;
+  line-height: 1.3;
+  letter-spacing: normal;
+  border: 1px solid var(--ns-edge);
+  border-radius: 0;
+  box-shadow: var(--ns-inset);
+  background: var(--ns-paper);
+  color: var(--ns-ink);
+}
+.blog-desktop .greyui-input::placeholder {
+  font: inherit;
+  letter-spacing: inherit;
+  color: var(--ns-muted);
+  opacity: 1;
+}
+.blog-desktop :is(strong, b, th) {
+  font-weight: var(--ns-weight-bold);
+}
+.blog-desktop .reader a,
+.blog-desktop .about-content a {
+  color: var(--ns-ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.blog-desktop :is(.document-scroll, .file-scroll, .recents-list, pre, .table-scroll) {
+  scrollbar-color: var(--ns-face) var(--ns-edge);
+  scrollbar-width: auto;
+}
+@media print {
+  .blog-desktop .desktop-window .greyui-window-frame {
+    box-shadow: none;
+    border: 0;
+  }
+}

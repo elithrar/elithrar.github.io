@@ -31,7 +31,11 @@
     site.title }} &middot; {{ site.tagline }} {% endif %}
   </title>
 
-  <!-- Newsreader Medium Italic, reduced to the Latin subset used by the site. -->
+  {% if page.layout == "post" or page.url == "/" or page.url == "/archive/" %}
+  <!-- Discover the enhancement while HTML is still streaming. -->
+  <link rel="modulepreload" href="/public/desktop/app.js" />
+  {% else %}
+  <!-- Only static pages prioritize the editorial face. -->
   <link
     rel="preload"
     href="/public/fonts/newsreader-latin-italic-500-v26.woff2"
@@ -39,6 +43,7 @@
     type="font/woff2"
     crossorigin
   />
+  {% endif %}
 
   <!-- CSS -->
   <link rel="stylesheet" href="/public/css/poole.css" />
@@ -47,6 +52,8 @@
   <link rel="preload" as="style" href="/public/css/syntax.css" onload="this.onload=null;this.rel='stylesheet'" />
   <noscript><link rel="stylesheet" href="/public/css/syntax.css"></noscript>
   
+  <link rel="stylesheet" href="/public/desktop/app.css" />
+
   <!-- Icons -->
   <link rel="icon" href="/public/favicon.svg" type="image/svg+xml" />
 

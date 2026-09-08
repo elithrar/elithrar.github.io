@@ -1,0 +1,739 @@
+/* Geometry and document typography. Chrome is specified in nextstep-theme.css.
+   Source of truth: docs/nextstep/design-system.md. */
+.desktop-ready {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.desktop-ready #static-blog {
+  display: none;
+}
+.blog-desktop {
+  position: fixed;
+  inset: 0;
+  height: 100dvh;
+  color: var(--ns-ink);
+  background: var(--ns-workspace);
+  font: var(--ns-weight-regular) 14px/1.4 var(--greyui-font-ui);
+  text-align: left;
+}
+.blog-desktop *,
+.blog-desktop *::before,
+.blog-desktop *::after {
+  box-sizing: border-box;
+}
+.blog-desktop a {
+  color: var(--ns-ink);
+}
+.blog-desktop button {
+  font-family: var(--greyui-font-ui);
+}
+.blog-desktop [hidden] {
+  display: none !important;
+}
+.desktop-bar {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 132px;
+  z-index: 100;
+}
+.desktop-bar nav {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.desktop-bar nav > a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+.desktop-workspace {
+  position: absolute;
+  top: 0;
+  bottom: 84px;
+  left: 152px;
+  right: 82px;
+  overflow: hidden;
+}
+.desktop-icons {
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  display: grid;
+  width: 64px;
+  gap: 16px;
+  z-index: 100;
+}
+.blog-desktop .desktop-icons > .greyui-button,
+.blog-desktop .desktop-icons .desktop-recents-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2px;
+  padding: 2px 0;
+  width: 64px;
+  min-width: 64px;
+  max-width: 64px;
+  height: 64px;
+  min-height: 64px;
+  flex-shrink: 0;
+}
+.desktop-icons > .desktop-disclosure {
+  width: 64px;
+  min-width: 64px;
+}
+.desktop-app-icon {
+  border-radius: 0;
+  display: block;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+}
+.desktop-recents-trigger > span:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.desktop-icons .desktop-recents-trigger::after {
+  display: none;
+}
+.desktop-icons .greyui-button > span,
+.desktop-recents-trigger > span:last-child > span {
+  font-size: 12px;
+  line-height: 18px;
+}
+.file-icon {
+  margin: 0;
+  border-radius: 0;
+  display: block;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  color: var(--ns-ink);
+}
+.miniwindow-tray {
+  position: absolute;
+  bottom: 8px;
+  left: 160px;
+  right: 82px;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  z-index: 90;
+}
+.miniwindow-tray .miniwindow {
+  display: flex;
+  flex: 0 0 64px;
+  flex-direction: column;
+  gap: 2px;
+  width: 64px;
+  height: 64px;
+  padding: 0 2px 4px;
+}
+.miniwindow-title {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: var(--ns-ink);
+  color: var(--ns-paper);
+  font-size: 10px;
+  line-height: 15px;
+}
+.blog-desktop .desktop-window {
+  position: absolute;
+  min-width: 0;
+}
+.blog-desktop .desktop-window .greyui-window-frame {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+}
+.blog-desktop .greyui-window-tab {
+  position: static;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: none;
+  flex-shrink: 0;
+  height: 22px;
+  cursor: grab;
+  touch-action: none;
+}
+.blog-desktop .greyui-window-title {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  min-width: 0;
+  max-width: none;
+  padding: 0 6px;
+}
+.blog-desktop .greyui-window-title > span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.blog-desktop .window-close,
+.blog-desktop .greyui-window-widget {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  min-height: 20px;
+  padding: 0;
+  margin: 0;
+}
+.blog-desktop .greyui-window-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+.blog-desktop .desktop-window.is-maximized {
+  inset: 8px !important;
+  width: auto !important;
+  height: auto !important;
+}
+.window-resize-bar {
+  display: grid;
+  grid-template-columns: 28px 1fr 28px;
+  height: 7px;
+  flex-shrink: 0;
+}
+.window-resize-bar > div {
+  touch-action: none;
+  cursor: ns-resize;
+}
+.window-resize-bar > div:first-child {
+  cursor: nesw-resize;
+}
+.window-resize-bar > div:last-child {
+  cursor: nwse-resize;
+}
+.document-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+.explorer-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+}
+.reader {
+  width: 100%;
+  max-width: 74ch;
+  margin: 0 auto;
+  padding: 24px 28px 48px;
+  color: #171717;
+  font: var(--ns-weight-regular) 17px/1.65 var(--ns-font-reading);
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+.reader :is(h1, h2, h3, h4, h5, h6) {
+  letter-spacing: normal;
+}
+.reader h1 {
+  margin: 14px 0 24px;
+  font: var(--ns-weight-bold) 32px/1.2 var(--ns-font-ui);
+  letter-spacing: normal;
+  text-wrap: pretty;
+}
+.reader h2 {
+  margin: 32px 0 16px;
+  font: var(--ns-weight-bold) 24px/1.2 var(--ns-font-ui);
+  text-wrap: pretty;
+}
+.reader h3 {
+  margin: 24px 0 12px;
+  font: var(--ns-weight-bold) 20px/1.3 var(--ns-font-ui);
+}
+.reader h4,
+.reader h5,
+.reader h6 {
+  font: var(--ns-weight-bold) 17px/1.3 var(--ns-font-ui);
+}
+.reader p {
+  margin: 0 0 18px;
+}
+.reader ul,
+.reader ol {
+  margin: 0 0 20px;
+  padding-left: 24px;
+}
+.reader li {
+  padding: 3px 0;
+}
+.reader .document-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 16px;
+  color: var(--desktop-muted);
+  font: 12px/1.5 var(--greyui-font-ui);
+}
+.reader blockquote {
+  margin: 20px 0;
+  padding: 8px 16px;
+  border-left: 2px solid var(--ns-edge);
+  color: var(--desktop-muted);
+}
+.reader pre {
+  max-width: 100%;
+  margin: 20px 0;
+  padding: 16px;
+  border: 1px solid var(--ns-face);
+  border-radius: 0;
+  overflow: auto;
+  white-space: pre;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.reader pre code {
+  white-space: pre;
+  overflow-wrap: normal;
+}
+.reader .highlight {
+  border-radius: 0;
+  min-width: 0;
+  max-width: 100%;
+}
+.reader img,
+.reader video {
+  max-width: 100%;
+  height: auto;
+}
+.reader iframe {
+  max-width: 100%;
+  border: 0;
+}
+.reader .table-scroll {
+  overflow-x: auto;
+  margin: 20px 0;
+}
+.reader table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.reader td,
+.reader th {
+  padding: 8px;
+  border: 1px solid var(--ns-edge);
+}
+.reader [id] {
+  scroll-margin-top: 110px;
+}
+.explorer-toolbar label {
+  font-weight: var(--ns-weight-bold);
+}
+.explorer-toolbar .greyui-input {
+  flex: 1;
+  width: auto;
+  min-width: 0;
+  border: 1px solid #000;
+  border-radius: 0;
+  background: #fff;
+  font-size: 16px;
+}
+.sort-label {
+  margin-left: auto;
+}
+.explorer-content {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+}
+.file-scroll {
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+.file-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 144px), 1fr));
+  align-items: start;
+  gap: 12px 8px;
+  margin: 0;
+  padding: 16px;
+  list-style: none;
+}
+.file-grid li {
+  min-width: 0;
+  padding: 0;
+}
+.file-grid a {
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-height: 144px;
+  padding: 8px 4px;
+  color: #000;
+  text-decoration: none;
+  text-align: center;
+}
+.file-title {
+  padding: 2px 4px;
+  overflow-wrap: anywhere;
+  font: 14px/1.35 var(--greyui-font-ui);
+}
+.file-grid a:hover .file-title,
+.file-grid a:focus-visible .file-title {
+  color: #fff;
+  background: var(--desktop-title);
+}
+.file-grid time {
+  color: var(--desktop-muted);
+  font-size: 12px;
+}
+.empty-results {
+  padding: 24px;
+}
+.blog-desktop .greyui-statusbar {
+  flex-shrink: 0;
+  min-height: 26px;
+  border-color: #000;
+  background: var(--ns-face);
+  font-size: 12px;
+}
+.about-content {
+  padding: 24px;
+}
+.about-content > img {
+  margin: 0 0 12px;
+}
+.about-content h1 {
+  margin: 0 0 16px;
+  font: var(--ns-weight-bold) 30px/1.2 var(--ns-font-ui);
+  letter-spacing: normal;
+}
+.about-content p {
+  font-size: 16px;
+}
+.about-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.window-disclosure {
+  position: relative;
+}
+.window-disclosure .greyui-collapsible-arrow {
+  display: none;
+}
+.window-disclosure .recents-list {
+  position: absolute;
+  top: -22px;
+  left: 100%;
+  z-index: 10;
+  width: min(360px, calc(100vw - 164px));
+  max-height: calc(100dvh - 60px);
+  overflow-y: auto;
+}
+.window-disclosure nav {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+}
+.recents-list .greyui-button {
+  display: flex;
+  justify-content: flex-start;
+  min-width: 0;
+  text-align: left;
+  white-space: normal;
+}
+.recents-list .greyui-button > span {
+  overflow-wrap: anywhere;
+}
+.desktop-disclosure .recents-list {
+  left: auto;
+  right: 100%;
+  top: 0;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+/* Compact is a native scrolling reading page, with a content-fitting frame. */
+.desktop-ready[data-desktop-layout="compact"] {
+  overflow: auto;
+  background: var(--ns-workspace);
+}
+.blog-desktop[data-layout="compact"] {
+  position: relative;
+  inset: auto;
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 100svh;
+}
+.blog-desktop[data-layout="compact"] .desktop-bar {
+  position: fixed;
+  top: 9px;
+  left: 9px;
+  width: 132px;
+  padding: 0;
+}
+.blog-desktop[data-layout="compact"] .desktop-bar > .menu-heading {
+  width: 100%;
+  min-height: 44px;
+  justify-content: space-between;
+}
+.blog-desktop[data-layout="compact"] .desktop-bar > nav {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: auto;
+  width: 100%;
+  max-height: calc(100dvh - 62px);
+  overflow-y: auto;
+}
+.blog-desktop[data-layout="compact"] .desktop-bar nav > button,
+.blog-desktop[data-layout="compact"] .desktop-bar nav > a,
+.blog-desktop[data-layout="compact"] .recents-trigger {
+  min-height: 44px;
+}
+.blog-desktop[data-layout="compact"] .desktop-workspace {
+  position: relative;
+  inset: auto;
+  overflow: visible;
+  padding: 8px 8px 24px;
+}
+.blog-desktop[data-layout="compact"] .desktop-window,
+.blog-desktop[data-layout="compact"] .desktop-window.is-maximized {
+  position: relative;
+  inset: auto !important;
+  width: 100% !important;
+  height: auto !important;
+}
+.blog-desktop[data-layout="compact"] .desktop-window .greyui-window-frame {
+  display: block;
+  height: auto;
+  min-height: 0;
+}
+.blog-desktop[data-layout="compact"] .greyui-window-tab {
+  position: sticky;
+  top: 8px;
+  height: 44px;
+  min-height: 44px;
+  z-index: 10;
+  cursor: default;
+  touch-action: auto;
+}
+.blog-desktop[data-layout="compact"] .window-close {
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+}
+.blog-desktop[data-layout="compact"] .greyui-window-title {
+  padding-left: 132px;
+}
+.blog-desktop[data-layout="compact"] .document-scroll,
+.blog-desktop[data-layout="compact"] .file-scroll {
+  overflow: visible;
+  height: auto;
+  flex: none;
+  scrollbar-gutter: auto;
+  overscroll-behavior: auto;
+}
+.blog-desktop[data-layout="compact"] .reader {
+  padding: 24px clamp(16px, 4vw, 36px) 48px;
+}
+.blog-desktop[data-layout="compact"] .reader h1 {
+  font-size: clamp(28px, 6vw, 36px);
+}
+.blog-desktop[data-layout="compact"] .explorer-content {
+  display: block;
+}
+.blog-desktop[data-layout="compact"] .greyui-input {
+  min-height: 44px;
+}
+.blog-desktop[data-layout="compact"] .file-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 128px), 1fr));
+  gap: 16px 8px;
+  padding: 16px 8px;
+}
+.blog-desktop[data-layout="compact"] .file-grid a {
+  cursor: default;
+  min-height: 148px;
+}
+.blog-desktop[data-layout="compact"] .sort-label {
+  display: none;
+}
+.blog-desktop[data-layout="compact"] .file-scroll {
+  width: auto;
+}
+.blog-desktop[data-layout="compact"] .window-disclosure .recents-list {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  max-width: none;
+  max-height: calc(100dvh - 160px);
+}
+.blog-desktop[data-layout="compact"] .recents-list .greyui-button {
+  --ns-control-padding: 10px 12px;
+  min-height: 44px;
+  padding: 10px 12px;
+}
+.blog-desktop[data-layout="compact"] .desktop-icons {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 64px;
+  grid-auto-flow: row;
+  justify-content: start;
+  align-items: start;
+  gap: 16px;
+  padding: 76px 9px 24px;
+  z-index: 90;
+}
+.blog-desktop[data-layout="compact"] .desktop-disclosure {
+  position: relative;
+}
+.blog-desktop[data-layout="compact"] .desktop-disclosure .recents-list {
+  position: relative;
+  inset: auto;
+  margin-top: 12px;
+  width: min(288px, calc(100vw - 18px));
+  max-height: calc(100dvh - 160px);
+}
+/* One persistent title row; mask the gutter above it during native page scrolling. */
+.blog-desktop[data-layout="compact"] {
+  --greyui-font-size: 14px;
+}
+.blog-desktop[data-layout="compact"]::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: 9px;
+  background: var(--ns-workspace);
+  z-index: 95;
+}
+.blog-desktop[data-layout="compact"] .desktop-bar[data-recents-open="true"] {
+  width: min(288px, calc(100vw - 18px));
+}
+.blog-desktop[data-layout="compact"] .desktop-bar[data-recents-open="true"] > .menu-heading,
+.blog-desktop[data-layout="compact"] .desktop-bar[data-recents-open="true"] > nav > :not(.window-disclosure),
+.blog-desktop[data-layout="compact"]
+  .desktop-bar[data-recents-open="true"]
+  > nav
+  > .window-disclosure
+  > .recents-trigger {
+  display: none;
+}
+.blog-desktop[data-layout="compact"] .desktop-bar[data-recents-open="true"] > nav {
+  position: static;
+}
+.blog-desktop[data-layout="compact"] .desktop-bar .recents-list {
+  box-shadow: none;
+  max-height: none;
+}
+.blog-desktop[data-layout="compact"] .desktop-bar .recents-list > .menu-heading {
+  min-height: 44px;
+  padding: 0;
+}
+.blog-desktop[data-layout="compact"] .desktop-bar .recents-list > .menu-heading > span {
+  flex: 1;
+  text-align: center;
+  padding-right: 44px;
+}
+.blog-desktop[data-layout="compact"] .palette-back {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
+}
+.blog-desktop[data-layout="compact"] .reader [id] {
+  scroll-margin-top: 66px;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-greyui-theme="nextstep"] *,
+  [data-greyui-theme="nextstep"] *::before,
+  [data-greyui-theme="nextstep"] *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+@media print {
+  .desktop-ready {
+    overflow: visible;
+  }
+  .blog-desktop,
+  .blog-desktop[data-layout="compact"] {
+    position: static;
+    display: block;
+    height: auto;
+    min-height: 0;
+    background: #fff;
+  }
+  .blog-desktop[data-layout="compact"]::before,
+  .desktop-bar,
+  .desktop-icons,
+  .miniwindow-tray,
+  .window-resize-bar,
+  .blog-desktop .greyui-window-tab {
+    display: none !important;
+  }
+  .desktop-workspace {
+    position: static;
+    overflow: visible;
+  }
+  .blog-desktop .desktop-window {
+    display: none;
+  }
+  .blog-desktop .desktop-window[data-active="true"] {
+    display: block;
+    position: static;
+    width: 100% !important;
+    height: auto !important;
+  }
+  .blog-desktop .desktop-window .greyui-window-frame {
+    display: block;
+    height: auto;
+    border: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+  .document-scroll {
+    overflow: visible;
+  }
+  .reader {
+    max-width: none;
+    padding: 0;
+  }
+  .reader pre,
+  .reader pre code {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}

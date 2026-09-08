@@ -1,0 +1,90 @@
+{
+  "environment": {
+    "node": "v24.19.0",
+    "compression": "gzip, level 9; payload only, not HTTP transfer timing"
+  },
+  "before": {
+    "assets": {
+      "index.html": {
+        "bytes": 93930,
+        "gzipBytes": 20687
+      },
+      "desktop-catalog.json": {
+        "bytes": 3916,
+        "gzipBytes": 1447
+      },
+      "public/desktop/app.js": {
+        "bytes": 248339,
+        "gzipBytes": 78425
+      },
+      "public/desktop/app.css": {
+        "bytes": 85191,
+        "gzipBytes": 13678
+      },
+      "article/guide-logging-middleware-go/index.html": {
+        "bytes": 35003,
+        "gzipBytes": 7832
+      },
+      "article/kubernetes-admission-control/index.html": {
+        "bytes": 30187,
+        "gzipBytes": 7540
+      },
+      "article/building-go-projects-on-circle-ci/index.html": {
+        "bytes": 18277,
+        "gzipBytes": 4895
+      }
+    },
+    "homepageHtmlJsCssAndDataGzipBytes": 134504,
+    "dateFormatting": {
+      "callsPerSample": 2600,
+      "milliseconds": [
+        124.07,
+        126.42,
+        140.43
+      ],
+      "medianMilliseconds": 126.42
+    }
+  },
+  "after": {
+    "assets": {
+      "index.html": {
+        "bytes": 98001,
+        "gzipBytes": 21970
+      },
+      "desktop-catalog.json": {
+        "bytes": 3811,
+        "gzipBytes": 1443
+      },
+      "public/desktop/app.js": {
+        "bytes": 249169,
+        "gzipBytes": 78654
+      },
+      "public/desktop/app.css": {
+        "bytes": 85191,
+        "gzipBytes": 13678
+      },
+      "article/guide-logging-middleware-go/index.html": {
+        "bytes": 38790,
+        "gzipBytes": 9001
+      },
+      "article/kubernetes-admission-control/index.html": {
+        "bytes": 33974,
+        "gzipBytes": 8720
+      },
+      "article/building-go-projects-on-circle-ci/index.html": {
+        "bytes": 22064,
+        "gzipBytes": 6067
+      }
+    },
+    "homepageHtmlJsCssAndDataGzipBytes": 114302,
+    "dateFormatting": {
+      "callsPerSample": 2600,
+      "milliseconds": [
+        2.67,
+        2.74,
+        3.03
+      ],
+      "medianMilliseconds": 2.74
+    }
+  }
+}
