@@ -495,6 +495,21 @@ test("empty mobile desktop exposes consistent Recents, Archive, and About launch
         [...desktop.querySelectorAll("button")].map((node) => node.textContent),
         ["Recents", "Archive", "About"]
       )
+      const { inspectCascade } = await import("./css-cascade.mjs")
+      const value = inspectCascade(pageCSS)
+      assert.equal(value(desktop, "display"), "grid")
+      assert.equal(value(desktop, "grid-template-columns"), "64px")
+      assert.equal(value(desktop, "grid-auto-flow"), "row")
+      assert.equal(value(desktop, "justify-content"), "start")
+      assert.equal(value(desktop, "gap"), "16px")
+      assert.equal(value(desktop.querySelector(".desktop-disclosure"), "width"), "64px")
+      for (const tile of desktop.querySelectorAll("button")) {
+        assert.equal(value(tile, "width"), "64px")
+        assert.equal(value(tile, "min-width"), "64px")
+        assert.equal(value(tile, "height"), "64px")
+        assert.equal(value(tile, "gap"), "2px")
+        assert.equal(value(tile, "justify-content"), "center")
+      }
       for (const icon of desktop.querySelectorAll("img")) {
         assert.equal(icon.alt, "")
         assert.ok((await readFile(`_site${icon.getAttribute("src")}`)).length > 0)
@@ -506,6 +521,14 @@ test("empty mobile desktop exposes consistent Recents, Archive, and About launch
         )
       launchIcon("Recents")
       await until(() => desktop.querySelector(".recents-list"))
+      const panel = desktop.querySelector(".recents-list")
+      assert.equal(value(panel, "position"), "relative")
+      assert.equal(value(panel, "inset"), "auto")
+      assert.equal(value(panel, "margin-top"), "12px")
+      assert.match(value(panel, "width"), /288px/)
+      const expanded = desktop.querySelector(".desktop-recents-trigger")
+      assert.equal(value(expanded, "width"), "64px")
+      assert.equal(value(expanded, "padding"), "2px 0")
       assert.deepEqual(
         [...desktop.querySelectorAll(".recents-list nav button")].map((node) => node.textContent),
         catalog.slice(0, 3).map((post) => post.title)

@@ -4,6 +4,14 @@ The subsequent [performance review](performance-review.md) records startup, inte
 
 Reviewed 2026-09-07 against [the design system](design-system.md), written before implementation, and [all 36 original reference images](README.md). This is a source, CSS-cascade and automated behavior review. The historical corpus was visually inspected; the implemented site has **not** passed a rendered-browser review.
 
+## Mobile launcher spacing correction — 2026-09-08
+
+IMG_0617.jpeg shows the Recents tile narrower than Archive/About and the launcher row centered on the phone. The flex layout allowed the auto-sized disclosure wrapper to shrink; its trigger also inherited generic menu alignment. Give both wrapper and trigger explicit 64px widths, keep all tiles 64px high, and use consistent 2px internal gaps/padding with the existing 40px artwork and 18px caption line. Shared launcher spacing is now 16px.
+
+The compact desktop uses one 64px grid column aligned with the 9px Blog menu gutter. Rows grow downward. Recents expands in document flow below its own tile (12px separation, up to 288px wide), pushing Archive/About down instead of floating beneath the entire launcher group. The desktop dock retains its right-edge placement; the mobile centered row is removed.
+
+Build and all 30 tests pass. The existing closed-desktop interaction test now checks grid direction/alignment, wrapper and all tile dimensions, internal spacing, and expanded Recents sizing/flow at 320/390/768px, alongside opening each app. Browser tab discovery still times out, so these checks establish the CSS cascade and behavior, not rendered pixel measurements.
+
 ## Typography refinement: current review
 
 IMG_0615.png shows a material inconsistency: Archive’s search placeholder is monospaced while Find, file names and window titles are proportional. Source inspection confirms greyUI’s `.greyui-input` explicitly selects `--greyui-font-mono`; this was not a browser glitch. The previous design system also permitted unrelated editorial headings. The revised [typography contract](design-system.md#typography-and-scale) was documented before this correction.
