@@ -1,4 +1,13 @@
-import { useEffect, useLayoutEffect, useRef, useState, useEffectEvent, type MouseEvent, type PointerEvent } from "react"
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useEffectEvent,
+  type MouseEvent,
+  type PointerEvent,
+} from "react"
 import { createRoot } from "react-dom/client"
 import { Button, Layer, Window } from "greyui"
 import { clampRect, initialRect, type Post, type Rect } from "./catalog"
@@ -33,17 +42,20 @@ function Desktop({ posts }: { posts: Post[] }) {
   }, [menuOpen])
   const pagePositions = useRef(new Map<string, number>())
   const [viewport, setViewport] = useState({ width: innerWidth - 234, height: innerHeight - 100 })
-  const make = (id: string, index: number): AppWindow => ({
-    id,
-    minimized: false,
-    maximized: false,
-    rect:
-      id === ARCHIVE
-        ? clampRect({ x: 160, y: viewport.height * 0.57, width: 700, height: 350 }, viewport.width, viewport.height)
-        : id === ABOUT
-          ? clampRect({ x: 180, y: 110, width: 390, height: 300 }, viewport.width, viewport.height)
-          : initialRect(index, viewport.width, viewport.height),
-  })
+  const make = useCallback(
+    (id: string, index: number): AppWindow => ({
+      id,
+      minimized: false,
+      maximized: false,
+      rect:
+        id === ARCHIVE
+          ? clampRect({ x: 160, y: viewport.height * 0.57, width: 700, height: 350 }, viewport.width, viewport.height)
+          : id === ABOUT
+            ? clampRect({ x: 180, y: 110, width: 390, height: 300 }, viewport.width, viewport.height)
+            : initialRect(index, viewport.width, viewport.height),
+    }),
+    [viewport.width, viewport.height]
+  )
   const direct = posts.find((post) => post.url === location.pathname)
   const [windows, setWindows] = useState<AppWindow[]>(() =>
     direct
@@ -69,39 +81,62 @@ function Desktop({ posts }: { posts: Post[] }) {
     rect: Rect
     edge?: "left" | "middle" | "right"
   } | null>(null)
+  const dragFrame = useRef<number | null>(null)
+  const pendingDrag = useRef<{ id: string; rect: Rect } | null>(null)
+  const flushDrag = () => {
+    dragFrame.current = null
+    const update = pendingDrag.current
+    pendingDrag.current = null
+    if (update) setWindows((old) => old.map((win) => (win.id === update.id ? { ...win, rect: update.rect } : win)))
+  }
+  useEffect(
+    () => () => {
+      if (dragFrame.current !== null) cancelAnimationFrame(dragFrame.current)
+    },
+    []
+  )
   const title = (id: string) =>
     id === ARCHIVE ? "Archive" : id === ABOUT ? "About" : (posts.find((post) => post.url === id)?.title ?? "Article")
-  const activate = (id: string, focus = false) => {
-    if (compact && id !== active) pagePositions.current.set(active, window.scrollY)
-    if (focus) pendingFocus.current = id
-    setActive(id)
-    setOrder((old) => (old.at(-1) === id ? old : [...old.filter((item) => item !== id), id]))
-  }
+  const activate = useCallback(
+    (id: string, focus = false) => {
+      if (compact && id !== active) pagePositions.current.set(active, window.scrollY)
+      if (focus) pendingFocus.current = id
+      setActive(id)
+      setOrder((old) => (old.at(-1) === id ? old : [...old.filter((item) => item !== id), id]))
+    },
+    [compact, active]
+  )
   const focusWindow = (id: string) => {
     if (active === id) return
     activate(id)
     history.replaceState(null, "", id.startsWith("/") ? id : id === ARCHIVE ? "/archive/" : "/")
   }
-  const open = (id: string, navigate = true) => {
-    setMenuOpen(false)
-    setRecentMenuOpen(false)
-    setWindows((old) =>
-      old.some((win) => win.id === id)
-        ? old.map((win) => (win.id === id ? { ...win, minimized: false } : win))
-        : [...old, make(id, old.filter((win) => win.id.startsWith("/")).length % 3)]
-    )
-    activate(id, true)
-    if (navigate) history.pushState(null, "", id === ARCHIVE ? "/archive/" : id === ABOUT ? "/" : id)
-  }
-  const onNavigate = (event: MouseEvent, path: string) => {
-    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return
-    const url = new URL(path, location.origin)
-    if (!posts.some((post) => post.url === url.pathname)) return
-    event.preventDefault()
-    open(url.pathname, false)
-    history.pushState(null, "", url.pathname + url.hash)
-    if (url.hash) window.dispatchEvent(new HashChangeEvent("hashchange"))
-  }
+  const open = useCallback(
+    (id: string, navigate = true) => {
+      setMenuOpen(false)
+      setRecentMenuOpen(false)
+      setWindows((old) =>
+        old.some((win) => win.id === id)
+          ? old.map((win) => (win.id === id ? { ...win, minimized: false } : win))
+          : [...old, make(id, old.filter((win) => win.id.startsWith("/")).length % 3)]
+      )
+      activate(id, true)
+      if (navigate) history.pushState(null, "", id === ARCHIVE ? "/archive/" : id === ABOUT ? "/" : id)
+    },
+    [make, activate]
+  )
+  const onNavigate = useCallback(
+    (event: MouseEvent, path: string) => {
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return
+      const url = new URL(path, location.origin)
+      if (!posts.some((post) => post.url === url.pathname)) return
+      event.preventDefault()
+      open(url.pathname, false)
+      history.pushState(null, "", url.pathname + url.hash)
+      if (url.hash) window.dispatchEvent(new HashChangeEvent("hashchange"))
+    },
+    [posts, open]
+  )
   useEffect(() => {
     document.body.classList.add("desktop-ready")
     const fallback = document.getElementById("static-blog")
@@ -215,9 +250,13 @@ function Desktop({ posts }: { posts: Post[] }) {
       viewport.width,
       viewport.height
     )
-    setWindows((old) => old.map((win) => (win.id === moving.id ? { ...win, rect } : win)))
+    pendingDrag.current = { id: moving.id, rect }
+    if (dragFrame.current === null) dragFrame.current = requestAnimationFrame(flushDrag)
   }
   const pointerEnd = () => {
+    // Preserve the final sampled position even if pointerup precedes the frame.
+    if (dragFrame.current !== null) cancelAnimationFrame(dragFrame.current)
+    flushDrag()
     drag.current = null
   }
   const recentItems = (close: () => void) =>
@@ -421,7 +460,14 @@ function Desktop({ posts }: { posts: Post[] }) {
                       dismiss(win.id, false)
                     }}
                   >
-                    <svg className="close-glyph" fill="none" viewBox="0 0 14 14" width="14" height="14" aria-hidden="true">
+                    <svg
+                      className="close-glyph"
+                      fill="none"
+                      viewBox="0 0 14 14"
+                      width="14"
+                      height="14"
+                      aria-hidden="true"
+                    >
                       <path fill="#aaa" stroke="#000" d="M.5.5h13v13H.5z" />
                       <path stroke="#fff" d="M1 12V1h11" />
                       <path stroke="#555" d="M2 12h10V2" />
@@ -431,7 +477,7 @@ function Desktop({ posts }: { posts: Post[] }) {
                 </Window.TitleBar>
                 <Window.Body>
                   {post ? (
-                    <Article post={post} onNavigate={onNavigate} />
+                    <Article post={post} onNavigate={onNavigate} visible={!win.minimized && (!compact || isActive)} />
                   ) : win.id === ARCHIVE ? (
                     <Explorer posts={posts} onNavigate={onNavigate} />
                   ) : (
@@ -511,9 +557,16 @@ function Desktop({ posts }: { posts: Post[] }) {
   )
 }
 async function start() {
-  const response = await fetch("/desktop-catalog.json")
-  if (!response.ok) return
-  const posts: Post[] = await response.json()
+  const embedded = document.getElementById("desktop-catalog")?.textContent
+  let posts: Post[]
+  if (embedded) {
+    posts = JSON.parse(embedded)
+  } else {
+    // Compatibility path for older cached HTML without an embedded catalog.
+    const response = await fetch("/desktop-catalog.json")
+    if (!response.ok) return
+    posts = await response.json()
+  }
   if (
     !Array.isArray(posts) ||
     !posts.every(

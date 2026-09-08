@@ -1,10 +1,10 @@
-import { useState, type MouseEvent } from "react"
+import { memo, useState, type MouseEvent } from "react"
 import { Button, Input, Window } from "greyui"
 import { filterPosts, type Post } from "./catalog"
 import { Icon } from "./file-icon"
 import { dateLabel } from "./format"
 
-export function Explorer({
+export const Explorer = memo(function Explorer({
   posts,
   onNavigate,
 }: {
@@ -61,4 +61,4 @@ export function Explorer({
       </Window.StatusBar>
     </>
   )
-}
+})

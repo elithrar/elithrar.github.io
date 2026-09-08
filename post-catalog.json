@@ -2,8 +2,4 @@
 layout: null
 permalink: /desktop-catalog.json
 ---
-[
-{% for post in site.posts %}
-  {"title": {{ post.title | jsonify }}, "url": {{ post.url | jsonify }}, "date": {{ post.date | date: "%Y-%m-%d" | jsonify }}, "words": {{ post.content | number_of_words }}}{% unless forloop.last %},{% endunless %}
-{% endfor %}
-]
+{% include desktop-catalog.json %}

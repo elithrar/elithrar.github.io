@@ -44,13 +44,21 @@ async function until(check) {
   }
   assert.ok(check(), "UI did not reach expected state")
 }
-async function launch({ path = "/", failCatalog = false, failArticle = false, width = 1440, coarse = false } = {}) {
+async function launch({
+  path = "/",
+  failCatalog = false,
+  failArticle = false,
+  width = 1440,
+  coarse = false,
+  serverHTML = false,
+} = {}) {
   const calls = []
   const page =
     path === "/"
       ? '<div id="static-blog"><a href="/archive/">Archive</a></div>'
       : `<div id="static-blog">${bodies.get(path)}</div>`
-  const dom = new JSDOM(`<div id="desktop-root"></div>${page}`, {
+  const html = serverHTML ? await readFile(`_site${path}index.html`, "utf8") : `<div id="desktop-root"></div>${page}`
+  const dom = new JSDOM(html, {
     url: `https://blog.questionable.services${path}`,
     runScripts: "outside-only",
     pretendToBeVisual: true,
@@ -75,6 +83,24 @@ async function launch({ path = "/", failCatalog = false, failArticle = false, wi
     observe() {}
     disconnect() {}
   }
+  const counters = { parsedArticles: 0, dateFormats: 0 }
+  const Parser = dom.window.DOMParser
+  dom.window.DOMParser = class extends Parser {
+    parseFromString(...args) {
+      counters.parsedArticles++
+      return super.parseFromString(...args)
+    }
+  }
+  const Formatter = dom.window.Intl.DateTimeFormat
+  dom.window.Intl.DateTimeFormat = class extends Formatter {
+    get format() {
+      const format = super.format
+      return (...args) => {
+        counters.dateFormats++
+        return format(...args)
+      }
+    }
+  }
   dom.window.HTMLElement.prototype.scrollIntoView = function () {
     this.dataset.scrolled = "true"
   }
@@ -85,7 +111,7 @@ async function launch({ path = "/", failCatalog = false, failArticle = false, wi
   }
   dom.window.eval(script)
   if (!failCatalog) await until(() => dom.window.document.body.classList.contains("desktop-ready"))
-  return { dom, document: dom.window.document, calls, resizeViewport, close: () => dom.window.close() }
+  return { dom, document: dom.window.document, calls, counters, resizeViewport, close: () => dom.window.close() }
 }
 function region(document, id) {
   return [...document.querySelectorAll("[data-window-id]")].find((node) => node.dataset.windowId === id)
@@ -801,5 +827,133 @@ test("NeXTSTEP typography overrides library and editorial defaults for search, c
     } finally {
       close()
     }
+  }
+})
+
+test("generated pages bootstrap from embedded catalog and existing article DOM without a request waterfall", async () => {
+  for (const [path, width, expectedReaders] of [
+    ["/", 1440, 3],
+    ["/", 390, 1],
+    [first.url, 390, 1],
+    ["/archive/", 390, 0],
+  ]) {
+    const { document, calls, counters, close } = await launch({ path, width, serverHTML: true })
+    try {
+      assert.deepEqual(JSON.parse(document.getElementById("desktop-catalog").textContent), catalog)
+      assert.equal(document.querySelectorAll(".article-content").length, expectedReaders)
+      assert.deepEqual(calls, [], "initial catalog and seeded readers need no fetches")
+      assert.equal(counters.parsedArticles, 0, "server article DOM is cloned, not parsed again")
+      assert.ok(document.querySelector('link[rel="modulepreload"][href="/public/desktop/app.js"]'))
+      assert.equal(document.querySelector('link[rel="preload"][as="font"]'), null)
+      if (path !== "/archive/") {
+        const seed = [...document.querySelectorAll("#static-blog .post-content")].find(
+          (node) => node.dataset.postUrl === first.url
+        )
+        assert.ok(seed.querySelector("pre"))
+        assert.equal(seed.querySelector(".table-scroll"), null, "preparation does not alter fallback content")
+        assert.equal(
+          region(document, first.url).querySelector('[role="status"]'),
+          null,
+          "seeded reader has no loading intermediate"
+        )
+      }
+    } finally {
+      close()
+    }
+  }
+})
+
+test("mobile defers hidden article work and retains prepared content after first activation", async () => {
+  const { dom, document, calls, close } = await launch({ width: 390 })
+  try {
+    await until(() => region(document, first.url).querySelector(".article-content"))
+    assert.deepEqual(calls, ["/desktop-catalog.json", first.url])
+    assert.equal(region(document, second.url).querySelector(".article-content"), null)
+    await switchWindow(dom, document, second.title)
+    await until(() => region(document, second.url).querySelector(".article-content"))
+    const content = region(document, second.url).querySelector(".article-content")
+    await switchWindow(dom, document, first.title)
+    await switchWindow(dom, document, second.title)
+    assert.equal(region(document, second.url).querySelector(".article-content"), content)
+    assert.equal(calls.filter((url) => url === second.url).length, 1)
+    assert.equal(calls.includes(catalog[2].url), false)
+  } finally {
+    close()
+  }
+})
+
+test("window movement coalesces pointer samples and does not rerender article or Archive contents", async () => {
+  const { dom, document, counters, close } = await launch({ serverHTML: true })
+  try {
+    const win = region(document, first.url),
+      title = win.querySelector(".greyui-window-tab")
+    const before = win.getAttribute("style"),
+      formatted = counters.dateFormats
+    const queue = new Map()
+    let frame = 0
+    dom.window.requestAnimationFrame = (callback) => {
+      queue.set(++frame, callback)
+      return frame
+    }
+    dom.window.cancelAnimationFrame = (id) => queue.delete(id)
+    title.setPointerCapture = () => {}
+    const pointer = (type, x, y) => {
+      const event = new dom.window.MouseEvent(type, {
+        bubbles: true,
+        cancelable: true,
+        clientX: x,
+        clientY: y,
+        button: 0,
+      })
+      Object.defineProperty(event, "pointerId", { value: 1 })
+      title.dispatchEvent(event)
+    }
+    pointer("pointerdown", 100, 100)
+    for (let i = 1; i <= 10; i++) pointer("pointermove", 100 + i * 4, 100 + i * 2)
+    assert.equal(queue.size, 1, "many samples schedule only one frame")
+    assert.equal(win.getAttribute("style"), before)
+    const paint = [...queue.values()][0]
+    queue.clear()
+    paint()
+    await until(() => win.getAttribute("style") !== before)
+    assert.equal(win.style.left, "48px")
+    assert.equal(win.style.top, "44px")
+    assert.equal(counters.dateFormats, formatted, "memoized content does not format dates during geometry updates")
+    pointer("pointermove", 148, 124)
+    pointer("pointerup", 148, 124)
+    await until(() => win.style.left === "56px")
+    assert.equal(queue.size, 0, "pointerup flushes the last sample and cancels its frame")
+    assert.equal(counters.dateFormats, formatted)
+  } finally {
+    close()
+  }
+})
+
+test("article media reserve intrinsic space and do not force the leading image to lazy-load", async () => {
+  const imagePaths = new Set()
+  for (const post of catalog) {
+    const dom = new JSDOM(await readFile(`_site${post.url}index.html`, "utf8"))
+    try {
+      for (const image of dom.window.document.querySelectorAll(".post-content img")) {
+        assert.ok(Number(image.getAttribute("width")) > 0, `${post.url}: image width`)
+        assert.ok(Number(image.getAttribute("height")) > 0, `${post.url}: image height`)
+        imagePaths.add(image.getAttribute("src"))
+      }
+    } finally {
+      dom.window.close()
+    }
+  }
+  assert.equal(imagePaths.size, 5)
+  const post = catalog.find((item) => item.url.includes("from-vim-to-vscode"))
+  const { document, calls, close } = await launch({ path: post.url, serverHTML: true, width: 390 })
+  try {
+    const images = [...region(document, post.url).querySelectorAll(".article-content img")]
+    assert.equal(images.length, 4)
+    assert.notEqual(images[0].getAttribute("loading"), "lazy")
+    assert.ok(images.slice(1).every((image) => image.getAttribute("loading") === "lazy"))
+    assert.ok(images.every((image) => image.getAttribute("decoding") === "async"))
+    assert.deepEqual(calls, [])
+  } finally {
+    close()
   }
 })

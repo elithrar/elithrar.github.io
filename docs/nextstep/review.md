@@ -1,5 +1,7 @@
 # NeXTSTEP implementation review
 
+The subsequent [performance review](performance-review.md) records startup, interaction and image-layout fixes, production-build comparisons, 30 passing tests and the outstanding browser/CWV measurement gates.
+
 Reviewed 2026-09-07 against [the design system](design-system.md), written before implementation, and [all 36 original reference images](README.md). This is a source, CSS-cascade and automated behavior review. The historical corpus was visually inspected; the implemented site has **not** passed a rendered-browser review.
 
 ## Typography refinement: current review

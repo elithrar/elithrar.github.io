@@ -1,28 +1,46 @@
-import { useEffect, useRef, useState, type MouseEvent } from "react"
+import { memo, useEffect, useRef, useState, type MouseEvent } from "react"
 import { Button } from "greyui"
 import type { Post } from "./catalog"
 import { prepareArticle } from "./article"
 import { dateLabel } from "./format"
 
-export function Article({ post, onNavigate }: { post: Post; onNavigate: (event: MouseEvent, url: string) => void }) {
+function seededArticle(url: string, prefix: string): string | null {
+  const seed = [...document.querySelectorAll("#static-blog .post-content[data-post-url]")].find(
+    (node) => node.getAttribute("data-post-url") === url
+  )
+  return seed ? prepareArticle(seed, url, prefix) : null
+}
+
+export const Article = memo(function Article({
+  post,
+  onNavigate,
+  visible,
+}: {
+  post: Post
+  onNavigate: (event: MouseEvent, url: string) => void
+  visible: boolean
+}) {
   const prefix = `post-${post.url.replace(/[^a-z0-9]/gi, "-")}-`
-  const [html, setHtml] = useState<string | null>(null)
+  // Seed before the first commit so an existing article never flashes a loader.
+  const [html, setHtml] = useState<string | null>(() => (visible ? seededArticle(post.url, prefix) : null))
   const [error, setError] = useState(false)
   const [attempt, setAttempt] = useState(0)
   const content = useRef<HTMLDivElement>(null)
   useEffect(() => {
+    // Retain loaded readers and their scroll positions, but do not load hidden
+    // mobile windows until first shown. Closing still unmounts the document.
+    if (!visible || html !== null) return
     const controller = new AbortController()
     setError(false)
-    const seed =
-      document.querySelector("#static-blog .post-content")?.getAttribute("data-post-url") === post.url
-        ? document.querySelector("#static-blog .post-content")
-        : null
-    const request = seed
-      ? Promise.resolve(`<div class="post-content">${seed.innerHTML}</div>`)
-      : fetch(post.url, { signal: controller.signal }).then((response) => {
-          if (!response.ok) throw new Error("Article request failed")
-          return response.text()
-        })
+    const seed = seededArticle(post.url, prefix)
+    if (seed !== null) {
+      setHtml(seed)
+      return
+    }
+    const request = fetch(post.url, { signal: controller.signal }).then((response) => {
+      if (!response.ok) throw new Error("Article request failed")
+      return response.text()
+    })
     request
       .then((source) => {
         if (!controller.signal.aborted) setHtml(prepareArticle(source, post.url, prefix))
@@ -31,7 +49,7 @@ export function Article({ post, onNavigate }: { post: Post; onNavigate: (event: 
         if (!controller.signal.aborted) setError(true)
       })
     return () => controller.abort()
-  }, [post.url, prefix, attempt])
+  }, [post.url, prefix, attempt, visible, html])
   useEffect(() => {
     if (!html) return
     const jump = () => {
@@ -104,4 +122,4 @@ export function Article({ post, onNavigate }: { post: Post; onNavigate: (event: 
       </article>
     </div>
   )
-}
+})
