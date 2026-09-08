@@ -486,7 +486,11 @@ function Desktop({ posts }: { posts: Post[] }) {
                       <h1>Questionable Services</h1>
                       <p>Writings about computing, agents, and the Internet.</p>
                       <p>
-                        By <a href="https://github.com/elithrar">Matt Silverlock</a>.
+                        By <a href="https://twitter.com/elithrar">Matt Silverlock</a>
+                        {" • "}
+                        <a href="https://github.com/elithrar">GitHub</a>
+                        {" • "}
+                        <a href="https://www.linkedin.com/in/mattsilverlock">LinkedIn</a>
                       </p>
                       <div className="about-links">
                         <a href="/atom.xml">Subscribe via RSS</a>
