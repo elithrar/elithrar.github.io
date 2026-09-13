@@ -9,11 +9,44 @@
   --link-visited: #672633;
   --link-active: #541f2b;
   --code: #a13f52;
-  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body: "Newsreader Text", "Iowan Old Style", "Palatino Linotype",
+    Georgia, "Times New Roman", serif;
   --font-heading: Georgia, "Times New Roman", serif;
   --font-editorial: "Newsreader", "Iowan Old Style", "Palatino Linotype",
     Georgia, "Times New Roman", serif;
   --font-code: Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+@font-face {
+  font-family: "Newsreader Text";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/public/fonts/newsreader-text-regular-cfcb4f7a.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Newsreader Text";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/public/fonts/newsreader-text-bold-cfcb4f7a.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Newsreader Text";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/public/fonts/newsreader-text-italic-cfcb4f7a.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Newsreader Text";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/public/fonts/newsreader-text-bolditalic-cfcb4f7a.woff2") format("woff2");
 }
 
 @font-face {
@@ -164,13 +197,6 @@ h3 {
 .header {
   color: var(--ink);
   margin-bottom: 2.25rem;
-}
-
-.header-mark {
-  display: block;
-  width: 4.25rem;
-  height: 4.25rem;
-  margin: -0.75rem auto 0;
 }
 
 .header-title {
