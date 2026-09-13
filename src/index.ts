@@ -33,7 +33,12 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const response = await env.ASSETS.fetch(request)
     const respHeaders = new Headers(response.headers)
-    const pathname = new URL(request.url).pathname
+    const { pathname, hostname } = new URL(request.url)
+
+    // Keep branch previews out of search results; canonical URLs remain production URLs.
+    if (hostname.endsWith(".workers.dev")) {
+      respHeaders.set("X-Robots-Tag", "noindex")
+    }
 
     // Font filenames are versioned, so browsers can keep them without revalidation.
     if (pathname.endsWith(".woff2")) {
