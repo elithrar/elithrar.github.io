@@ -300,10 +300,10 @@ pre code {
 
 .post-title {
   margin-bottom: 0;
-  font-family: var(--font-editorial);
+  font-family: var(--font-body);
   font-size: clamp(1.55rem, 4.5vw, 1.8rem);
   font-weight: 500;
-  font-style: italic;
+  font-style: normal;
   line-height: 1.06;
   letter-spacing: -0.025em;
 }
@@ -377,11 +377,16 @@ pre code {
   text-decoration-thickness: 2px;
 }
 
-.home-archives h2,
-.home-archives .related-posts {
+.home-archives h2 {
   font-family: var(--font-editorial);
   font-weight: 500;
   font-style: italic;
+}
+
+.home-archives .related-posts {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-style: normal;
 }
 
 .small-date {
