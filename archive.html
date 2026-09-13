@@ -1,25 +1,29 @@
 ---
 layout: default
 title: Archive
+permalink: /archive/
 ---
-
-<section class="related">
-  <h1>All Posts</h1>
-  <hr />
-  <ul class="archive-list">
-    {% for post in site.posts %}
-    <li class="archive-item">
-      <h2 class="post-title archive-title">
-        <a href="{{ site.baseurl}}{{ post.url }}">
-          {{ post.title }}
-        </a>
-      </h2>
-      <time
-        class="post-date small-date"
-        datetime="{{ post.date | date_to_xmlschema }}"
-        >Posted on {{ post.date | date_to_string }}</time
-      >
-    </li>
-    {% endfor %}
-  </ul>
-</section>
+<header class="archive-intro">
+  <div>
+    <p class="eyebrow">Questionable Services / Index</p>
+    <h1>Everything,<br>in its time.</h1>
+    <p>{{ site.posts.size }} articles. Computing, agents, and the Internet,<br class="desktop-break"> collected here over the years.</p>
+  </div>
+  <div class="archive-print" aria-hidden="true">{% include serigraph-glyph.svg index=4 %}</div>
+</header>
+{% assign years = site.posts | group_by_exp: 'post', "post.date | date: '%Y'" %}
+<div class="archive-tools">
+  <nav class="year-nav" aria-label="Browse by year">{% for year in years %}<a href="#year-{{ year.name }}">{{ year.name }}</a>{% endfor %}</nav>
+  <div class="archive-search" hidden><label for="archive-query">Find an article</label><input type="search" id="archive-query" placeholder="Search titles or years…" autocomplete="off"></div>
+</div>
+<p id="archive-status" class="search-status" role="status" aria-live="polite" hidden></p>
+<div class="archive-years">
+  {% for year in years %}
+  <section class="archive-year" aria-labelledby="year-{{ year.name }}" data-year="{{ year.name }}">
+    <h2 id="year-{{ year.name }}" tabindex="-1">{{ year.name }}</h2>
+    <ul>{% for post in year.items %}
+      <li class="archive-entry"><time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%d %b' }}</time><a href="{{ post.url }}">{{ post.title }}<span aria-hidden="true">↗</span></a></li>
+    {% endfor %}</ul>
+  </section>
+  {% endfor %}
+</div>

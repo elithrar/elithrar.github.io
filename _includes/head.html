@@ -31,31 +31,12 @@
     site.title }} &middot; {{ site.tagline }} {% endif %}
   </title>
 
-  <!-- EB Garamond variable roman for body copy. -->
-  <link
-    rel="preload"
-    href="/public/fonts/eb-garamond-latin-normal-400-700-v33.woff2"
-    as="font"
-    type="font/woff2"
-    crossorigin
-  />
-
-  <!-- Newsreader Medium Italic, reduced to the Latin subset used by the site. -->
-  <link
-    rel="preload"
-    href="/public/fonts/newsreader-latin-italic-500-v26.woff2"
-    as="font"
-    type="font/woff2"
-    crossorigin
-  />
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="/public/css/poole.css" />
+  <meta name="theme-color" content="#ebe8e1" />
+  <link rel="preload" href="/public/fonts/barlow-condensed-latin-700-v13.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/public/fonts/eb-garamond-latin-normal-400-700-v33.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/public/css/syntax.css" />
   <link rel="stylesheet" href="/public/css/app.css" />
-  <!-- Preload code syntax CSS (non-blocking) -->
-  <link rel="preload" as="style" href="/public/css/syntax.css" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link rel="stylesheet" href="/public/css/syntax.css"></noscript>
-  
+
   <!-- Icons -->
   <link rel="icon" href="/public/favicon.svg" type="image/svg+xml" />
 

@@ -1,34 +1,31 @@
 ---
 layout: default
 ---
-
+{% assign read_minutes = content | strip_html | number_of_words | divided_by: 220 | at_least: 1 %}
+{% assign print_index = page.date | date: '%d' | plus: 0 %}
 <article class="post">
-  <hr />
-  <h1 class="post-title">
-    <a href="{{ page.url }}">
-      {{ page.title }}
-    </a>
-  </h1>
-  <time class="post-month" datetime="{{ page.date | date_to_xmlschema }}"
-    >{{ page.date | date: "%B, %Y" }}</time
-  >
-  <span class="post-bullets" aria-hidden="true">&#8226;&#8226;&#8226;</span>
-  <div class="post-content">
-    {{ content }}
+  <header class="article-header">
+    <div class="article-header-type">
+      <p class="eyebrow"><a href="/archive/">The writing</a><span aria-hidden="true"> / </span>{{ page.date | date: '%Y' }}</p>
+      <h1>{{ page.title }}</h1>
+      <p class="article-meta"><time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%d %B %Y' }}</time><span>{{ read_minutes }} min read</span></p>
+    </div>
+    <div class="article-print" aria-hidden="true">{% include serigraph-glyph.svg index=print_index %}</div>
+  </header>
+  <div class="reading-layout">
+    <aside class="reading-rail" aria-label="About this article">
+      <p class="eyebrow">Written by</p>
+      <a class="author-name" href="mailto:{{ site.author.email }}">Matt Silverlock</a>
+      <nav class="contents-nav" aria-labelledby="contents-title" hidden>
+        <h2 id="contents-title">In this article</h2>
+        <ol id="article-contents"></ol>
+      </nav>
+      <a class="back-link" href="/archive/">← All the writing</a>
+    </aside>
+    <div class="post-content">{{ content }}</div>
   </div>
 </article>
-
-<div class="related">
-  <h2>Recent Posts</h2>
-  <ul class="related-posts">
-    {% for post in site.related_posts limit:4 %}
-    <li>
-      <h3>
-        <a href="{{ post.url }}">
-          {{ post.title }}
-        </a>
-      </h3>
-    </li>
-    {% endfor %}
-  </ul>
-</div>
+<nav class="adjacent-posts" aria-label="More writing">
+  {% if page.previous %}<a href="{{ page.previous.url }}"><span class="eyebrow">Earlier <span aria-hidden="true">↙</span></span><span>{{ page.previous.title }}</span></a>{% endif %}
+  {% if page.next %}<a href="{{ page.next.url }}"><span class="eyebrow">Later <span aria-hidden="true">↗</span></span><span>{{ page.next.title }}</span></a>{% endif %}
+</nav>

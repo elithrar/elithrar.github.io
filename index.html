@@ -1,55 +1,49 @@
 ---
 layout: default
 ---
-
-<div class="related home-archives">
-  <h2>From the <a href="/archive/">Archives</a></h2>
-  <ul class="related-posts center">
-    {% for post in site.posts limit:3 %}
-    <li class="small">
-      <a href="{{ post.url }}">
-        {{ post.title }}
-      </a>
-    </li>
+{% if paginator.page == 1 %}
+<section class="cover" aria-labelledby="masthead">
+  <div class="cover-type">
+    <p class="eyebrow">A website by Matt Silverlock</p>
+    <h1 id="masthead"><span>Questionable</span><span>Services<span class="title-stop">.</span></span></h1>
+    <p class="cover-description">Writings about computing,<br>agents, and the Internet.</p>
+  </div>
+  <div class="cover-print" aria-hidden="true">{% include serigraph-cover.svg %}</div>
+</section>
+{% else %}
+<header class="section-intro compact-intro">
+  <p class="eyebrow">Questionable Services / Writing</p>
+  <h1>Further back.</h1>
+  <p>Page {{ paginator.page }} of {{ paginator.total_pages }}.</p>
+</header>
+{% endif %}
+<section class="writing" aria-labelledby="writing-title">
+  <div class="section-label">
+    <h2 id="writing-title">The writing</h2>
+    <a href="/archive/">All {{ site.posts.size }} articles <span aria-hidden="true">↗</span></a>
+  </div>
+  <div class="entries">
+    {% for post in paginator.posts %}
+    {% assign read_minutes = post.content | strip_html | number_of_words | divided_by: 220 | at_least: 1 %}
+    {% assign offset = paginator.page | minus: 1 | times: site.paginate %}
+    {% assign absolute_index = offset | plus: forloop.index %}
+    <article class="entry {% if forloop.first %}entry-featured{% endif %}">
+      <div class="entry-rail">
+        <span class="entry-number" aria-hidden="true">{% if absolute_index < 10 %}0{% endif %}{{ absolute_index }}</span>
+        <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%d %b %Y' }}</time>
+      </div>
+      <div class="entry-main">
+        <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+        <p class="entry-excerpt">{{ post.excerpt | strip_html | normalize_whitespace | truncatewords: 42 | escape }}</p>
+        <p class="entry-action"><a href="{{ post.url }}" aria-label="Read {{ post.title | escape }}">Read the article <span aria-hidden="true">↗</span></a><span>{{ read_minutes }} min read</span></p>
+      </div>
+      <div class="entry-print" aria-hidden="true">{% include serigraph-glyph.svg index=absolute_index %}</div>
+    </article>
     {% endfor %}
-  </ul>
-</div>
-<hr />
-<div class="posts">
-  {% for post in paginator.posts %}
-  <article class="post">
-    <h2 class="post-title">
-      <a href="{{ post.url }}">
-        {{ post.title }}
-      </a>
-    </h2>
-    <time class="post-month" datetime="{{ post.date | date_to_xmlschema }}"
-      >{{ post.date | date: "%B, %Y" }}</time
-    >
-    <span class="post-bullets" aria-hidden="true">&#8226;&#8226;&#8226;</span>
-    <div class="post-content">
-      {{ post.content }}
-    </div>
-  </article>
-  <hr />
-  {% endfor %}
-</div>
-
-<div class="pagination">
-  {% if paginator.next_page %}
-  <a class="pagination-item older" href="/page{{paginator.next_page}}/"
-    >Older</a
-  >
-  {% else %}
-  <span class="pagination-item older">Older</span>
-  {% endif %} {% if paginator.previous_page %} {% if paginator.previous_page ==
-  1 %}
-  <a class="pagination-item newer" href="/">Newer</a>
-  {% else %}
-  <a class="pagination-item newer" href="/page{{paginator.previous_page}}/"
-    >Newer</a
-  >
-  {% endif %} {% else %}
-  <span class="pagination-item newer">Newer</span>
-  {% endif %}
-</div>
+  </div>
+</section>
+<nav class="pagination" aria-label="Writing pages">
+  {% if paginator.previous_page %}<a href="{{ paginator.previous_page_path }}">← Newer writing</a>{% else %}<span></span>{% endif %}
+  <span class="page-count">{{ paginator.page }} / {{ paginator.total_pages }}</span>
+  {% if paginator.next_page %}<a href="{{ paginator.next_page_path }}">Older writing →</a>{% else %}<span></span>{% endif %}
+</nav>

@@ -1,23 +1,13 @@
 <footer class="site-footer">
-  <small
-    >&copy; {{ site.time | date: "%Y" }}
-    <a href="mailto:{{ site.author.email }}">{{ site.author.name }}</a> |
-    <a rel="me" href="https://mastodon.social/@elithrar">Mastodon</a> | Code
-    snippets are
-    <a href="https://choosealicense.com/licenses/mit/" title="MIT license"
-      >MIT licensed</a
-    >
-    | Built with <a href="https://jekyllrb.com/">Jekyll</a></small
-  >
+  <div class="footer-print" aria-hidden="true">{% include serigraph-footer.svg %}</div>
+  <div class="footer-content">
+    <div class="footer-name"><p class="eyebrow">Questionable Services</p><p>Matt<br>Silverlock<span>.</span></p></div>
+    <nav class="footer-links" aria-label="Elsewhere">
+      <a href="https://github.com/elithrar">GitHub <span aria-hidden="true">↗</span></a>
+      <a rel="me" href="https://mastodon.social/@elithrar">Mastodon <span aria-hidden="true">↗</span></a>
+      <a href="mailto:{{ site.author.email }}">Say hello <span aria-hidden="true">↗</span></a>
+      <a href="/atom.xml">RSS feed <span aria-hidden="true">↗</span></a>
+    </nav>
+    <p class="footer-colophon">© {{ site.time | date: '%Y' }} Matt Silverlock.<br>Code snippets under <a href="https://choosealicense.com/licenses/mit/">MIT</a>. Published with <a href="https://jekyllrb.com/">Jekyll</a>.</p>
+  </div>
 </footer>
-<!-- AnchorJS -->
-<script src="/public/js/anchor.min.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    "use strict"
-    anchors.options.placement = "left"
-    anchors.add(
-      ".post-content > h2, .post-content > h3, .post-content > h4, .post-content > h5, .post-content > h6"
-    )
-  })
-</script>
