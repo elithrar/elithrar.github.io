@@ -5,6 +5,7 @@
   "workers_dev": false,
   "compatibility_date": "2026-08-29",
   "main": "src/index.ts",
+  "previews": {},
   "routes": [
     { "pattern": "blog.questionable.services", "custom_domain": true }
   ],
