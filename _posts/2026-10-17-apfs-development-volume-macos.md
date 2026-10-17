@@ -5,7 +5,7 @@ date: 2026-10-17 00:00:00 +0000
 categories: macos, apfs, tools
 ---
 
-Disabling Spotlight indexing for your repositories doesn’t stop macOS from logging filesystem changes. That distinction matters when you have several coding agents running in parallel. [fforres reported fseventsd staying busy after days of agent work](https://x.com/fforres/status/2110806374544523559), despite already excluding his development folders from Spotlight.
+Disabling Spotlight indexing for your repositories doesn’t stop macOS from logging filesystem changes. [fforres had already excluded his development folders from Spotlight](https://x.com/fforres/status/2110806374544523559), but `fseventsd` was still busy after days of running coding agents.
 
 There are two separate sources of overhead here. `fseventsd` collects filesystem changes and maintains an on-disk history. Spotlight’s metadata services read eligible files, extract metadata and update their search indexes. Both use CPU and disk I/O beyond the work your build or test runner is doing. The logs and indexes also occupy disk space.
 
