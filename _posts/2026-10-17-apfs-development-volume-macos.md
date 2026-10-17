@@ -1,23 +1,19 @@
 ---
 layout: post
-title: "A separate APFS volume for development on macOS"
+title: "An APFS volume for development on macOS"
 date: 2026-10-17 00:00:00 +0000
 categories: macos, apfs, tools
 ---
 
-Disabling Spotlight indexing for your repositories doesn’t stop macOS from logging filesystem changes. [fforres had already excluded his development folders from Spotlight](https://x.com/fforres/status/2110806374544523559), but `fseventsd` was still busy after days of running coding agents.
+macOS logs filesystem changes through `fseventsd` and indexes files for Spotlight. Git checkouts can rewrite thousands of files, and each new [worktree](https://git-scm.com/docs/git-worktree) has its own working copy. For example, three full worktrees of a 10,000-file repository contain 30,000 checked-out files, even though they share Git’s object database. Dependencies, build output and agent-generated logs & test artifacts add more files. Running agents in parallel gives macOS more changes to process, using CPU and disk I/O on directories you might delete an hour later.
 
-There are two separate sources of overhead here. `fseventsd` collects filesystem changes and maintains an on-disk history. Spotlight’s metadata services read eligible files, extract metadata and update their search indexes. Both use CPU and disk I/O beyond the work your build or test runner is doing. The logs and indexes also occupy disk space.
+[fforres ran into this with parallel coding agents](https://x.com/fforres/status/2110806374544523559). Excluding his projects from Spotlight hadn’t been enough. His [follow-up](https://x.com/fforres/status/2110883187920617472) described moving them to a separate volume and disabling indexing and event logging there.
 
-One [diagnostic report from an M3 Pro running coding agents](https://github.com/talkstream/fseventsd-runaway) recorded `fseventsd` growing to 24 GB of process memory and consuming 97–98% of one CPU core for roughly two days. That was a runaway daemon, with an unproven trigger. It isn’t a benchmark for this setup, but it’s a good reason to check what’s consuming resources before blaming the compiler.
+I wanted the same setup without reserving a fixed amount of disk space or changing how my tools access my repositories. I put together [repos-volume.sh](https://github.com/elithrar/dotfiles/blob/main/repos-volume.sh), which creates an APFS volume at `~/repos`. I keep my Codex worktrees & generated artifacts there too, as [I described here](https://x.com/elithrar/status/2111461035152662911).
 
-Inspired by [fforres’ dedicated-volume follow-up](https://x.com/fforres/status/2110883187920617472), I put together a [Bash script](https://github.com/elithrar/dotfiles/blob/main/repos-volume.sh) to mount a separate APFS volume at `~/repos`. As [I described here](https://x.com/elithrar/status/2111461035152662911), it holds my repositories, Codex worktrees & generated artifacts, with Spotlight indexing and persistent FSEvents logging disabled for that volume.
+APFS volumes [share free space within their container](https://support.apple.com/en-tj/guide/disk-utility/dskua9e6a110/mac). The new volume uses space as needed alongside existing volumes, so there’s no partition size to guess upfront.
 
-## Creating the volume
-
-APFS volumes [share available space within their container](https://support.apple.com/en-tj/guide/disk-utility/dskua9e6a110/mac). We don’t need to reserve 100 GB upfront or resize a partition later. Applications still access `~/repos` through the same path.
-
-These are the relevant lines from the script. Container discovery, UUID lookup and safety checks are omitted, so use the full script for setup.
+Here are the relevant commands from the script. Container lookup, UUID discovery and validation are omitted:
 
 ```bash
 repos=$HOME/repos
@@ -34,16 +30,12 @@ if ! sudo test -e "$log"; then sudo touch "$log"; fi
 sudo mdutil -i off "$repos"
 ```
 
-The script discovers the startup Data volume’s APFS container rather than assuming a disk number. `-nomount` prevents an immediate mount while we record the new volume’s UUID and prepare its destination.
+We create the volume inside the existing APFS container. The `-nomount` option lets the script record its UUID and prepare `~/repos` before mounting it. A UUID-based `/etc/fstab` entry makes subsequent mounts use the same directory.
 
-`nobrowse` keeps the volume out of normal Finder browsing. You can still open it with Go to Folder. `owners` enables ownership enforcement. A UUID-based `/etc/fstab` entry preserves the mountpoint and `rw,nobrowse,owners` options across later mounts.
+The `nobrowse` option keeps the volume out of Finder’s normal volume listing. You can still open `~/repos` directly, including with `Cmd+Shift+G`. The `owners` option keeps filesystem ownership enforcement enabled.
 
-The empty `.fseventsd/no_log` file is [Apple’s documented per-volume opt-out](https://developer.apple.com/library/archive/documentation/Darwin/Conceptual/FSEvents_ProgGuide/FileSystemEventSecurity/FileSystemEventSecurity.html) for persistent event logging. It doesn’t stop the daemon or disable all live notifications. `mdutil -i off` separately disables Spotlight indexing on the mounted volume.
+The empty `.fseventsd/no_log` file [disables persistent event logging for the volume](https://developer.apple.com/library/archive/documentation/Darwin/Conceptual/FSEvents_ProgGuide/FileSystemEventSecurity/FileSystemEventSecurity.html). It doesn’t stop `fseventsd` or all live file notifications. `mdutil -i off` separately disables Spotlight indexing.
 
-## What to keep in mind
+Use the full script for setup. It checks the volume’s identity and refuses to mount over a populated `~/repos`. It currently creates an unencrypted volume. Check your backup tooling before relying on a volume without persistent event history.
 
-I don’t have a controlled before/after benchmark for this script. CPU utilization, bytes written and retained disk space measure different things. I wouldn’t assign a percentage speedup or storage saving without measuring the same workload on both configurations.
-
-The helper refuses to mount over a populated `~/repos`. Existing repositories need an explicit migration. It also currently creates an unencrypted volume, which doesn’t inherit FileVault protection from the startup volume. Check your backup tooling’s behavior without persistent event history.
-
-For my development directories, this is preferable to disabling `fseventsd` or Spotlight system-wide. My other files keep their normal search and event-history behavior. You can create additional volumes for other top-level directories with different settings. They’ll share the same free space, so remember that filling one can still fill the disk.
+This leaves `fseventsd` and Spotlight running normally for the rest of the machine. You can apply the same approach to other top-level directories by creating additional APFS volumes. Each can have its own indexing and logging settings.
